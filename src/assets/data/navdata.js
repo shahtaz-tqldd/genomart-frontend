@@ -3,12 +3,6 @@ import { PiShoppingCartSimpleFill, PiAddressBookFill } from 'react-icons/pi'
 import { MdCall } from 'react-icons/md'
 export const navdata = [
   {
-    id: 1,
-    title: "Home",
-    link: "/",
-    icon:RiHome5Fill
-  },
-  {
     id: 2,
     title: "Shop",
     link: "/shop",
