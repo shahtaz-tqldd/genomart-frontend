@@ -120,3 +120,21 @@ body {
 .custom-quill-editor .ql-toolbar {
   display: none;
 }
+
+.swiper-pagination {
+  position: absolute;
+  bottom: 0px !important;
+  left: 50%;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: transparent !important; /* Make the inactive bullet transparent */
+  border: 2px solid #F33838 !important; /* Add white border to inactive bullet */
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #F33838 !important; /* Change active bullet color to red */
+  border: 2px solid #F33838 !important; /* Add red border to active bullet */
+}

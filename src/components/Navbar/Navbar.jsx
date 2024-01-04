@@ -8,12 +8,14 @@ import { IoIosArrowDown } from "react-icons/io";
 import MobileMenuDrawer from "./MobileMenuDrawer";
 import CartSlide from "../Cart/CartSlide";
 import NavDropdown from "./NavDropdown";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const user = [];
   const [drawerState, setDrawerState] = useState({ left: false, right: false });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const cart = useSelector((state) => state?.cart);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -34,7 +36,9 @@ const Navbar = () => {
       return;
     }
 
-    const isChildOfDropdown = dropdownRef.current.contains(event.relatedTarget);
+    const isChildOfDropdown = dropdownRef?.current?.contains(
+      event.relatedTarget
+    );
 
     if (!event.relatedTarget || !isChildOfDropdown) {
       setIsDropdownOpen(false);
@@ -42,7 +46,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-[#8ADAB2]">
+    <div className="bg-[#8ADAB2] sticky top-0 z-50">
       <div className="cont flex items-center justify-between py-3 text-[#31304D]">
         <button
           onClick={() => setDrawerState({ left: true })}
@@ -119,7 +123,7 @@ const Navbar = () => {
             </button>
 
             <div className="absolute -top-2 left-5 z-10 bg-red-500 text-white text-xs font-bold h-5 w-5 rounded-full grid place-items-center">
-              4
+              {cart?.length || 0}
             </div>
             {user?.length > 0 ? (
               <button className="bg-white hover:bg-gray-700 transition rounded-full group overflow-hidden h-8 w-8 grid place-items-center">
