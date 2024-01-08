@@ -99,18 +99,18 @@ body {
 }
 
 .custom-quill-editor {
-  border-radius: 10px;
+  border-radius: 8px;
   font-family: "Outfit", sans-serif;
   color: #333;
   border: 1px solid #ddd;
 }
 
 .custom-quill-editor .ql-editor {
-  border-radius: 10px;
+  border-radius: 0 0 8px 8px;
   font-size: 14px;
-  background-color: #f8f7f7;
+  background-color: #fff;
   padding: 10px;
-  min-height: 140px;
+  min-height: 180px;
 }
 
 .custom-quill-editor .ql-container.ql-snow {
@@ -118,7 +118,11 @@ body {
 }
 
 .custom-quill-editor .ql-toolbar {
-  display: none;
+  border-radius: 8px 8px 0 0;
+  border:none;
+  background-color: #e2e2e2;
+  display: flex;
+  gap: 16px;
 }
 
 .swiper-pagination {

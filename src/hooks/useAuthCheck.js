@@ -9,35 +9,35 @@ export default function useAuthCheck() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    const localAuth = localStorage?.getItem("auth");
-
+    const localAuth = localStorage?.getItem("genomart_auth");
+    
     if (localAuth) {
       const auth = JSON.parse(localAuth);
       setAuthToken(auth?.token);
     } else {
       dispatch(userLoggedOut());
-      localStorage.removeItem("auth");
+      localStorage.removeItem("genomart_auth");
     }
   }, []);
-
+  
   const { data, isLoading, isError, isSuccess, error } =
     useUserDetailsQuery(authToken, {
       skip: !authToken,
       refetchOnReconnect: true,
     }) || {};
 
-  useEffect(() => {
+    useEffect(() => {
     if (!isLoading && isSuccess && !isError) {
       dispatch(
         userLoggedIn({
           token: authToken,
-          user: data?.user,
+          user: data?.data,
         })
       );
     }
     if (!isLoading && error) {
       dispatch(userLoggedOut());
-      localStorage.removeItem("auth");
+      localStorage.removeItem("genomart_auth");
     }
 
     setTimeout(() => {

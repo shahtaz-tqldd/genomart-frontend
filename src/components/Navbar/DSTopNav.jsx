@@ -18,7 +18,6 @@ const DSTopNav = ({ toggle, setToggle }) => {
     setOpenMenu(event.currentTarget);
   };
 
-
   return (
     <div
       className="bg-white flex justify-between items-center shadow py-3 px-6 sticky top-0"
@@ -56,19 +55,17 @@ const DSTopNav = ({ toggle, setToggle }) => {
             onClick={handleMenuOpne}
             className="rounded-md flex items-center justify-between gap-2 px-4 lg:mr-0 md:mr-0 -mr-8 py-1 relative cursor-pointer"
           >
-            <img
-              className="w-10 h-10 object-cover rounded-full border-[3px] border-blue-200 hover:border-blue-300 transition duration-300"
-              src={
-                user?.photo?.url ||
-                "https://google.com"}
-              //   (user?.gender === "Male"
-              //     ? male
-              //     : user?.gender === "Female"
-              //     ? female
-              //     : other)
-              // }
-              alt={user?.fullname}
-            />
+            {user?.photo?.url ? (
+              <img
+                className="w-10 h-10 object-cover rounded-full border-[3px] border-blue-200 hover:border-blue-300 transition duration-300"
+                src={user?.photo?.url}
+                alt={user?.fullname}
+              />
+            ) : (
+              <div className="h-9 w-9 rounded-full grid place-items-center font-bold text-white bg-orange-500 text-xl">
+                {user?.fullname?.charAt(0).toUpperCase()}
+              </div>
+            )}
           </div>
           <Profilemenu
             openMenu={openMenu}

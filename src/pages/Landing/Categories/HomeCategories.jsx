@@ -3,6 +3,7 @@ import { FaAngleLeft } from "react-icons/fa";
 import { categories } from "../../../assets/data/mock/categories";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useNavigate } from "react-router-dom";
 
 const HomeCategories = () => {
   const [swiperRef, setSwiperRef] = useState();
@@ -14,9 +15,14 @@ const HomeCategories = () => {
   const handleNext = useCallback(() => {
     swiperRef?.slideNext();
   }, [swiperRef]);
+
+  const navigate = useNavigate();
+  const handleNavigateProduct = (name) => {
+    navigate("/products", { state: { category: name } });
+  };
   return (
     <div className="w-full my-20 relative container">
-      <div className="flex justify-between absolute container top-1/2 z-10">
+      <div className="flex justify-between absolute container top-1/2 -translate-y-1/2 z-10">
         <FaAngleLeft
           onClick={handlePrevious}
           className="text-3xl text-black hover:text-red-500 tr cursor-pointer"
@@ -43,19 +49,24 @@ const HomeCategories = () => {
             disableOnInteraction: false,
           }}
         >
-          {categories?.map(({ img, productName, products }, i) => (
+          {categories?.map(({ img, name, totalProducts }, i) => (
             <SwiperSlide key={i}>
               <div
+                onClick={() => handleNavigateProduct(name)}
                 // data-aos="fade-up"
                 // data-aos-duration="1000"
                 // data-aos-delay={`${150 * (i + 1)}`}
-                className="flex flex-col items-center"
+                className="flex flex-col items-center group cursor-pointer"
               >
-                <div className="bg-[#EEF5FF] h-36 w-36 rounded-full grid place-items-center">
-                  <img src={img} alt="" className="h-24 object-contain" />
+                <div className="bg-[#EEF5FF]  group-hover:bg-blue-200 tr h-32 w-32 rounded-full grid place-items-center">
+                  <img src={img} alt="" className="h-16  object-contain" />
                 </div>
-                <h1 className="text-xl font-bold mt-4">{productName}</h1>
-                <p className="text-md text-gray-400">{products} products</p>
+                <h1 className="text-lg font-bold text-slate-600 group-hover:text-slate-900 tr mt-4">
+                  {name}
+                </h1>
+                <p className="text-md text-gray-400">
+                  {totalProducts} products
+                </p>
               </div>
             </SwiperSlide>
           ))}

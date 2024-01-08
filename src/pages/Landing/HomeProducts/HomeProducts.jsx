@@ -1,5 +1,5 @@
 import React from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "../../../components/ProductCards/ProductCard";
 import { products } from "../../../assets/data/mock/products";
 import creative from "../../../assets/images/creative.png";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -20,8 +20,8 @@ const HomeProducts = () => {
           <ProductCard key={i} data={data} />
         ))}
       </div>
-      <div className="flex justify-center mt-6">
-        <Link to={'/products'} className="flex text-xl items-center gap-2 group hover:text-primary">
+      <div className="flex justify-center mt-12">
+        <Link to={'/products'} className="flex text-xl items-center gap-4 group hover:text-primaryColor tr">
           See All Products <FaArrowRightLong className="group-hover:translate-x-3 tr" />
         </Link>
       </div>

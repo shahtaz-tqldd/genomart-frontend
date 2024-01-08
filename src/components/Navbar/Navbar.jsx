@@ -1,17 +1,45 @@
 import React, { useRef, useState } from "react";
 import { navdata } from "../../assets/data/navdata";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PiShoppingCartFill } from "react-icons/pi";
 import { BiSolidUser } from "react-icons/bi";
-import { HiMenuAlt1 } from "react-icons/hi";
-import { IoIosArrowDown } from "react-icons/io";
+import { HiHome, HiMenuAlt1, HiUser } from "react-icons/hi";
+import { IoIosArrowDown, IoMdSettings } from "react-icons/io";
 import MobileMenuDrawer from "./MobileMenuDrawer";
 import CartSlide from "../Cart/CartSlide";
 import NavDropdown from "./NavDropdown";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authModalOpen } from "../../feature/auth/authModalSlice";
+import Profilemenu from "../../ui/Menu/ProfileMenu";
 
 const Navbar = () => {
-  const user = [];
+  const { user } = useSelector((state) => state?.auth);
+  const [openMenu, setOpenMenu] = useState(null);
+
+  const handleMenuClose = () => {
+    setOpenMenu(null);
+  };
+
+  const handleMenuOpne = (event) => {
+    setOpenMenu(event.currentTarget);
+  };
+  const navigate = useNavigate();
+
+  const handleMenuOptionClick = (e, option) => {
+    if (option.item === "Settings") {
+      navigate("/settings");
+      handleMenuClose();
+    }
+    if (option.item === "Home") {
+      navigate("/");
+      handleMenuClose();
+    }
+    if (option.item === "Accounts") {
+      navigate("/accounts/reports");
+      handleMenuClose();
+    }
+  };
+
   const [drawerState, setDrawerState] = useState({ left: false, right: false });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -45,6 +73,11 @@ const Navbar = () => {
     }
   };
 
+  const dispatch = useDispatch();
+  const handleOpenAuthModal = () => {
+    dispatch(authModalOpen());
+  };
+
   return (
     <div className="bg-[#8ADAB2] sticky top-0 z-50">
       <div className="cont flex items-center justify-between py-3 text-[#31304D]">
@@ -75,13 +108,11 @@ const Navbar = () => {
                 } transition duration-500 -mt-0.5`}
               >
                 <h1 className="h-5 flex items-center gap-1.5">
-                  {/* <d.icon /> */}
-                  Products
+                  Categories
                   <IoIosArrowDown className="mt-0.5" />
                 </h1>
                 <h1 className="h-5 text-white flex items-center gap-1.5">
-                  {/* <d.icon /> */}
-                  Products
+                  Categories
                   <IoIosArrowDown
                     className={`mt-0.5 ${
                       isDropdownOpen ? "rotate-180" : "rotate-0"
@@ -125,19 +156,37 @@ const Navbar = () => {
             <div className="absolute -top-2 left-5 z-10 bg-red-500 text-white text-xs font-bold h-5 w-5 rounded-full grid place-items-center">
               {cart?.length || 0}
             </div>
-            {user?.length > 0 ? (
-              <button className="bg-white hover:bg-gray-700 transition rounded-full group overflow-hidden h-8 w-8 grid place-items-center">
-                <div className="group-hover:-translate-y-9 transition duration-700 flex flex-col gap-4 pt-[7px]">
-                  {[...Array(2)].map((_, index) => (
-                    <BiSolidUser
-                      key={index}
-                      className="h-5 w-5 group-hover:text-white transform transition-transform"
-                    />
-                  ))}
-                </div>
-              </button>
+            {user?._id ? (
+              <>
+                <button
+                  onClick={handleMenuOpne}
+                  className="bg-white hover:bg-gray-700 transition rounded-full group overflow-hidden h-8 w-8 grid place-items-center"
+                >
+                  <div className="group-hover:-translate-y-9 transition duration-700 flex flex-col gap-4 pt-[7px]">
+                    {[...Array(2)].map((_, index) => (
+                      <BiSolidUser
+                        key={index}
+                        className="h-5 w-5 group-hover:text-white transform transition-transform"
+                      />
+                    ))}
+                  </div>
+                </button>
+                <Profilemenu
+                  openMenu={openMenu}
+                  handleMenuClose={handleMenuClose}
+                  options={[
+                    { item: "Home", icon: HiHome },
+                    { item: "Accounts", icon: HiUser },
+                    { item: "Settings", icon: IoMdSettings },
+                  ]}
+                  onClick={handleMenuOptionClick}
+                />
+              </>
             ) : (
-              <button className="bg-white hover:bg-gray-700 transition rounded-full group overflow-hidden h-9 px-4 grid place-items-center ml-4">
+              <button
+                onClick={handleOpenAuthModal}
+                className="bg-white hover:bg-gray-700 transition rounded-full group overflow-hidden h-9 px-4 grid place-items-center ml-4"
+              >
                 <div className="group-hover:-translate-y-9 transition duration-700 flex flex-col gap-4 pt-[8px]">
                   {[...Array(2)].map((_, index) => (
                     <h2
@@ -159,14 +208,12 @@ const Navbar = () => {
           toggleDrawer={toggleDrawer}
           data={navdata}
         />
-        <CartSlide
-          state={drawerState}
-          setState={setDrawerState}
-          toggleDrawerCart={toggleDrawer}
-        />
+        <CartSlide state={drawerState} toggleDrawerCart={toggleDrawer} />
       </div>
       <div ref={dropdownRef} onMouseLeave={() => setIsDropdownOpen(false)}>
-        {isDropdownOpen && <NavDropdown isOpen={isDropdownOpen} />}
+        {isDropdownOpen && (
+          <NavDropdown isOpen={isDropdownOpen} setIsOpen={setIsDropdownOpen} />
+        )}
       </div>
     </div>
   );

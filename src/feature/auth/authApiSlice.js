@@ -3,11 +3,11 @@ import { userLoggedIn } from "./authSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    loginUser: builder.mutation({
+    userLogin: builder.mutation({
       query: (data) => {
         const { bodyData } = data;
         return {
-          url: `/api/v1/login`,
+          url: `auth/login`,
           method: "POST",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -19,16 +19,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           localStorage.setItem(
-            "auth",
+            "genomart_auth",
             JSON.stringify({
-              token: result.data.token,
+              token: result?.data?.data?.token,
             })
           );
-          // console.log(result.data.user);
           dispatch(
             userLoggedIn({
-              token: result.data.token,
-              user: result.data.user,
+              token: result?.data?.data?.token,
+              user: result?.data?.data?.user,
             })
           );
         } catch (error) {
@@ -37,10 +36,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: [""],
     }),
+
     userDetails: builder.query({
       query: (token) => {
+        console.log(token);
         return {
-          url: `/api/v1/my-profile`,
+          url: `user/profile`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -53,4 +54,4 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginUserMutation, useUserDetailsQuery } = authApiSlice;
+export const { useUserLoginMutation, useUserDetailsQuery } = authApiSlice;

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import "../../assets/styles/dashboard-sidebar.css";
+import "../assets/styles/dashboard-sidebar.css";
 import DSNav from "../components/Navbar/DSNav";
 import DSTopNav from "../components/Navbar/DSTopNav";
 
-const Dashboard = () => {
+const DashboardLayout = () => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -28,4 +28,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardLayout;

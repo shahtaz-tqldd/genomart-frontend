@@ -7,17 +7,11 @@ import {
 } from "../../feature/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
-const CartProductCard = ({ data }) => {
-  const dispatch = useDispatch()
-  const {
-    image,
-    name,
-    price,
-    _id,
-    quantity = 2,
-    stock,
-  } = data;
+const CartProductCard = ({ data, onClose }) => {
+  const dispatch = useDispatch();
+  const { image, name, price, _id, quantity, stock } = data;
 
   const handleDecrementQuantity = (_id, Quantity) => {
     dispatch(
@@ -45,6 +39,11 @@ const CartProductCard = ({ data }) => {
       })
     );
   };
+  const navigate = useNavigate();
+  const handleNaviagte = () => {
+    navigate(`/products/${_id}`);
+    onClose();
+  };
 
   return (
     <div className="grid grid-cols-4 gap-3 group">
@@ -56,14 +55,16 @@ const CartProductCard = ({ data }) => {
         />
       </div>
       <div className="col-span-3 flex flex-col justify-between relative">
-        <h2>{name}</h2>
+        <h2 onClick={handleNaviagte} className="font-medium cursor-pointer hover:text-slate-900 tr">
+          {name}
+        </h2>
         <div
-            onClick={() => handleDeleteCartItem(_id)}
-            className="hidden group-hover:grid absolute top-0 right-3 h-7 w-7 bg-red-100 hover:bg-red-200 place-items-center rounded-full transition duration-300  cursor-pointer"
-          >
-            <RiDeleteBin6Line className="text-red-500 text-[14px]" />
-          </div>
-        <div className="flex justify-between items-center">
+          onClick={() => handleDeleteCartItem(_id)}
+          className="hidden group-hover:grid absolute top-0 right-3 h-7 w-7 bg-red-100 hover:bg-red-200 place-items-center rounded-full transition duration-300  cursor-pointer"
+        >
+          <RiDeleteBin6Line className="text-red-500 text-[14px]" />
+        </div>
+        <div className="flex justify-between items-end">
           <div className="flex items-center gap-2 border lg:px-2 px-1 py-[1px] w-fit rounded-full bg-[#f5f8fb]">
             <button
               onClick={() => handleDecrementQuantity(_id, quantity)}
@@ -81,7 +82,7 @@ const CartProductCard = ({ data }) => {
               <AiOutlinePlus />
             </button>
           </div>
-          <h2>{price}</h2>
+          <h2 className="text-sm font-bold">${price * quantity}</h2>
         </div>
       </div>
     </div>

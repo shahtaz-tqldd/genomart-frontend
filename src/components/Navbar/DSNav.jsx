@@ -9,8 +9,8 @@ import { dsnavdata } from "../../assets/data/dsnavdata";
 
 const DSNav = ({ toggle, setToggle }) => {
   const { user } = useSelector((state) => state?.auth);
-  const dispatch = useDispatch()
-  const role = user?.role
+  const dispatch = useDispatch();
+  const role = user?.role;
   const location = useLocation();
 
   const isActiveNavLink = (path) => {
@@ -33,20 +33,20 @@ const DSNav = ({ toggle, setToggle }) => {
 
   return (
     <div className="min-h-screen relative bg-white border-r border-gray-300">
-      <div onClick={() => setToggle(!toggle)} className="h-7 w-7 bg-slate-200 hover:bg-slate-300 text-slate-700 hover:slate-800 rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"><BiChevronLeft className="text-2xl" /></div>
+      <div
+        onClick={() => setToggle(!toggle)}
+        className="h-7 w-7 bg-slate-200 hover:bg-slate-300 text-slate-700 hover:slate-800 rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
+      >
+        <BiChevronLeft className="text-2xl" />
+      </div>
       <div className="py-4 flex flex-col items-center justify-center gap-2">
-        <Link to="/">
-          <h2>Logo</h2>
-          {/* <img src={logo} className="w-28 rounded-sm" alt="" /> */}
+        <Link
+          to={"/dashboard"}
+          className="text-3xl font-nav hover:text-black transition"
+        >
+          geno mart
         </Link>
-        <div>
-          <h1 className="text-sm font-medium text-gray-500 text-center">
-            Ayykori Digital Ltd.
-          </h1>
-          <p className="text-xs font-normal text-gray-600 text-center">
-            {user?.email}
-          </p>
-        </div>
+        <h2 className="uppercase tracking-widest text-sm">Admin Dashboard</h2>
       </div>
 
       <div className="mt-2 mx-4">
@@ -62,35 +62,45 @@ const DSNav = ({ toggle, setToggle }) => {
                     <button
                       onClick={() => toggleDropdown(item.title)}
                       className={`
-                      ${dashboardMenu} ${location.pathname
+                      ${dashboardMenu} ${
+                        location.pathname
                           .split("/")[1]
                           .includes(item.title.toLocaleLowerCase())
                           ? "text-primaryColor bg-emerald-100"
                           : "text-gray-600"
-                        } group-hover:bg-slate-100 rounded-md`}
+                      } group-hover:bg-slate-100 rounded-md`}
                     >
                       <item.icon className="text-base" />
                       {item.title}
                       <BiChevronRight
-                        className={`${openDropdown === item.title && "rotate-90"
-                          } text-lg transition-all duration-500 ml-auto`}
+                        className={`${
+                          openDropdown === item.title && "rotate-90"
+                        } text-lg transition-all duration-500 ml-auto`}
                       />
                     </button>
                     <div
-                      className={`${openDropdown === item.title
-                        ? "max-h-40 mt-1 overflow-y-hidden transition-all duration-500"
-                        : "max-h-0 mt-1 overflow-hidden transition-all duration-500"
-                        }`}
+                      className={`${
+                        openDropdown === item.title
+                          ? "max-h-40 mt-1 overflow-y-hidden transition-all duration-500"
+                          : "max-h-0 mt-1 overflow-hidden transition-all duration-500"
+                      }`}
                     >
                       {item.children.map((childItem, childIndex) => (
                         <NavLink
                           key={childIndex}
                           to={childItem.link}
                           onClick={() => setToggle(false)}
-                          className={`${isActiveNavLink(childItem.link)
-                            ? "text-primaryColor"
-                            : "text-gray-500"
-                            } hover:bg-emerald-50 items-center gap-2 py-1.5 text-sm pl-7 rounded-md ${childItem?.roles ? childItem?.roles?.includes(role) ? 'flex' : 'hidden' : 'flex'}`}
+                          className={`${
+                            isActiveNavLink(childItem.link)
+                              ? "text-primaryColor"
+                              : "text-gray-500"
+                          } hover:bg-emerald-50 items-center gap-2 py-1.5 text-sm pl-7 rounded-md ${
+                            childItem?.roles
+                              ? childItem?.roles?.includes(role)
+                                ? "flex"
+                                : "hidden"
+                              : "flex"
+                          }`}
                         >
                           <childItem.icon className="text-sm" />
                           {childItem.title}
@@ -103,11 +113,13 @@ const DSNav = ({ toggle, setToggle }) => {
                     title={item.title}
                     to={item.link}
                     onClick={() => setToggle(false)}
-                    className={`${isActiveNavLink(item.link) ? "bg-emerald-100" : ""
-                      } ${dashboardMenu} ${isActiveNavLink(item.link)
+                    className={`${
+                      isActiveNavLink(item.link) ? "bg-emerald-100" : ""
+                    } ${dashboardMenu} ${
+                      isActiveNavLink(item.link)
                         ? "text-primaryColor"
                         : "text-gray-500"
-                      }  group-hover:bg-slate-100 rounded-md`}
+                    }  group-hover:bg-slate-100 rounded-md`}
                   >
                     <item.icon className="text-base" />
                     {item.title}

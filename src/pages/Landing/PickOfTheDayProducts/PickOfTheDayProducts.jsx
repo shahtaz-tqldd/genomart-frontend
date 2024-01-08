@@ -1,12 +1,12 @@
 import brand from "../../../assets/images/brand-identity.png";
 import { products } from "../../../assets/data/mock/products";
-import ProductCard2 from "./ProductCard2";
 import { useCallback, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { BsArrowDownCircle } from "react-icons/bs";
 import "swiper/css";
 import "swiper/css/pagination";
+import PickOfTheProductCard from "../../../components/ProductCards/PickOfTheProductCard";
 
 const PickOfTheDayProducts = () => {
   const [swiperRef, setSwiperRef] = useState();
@@ -68,7 +68,7 @@ const PickOfTheDayProducts = () => {
           >
             {products?.map((data, i) => (
              <SwiperSlide key={i}>
-               <ProductCard2 data={data} color={colors[i % colors.length]} />
+               <PickOfTheProductCard data={data} color={colors[i % colors.length]} />
              </SwiperSlide>
           ))}
           </Swiper>

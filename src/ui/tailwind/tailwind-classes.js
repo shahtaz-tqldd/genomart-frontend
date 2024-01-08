@@ -5,6 +5,9 @@ export const dashboardMenu = classNames(
 );
 
 // buttons
+export const primarybtn = classNames(
+  "py-2 pl-4 pr-5 rounded bg-primaryColor text-white flex items-center gap-2"
+);
 export const dotbtn = classNames(
   "-mr-4 h-8 w-8 p-2 hover:bg-slate-100 rounded-full rotate-90 cursor-pointer"
 );
@@ -31,7 +34,7 @@ export const dropdownbtnLg = classNames(
   "bg-white py-2 px-5 border border-1 border-gray-300 text-md rounded-lg shadow-md hover:bg-green-100 hover:text-green-800 flex gap-2 items-center transition duration-300 select-none"
 );
 export const dropdownbtnMd = classNames(
-  "bg-white py-[15px] mb-[14px] px-6 border border-1 border-gray-300 text-sm rounded-lg hover:border-gray-800 text-gray-600 flex gap-2 items-center select-none"
+  "bg-transparent py-1 w-full border-b border-gray-400 hover:border-gray-800 text-gray-800 flex justify-between items-center select-none"
 );
 
 // scrollbar

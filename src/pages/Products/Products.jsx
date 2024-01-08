@@ -1,45 +1,100 @@
 import React, { useState } from "react";
 import { products } from "../../assets/data/mock/products";
-import ProductCardsm from "./ProductCardSm";
+import ProductCardsm from "../../components/ProductCards/ProductCardSm";
 import { categories } from "../../assets/data/mock/categories";
 import { IoGridOutline, IoSearch } from "react-icons/io5";
 import { AiOutlineMenu } from "react-icons/ai";
-import ProductCardList from "./ProductCardList";
+import ProductCardList from "../../components/ProductCards/ProductCardList";
+import { Box, Slider } from "@mui/material";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useGetAllProductsQuery } from "../../feature/products/productsApiSlice";
 
 const Products = () => {
+  const { state } = useLocation();
+  const { token } = useSelector((state) => state?.auth);
+  const cat = state?.category || "";
   const [grid, setGrid] = useState(true);
+  const [page, setPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState([cat]);
+  const [value, setValue] = useState([20, 37]);
+  const valuetext = (value) => {
+    return `BDT ${value * 100}`;
+  };
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const { data, isLoading, isSuccess, isError } = useGetAllProductsQuery(
+    { token, page },
+    { refetchOnReconnect: true, skip: !token }
+  );
+
   return (
-    <div className="container mt-12 grid grid-cols-7">
-      <div className="col-span-2 h-80 ">
+    <div className="container mt-12 flex gap-12">
+      <div className="w-[25%] h-full sticky top-28">
         <h2 className="text-xl font-medium mb-3">Product Status</h2>
         {["All Items", "On Stock", "New Arival"]?.map((c, i) => (
-          <div key={i} className="flex items-center gap-2">
+          <div key={i} className="flex items-center gap-2 text-sm">
             <input type="checkbox" />
             {c}
           </div>
         ))}
         <h2 className="text-xl font-medium mb-3 mt-8">Price Range</h2>
+        <Box sx={{ width: 300 }}>
+          <Slider
+            getAriaLabel={() => "Temperature range"}
+            value={value}
+            onChange={handleChange}
+            // valueLabelDisplay="auto"
+            getAriaValueText={valuetext}
+          />
+        </Box>
+        <h2>
+          Range : BDT {value[0] * 1000} - {value[1] * 1000}
+        </h2>
         <h2 className="text-xl font-medium mb-3 mt-8">Product Categories</h2>
         {categories?.map((c, i) => (
-          <div key={i} className="flex items-center gap-2">
-            <input type="checkbox" />
-            {c?.productName}
+          <div
+            onClick={() => {
+              selectedCategory.includes(c?.name)
+                ? setSelectedCategory(
+                    selectedCategory?.filter((s) => s !== c?.name)
+                  )
+                : setSelectedCategory([...selectedCategory, c?.name]);
+            }}
+            key={i}
+            className="flex items-center gap-2 text-sm cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              checked={selectedCategory.includes(c?.name)}
+            />
+            {c?.name}
+            <span className="text-gray-400 ml-2 text-sm mt-0.5">
+              ({c?.totalProducts})
+            </span>
           </div>
         ))}
       </div>
-      <div className="col-span-5 ">
+      <div className="w-[75%]">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <IoGridOutline
               onClick={() => setGrid(true)}
               className={`text-3xl p-1.5 rounded  border cursor-pointer ${
-                grid ? "bg-slate-800 text-white border-slate-800" : "text-gray-600"
+                grid
+                  ? "bg-slate-800 text-white border-slate-800"
+                  : "text-gray-600"
               }`}
             />
             <AiOutlineMenu
               onClick={() => setGrid(false)}
               className={`text-3xl p-1.5  rounded border cursor-pointer ${
-                grid ? "text-gray-600" : "bg-slate-800 border-slate-800 text-white"
+                grid
+                  ? "text-gray-600"
+                  : "bg-slate-800 border-slate-800 text-white"
               }`}
             />
           </div>
@@ -53,14 +108,14 @@ const Products = () => {
           </div>
         </div>
         {grid ? (
-          <div className="grid grid-cols-4 gap-4 mt-6">
-            {products?.map((data, i) => (
+          <div className="grid grid-cols-4 gap-4 mt-8">
+            {data?.data?.map((data, i) => (
               <ProductCardsm key={i} data={data} />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6  mt-4">
-            {products?.map((data, i) => (
+          <div className="grid grid-cols-1 gap-6 mt-8">
+            {data?.data?.map((data, i) => (
               <ProductCardList key={i} data={data} />
             ))}
           </div>

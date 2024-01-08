@@ -4,8 +4,8 @@ import { MdCall } from 'react-icons/md'
 export const navdata = [
   {
     id: 2,
-    title: "Shop",
-    link: "/shop",
+    title: "Products",
+    link: "/products",
     icon:PiShoppingCartSimpleFill
   },
   {

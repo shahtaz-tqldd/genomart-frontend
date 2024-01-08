@@ -1,24 +1,26 @@
+import React from "react";
 import { SwipeableDrawer } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import CartProductCard from "./CartProductCard";
+import CartProductCard from "../ProductCards/CartProductCard";
 import { clearCart } from "../../feature/cart/cartSlice";
 import { BiSolidTrash } from "react-icons/bi";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { handleCheckout } from "../../utiles/functions/handleAuthCheck";
 
-const CartSlide = ({ state, setState, toggleDrawerCart }) => {
-  const data = [];
+const CartSlide = ({ state, toggleDrawerCart }) => {
+  const { token } = useSelector((state) => state?.auth);
   const cart = useSelector((state) => state?.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleNavigate = (link) => {
-    // navigate(link);
-    // setState({ left: false });
-  };
 
   const handleRemoveAll = () => {
     dispatch(clearCart());
   };
+
+  const subtotal = cart.reduce((acc, product) => {
+    return acc + product.price * product.quantity;
+  }, 0);
 
   return (
     <div className="w-full absolute">
@@ -28,7 +30,7 @@ const CartSlide = ({ state, setState, toggleDrawerCart }) => {
         onClose={toggleDrawerCart("right", false)}
         onOpen={toggleDrawerCart("right", true)}
       >
-        <div className="md:w-[480px] w-[80vw] py-5 px-8">
+        <div className="md:w-[420px] w-[80vw] py-5 px-8">
           <div className="flex justify-between">
             <h2 className="text-2xl font-medium">Your Cart</h2>
             {cart?.length > 0 && (
@@ -43,7 +45,25 @@ const CartSlide = ({ state, setState, toggleDrawerCart }) => {
           </div>
           <div className="flex flex-col gap-3 mt-6">
             {cart?.length > 0 ? (
-              cart?.map((data, i) => <CartProductCard key={i} data={data} />)
+              <React.Fragment>
+                {cart?.map((data, i) => (
+                  <CartProductCard key={i} data={data} onClose={toggleDrawerCart("right", false)} />
+                ))}
+                <hr className="mt-6 mb-2" />
+                <div className="flex justify-between text-xl mb-4 px-2">
+                  <h2>Subtotal</h2>
+                  <h2 className="font-bold">${subtotal}</h2>
+                </div>
+                <button
+                  onClick={() =>
+                    handleCheckout(token, dispatch, navigate, toggleDrawerCart("right", false))
+                  }
+                  className="group flex items-center gap-3 bg-primaryColor py-2.5 justify-center text-white border border-primaryColor rounded-lg"
+                >
+                  Checkout
+                  <FaArrowRightLong className="mt-0.5 group-hover:translate-x-2 tr" />
+                </button>
+              </React.Fragment>
             ) : (
               <h2 className="text-2xl text-gray-400">No items added to cart</h2>
             )}

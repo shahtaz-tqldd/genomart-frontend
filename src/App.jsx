@@ -6,11 +6,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Loader from "./ui/Loader/Loader";
+import "react-quill/dist/quill.snow.css";
 
 function App() {
   const theme = createTheme({
     typography: {
-      fontFamily: `'Outfit', sans-serif`,
+      fontFamily: `"Figtree", sans-serif`,
     },
   });
 
@@ -22,7 +23,17 @@ function App() {
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <RouterProvider router={routes} />
-        <Toaster />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            className: "",
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#713200",
+            },
+          }}
+        />
       </LocalizationProvider>
     </ThemeProvider>
   );

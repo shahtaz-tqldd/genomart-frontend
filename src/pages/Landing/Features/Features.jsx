@@ -15,7 +15,7 @@ const Features = () => {
           <img src={img} alt="" className="h-28 -mt-24 object-contain" />
           <div className="mt-2">
             <h1 className="text-lg font-bold text-gray-900 mb-2">{title}</h1>
-            <p className="text-sm text-gray-600">{text} products</p>
+            <p className="text-sm text-gray-600">{text}</p>
           </div>
         </div>
       ))}
