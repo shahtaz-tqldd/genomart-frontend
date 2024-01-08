@@ -41,7 +41,7 @@ const DSNav = ({ toggle, setToggle }) => {
       </div>
       <div className="py-4 flex flex-col items-center justify-center gap-2">
         <Link
-          to={"/dashboard"}
+          to={"/"}
           className="text-3xl font-nav hover:text-black transition"
         >
           geno mart

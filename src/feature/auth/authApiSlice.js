@@ -18,12 +18,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          localStorage.setItem(
-            "genomart_auth",
-            JSON.stringify({
-              token: result?.data?.data?.token,
-            })
-          );
           dispatch(
             userLoggedIn({
               token: result?.data?.data?.token,
@@ -39,7 +33,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
 
     userDetails: builder.query({
       query: (token) => {
-        console.log(token);
         return {
           url: `user/profile`,
           method: "GET",

@@ -40,13 +40,11 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     }),
 
     getAllProducts: builder.query({
-      query: (data) => {
-        const { token } = data;
+      query: () => {
         return {
           url: `products`,
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json;charset=UTF-8",
           },
         };
@@ -55,14 +53,11 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     }),
 
     getSingleProduct: builder.query({
-      query: (data) => {
-        const { token, id } = data;
-        console.log(id)
+      query: ({ id }) => {
         return {
           url: `products/${id}`,
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json;charset=UTF-8",
           },
         };

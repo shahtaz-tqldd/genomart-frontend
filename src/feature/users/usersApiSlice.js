@@ -36,12 +36,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     getAllUser: builder.query({
       query: (data) => {
-        const { access_token } = data;
+        const { token } = data;
         return {
-          url: `/user`,
+          url: `user`,
           method: "GET",
           headers: {
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json;charset=UTF-8",
           },
         };

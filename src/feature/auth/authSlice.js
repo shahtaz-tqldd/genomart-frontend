@@ -12,10 +12,17 @@ export const authSlice = createSlice({
     userLoggedIn: (state, action) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
+      localStorage.setItem(
+        "genomart_auth",
+        JSON.stringify({
+          token: action.payload.token,
+        })
+      );
     },
     userLoggedOut: (state) => {
       state.token = undefined;
       state.user = undefined;
+      localStorage.removeItem("genomart_auth");
     },
   },
 });

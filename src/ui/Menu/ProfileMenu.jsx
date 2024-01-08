@@ -1,12 +1,14 @@
 import { Menu, MenuItem } from "@mui/material";
-import { IoLogOut } from "react-icons/io5";
+import { IoLogOut, IoGrid } from "react-icons/io5";
 import { userLoggedOut } from "../../feature/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Profilemenu = ({ openMenu, handleMenuClose, options, onClick }) => {
   const dispatch = useDispatch();
   const handleLogout = () => dispatch(userLoggedOut());
   const { user } = useSelector((state) => state?.auth);
+  const navigate = useNavigate()
 
   return (
     <div className="relative">
@@ -56,6 +58,17 @@ const Profilemenu = ({ openMenu, handleMenuClose, options, onClick }) => {
             </div>
           </MenuItem>
         ))}
+        {user?.email === "admin@genomart.com" && (
+          <MenuItem
+            sx={{ fontSize: "15px", minWidth: "200px" }}
+            onClick={() => navigate('/dashboard')}
+          >
+            <div className="flex items-center gap-1 text-md text-gray-800 ml-[1px]">
+              <IoGrid className="text-sm text-gray-500" />
+              <span className="px-1">Dashboard</span>
+            </div>
+          </MenuItem>
+        )}
         <div className="border-t mt-3 mb-2 border-gray-300 border-dashed">
           <MenuItem
             sx={{ fontSize: "15px", minWidth: "200px" }}

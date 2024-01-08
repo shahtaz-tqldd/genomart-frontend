@@ -5,8 +5,11 @@ import SocialLogin from "./SocialLogin";
 import { useForm } from "react-hook-form";
 import { useCreateUserMutation } from "../../feature/users/usersApiSlice";
 import toast from "react-hot-toast";
+import { userLoggedIn } from "../../feature/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const Register = ({ setRegOpen, handleClose }) => {
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
   const [createUser] = useCreateUserMutation() || {};
@@ -14,6 +17,12 @@ const Register = ({ setRegOpen, handleClose }) => {
     const res = await createUser({ bodyData: data });
     if (res?.data?.success) {
       toast.success(res?.data?.message);
+      dispatch(
+        userLoggedIn({
+          token: res?.data?.data?.token,
+          user: res?.data?.data?.user,
+        })
+      );
       handleClose();
     } else {
       toast.error(res?.error?.data?.message);

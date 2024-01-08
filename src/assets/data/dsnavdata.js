@@ -30,7 +30,7 @@ export const dsnavdata = [
     data: [
       {
         title: "Users",
-        link: "/users",
+        link: "/dashboard/users",
         icon: FiUsers,
       },
       {

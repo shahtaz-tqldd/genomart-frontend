@@ -27,8 +27,8 @@ const Products = () => {
   };
 
   const { data, isLoading, isSuccess, isError } = useGetAllProductsQuery(
-    { token, page },
-    { refetchOnReconnect: true, skip: !token }
+    { page },
+    { refetchOnReconnect: true }
   );
 
   return (

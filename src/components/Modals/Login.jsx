@@ -13,7 +13,6 @@ const Login = ({ setRegOpen, handleClose }) => {
   
   const handleLogin = async (data) => {
     const res = await userLogin({ bodyData: data });
-    console.log(res?.data)
     if (res?.data?.success) {
       toast.success(res?.data?.message);
       handleClose()

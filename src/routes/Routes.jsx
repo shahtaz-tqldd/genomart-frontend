@@ -12,6 +12,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ProductList from "../pages/Dashboard/Products/ProductList";
 import AddProduct from "../pages/Dashboard/Products/AddProduct";
+import UserList from "../pages/Dashboard/Users/UserList";
 
 export const routes = createBrowserRouter([
   {
@@ -50,11 +51,9 @@ export const routes = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      // <PrivateRoute
-      // allowedRoles={["Admin", "User", "HR", "Line Manager", "Super Admin"]}
-      // path={"/login"}>
-      <DashboardLayout />
-      // </PrivateRoute>
+      <PrivateRoute allowedRoles={["Admin", "User", "Super Admin"]} path={"/"}>
+        <DashboardLayout />
+      </PrivateRoute>
     ),
     children: [
       {
@@ -69,7 +68,10 @@ export const routes = createBrowserRouter([
         path: "/dashboard/products/add-product",
         element: <AddProduct />,
       },
-      
+      {
+        path: "/dashboard/users",
+        element: <UserList />,
+      },
     ],
   },
 

@@ -26,8 +26,8 @@ const ProductDetails = () => {
   const { id } = useParams();
 
   const { data, isLoading, isSuccess, isError } = useGetSingleProductQuery(
-    { token, id },
-    { refetchOnReconnect: true, skip: !token }
+    { id },
+    { refetchOnReconnect: true }
   );
 
   const [color, setColor] = useState(null);
@@ -49,7 +49,7 @@ const ProductDetails = () => {
         stock: data?.data?.stock,
         color: color || null,
         size: size || null,
-        quantity
+        quantity,
       })
     );
   };
@@ -190,7 +190,7 @@ const ProductDetails = () => {
             </button>
           </div>
           <button
-            onClick={(e)=>handleCheckout(e)}
+            onClick={(e) => handleCheckout(e)}
             className="group flex items-center gap-3 bg-primaryColor py-2 px-20 text-white border border-primaryColor rounded-lg"
           >
             Checkout
