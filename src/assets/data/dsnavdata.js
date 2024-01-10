@@ -35,7 +35,7 @@ export const dsnavdata = [
       },
       {
         title: "Orders",
-        link: "/order-report",
+        link: "/dashboard/orders",
         icon: IoCartOutline,
       },
 

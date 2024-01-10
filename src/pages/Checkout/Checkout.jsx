@@ -1,26 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CheckoutProductCard from "../../components/ProductCards/CheckoutProductCard";
 import { FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Checkout = () => {
-  const cart = useSelector((state) => state?.cart);
+  const [payment, setPayment] = useState("cash");
+  const { cart, auth } = useSelector((state) => state);
+  const { user } = auth;
   const subtotal = cart.reduce((acc, product) => {
     return acc + product.price * product.quantity;
   }, 0);
 
   const navigate = useNavigate();
-  const handleConfirmOrder = () => {
+  const handleConfirmOrder = (data) => {
     navigate("/orders/confirm", {
       state: {
         products: cart,
-        customer: { name: "rahim", address: "hem" },
-        payment: { method: "Cash On Deliver", total:subtotal },
+        customer: {...data, id:user?._id},
+        payment: { method: payment, total: subtotal },
       },
     });
   };
+
+  const initialValues = {
+    fullname: user?.fullname,
+    email: user?.email,
+    phone: user?.phone,
+    house: user?.house,
+    street: user?.street,
+    address: user?.address,
+  };
+  const { register, handleSubmit } = useForm({ defaultValues: initialValues });
   return (
     <div className="container mt-12 grid grid-cols-2 gap-10">
       <div>
@@ -38,71 +51,73 @@ const Checkout = () => {
           <h2 className="font-bold">${subtotal}</h2>
         </div>
       </div>
-      <div className="bg-gray-100 rounded-xl py-5 px-10 h-fit">
+      <form
+        onSubmit={handleSubmit(handleConfirmOrder)}
+        className="bg-gray-100 rounded-xl py-5 px-10 h-fit"
+      >
         <h2 className="text-2xl font-medium text-slate-800 mb-6">
           Billing Information
         </h2>
         <div className="flex flex-col gap-5">
           <TextField
-            id=""
-            size="sm"
             label="Full Name"
             type="text"
             variant="standard"
+            {...register("fullname", { required: true })}
           />
           <div className="grid grid-cols-2 gap-5">
             <TextField
-              id=""
-              size="small"
               label="Email"
               type="text"
+              value={user?.email}
               variant="standard"
+              // {...register("email", { required: true })}
             />
             <TextField
-              id=""
-              size="small"
               label="Phone Number"
               type="text"
               variant="standard"
+              {...register("phone", { required: true })}
             />
           </div>
           <h2 className="text-lg font-medium mt-5 -mb-2">Address</h2>
           <div className="grid grid-cols-2 gap-5">
             <TextField
-              id=""
-              size="small"
               label="House Number"
               type="text"
               variant="standard"
+              {...register("house", { required: true })}
             />
             <TextField
-              id=""
-              size="small"
               label="Road Name"
               type="text"
               variant="standard"
+              {...register("street", { required: true })}
             />
           </div>
           <TextField
-            id=""
-            size="small"
             label="Full Address"
             type="text"
             variant="standard"
+            {...register("address", { required: true })}
           />
           <h2 className="text-lg font-medium mt-5 -mb-2">Payment</h2>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="cashOnDelivery"
+            defaultValue="cash"
             name="radio-buttons-group"
+            onChange={(e, val) => {
+              e.preventDefault();
+              setPayment(val);
+            }}
           >
             <FormControlLabel
-              value="cashOnDelivery"
+              value="cash"
               control={<Radio />}
               label="Cash on delivery"
             />
             <FormControlLabel
-              value="paymentMethod"
+              value="online"
               control={<Radio />}
               label="Online Payment"
             />
@@ -110,14 +125,14 @@ const Checkout = () => {
         </div>
         <div className="mt-10 flex justify-end">
           <button
-            onClick={handleConfirmOrder}
+            type="submit"
             className="py-2.5 bg-primaryColor pl-8 pr-10 rounded-lg text-white flex items-center gap-2"
           >
             <FaRegCheckCircle />
             Confirm Order
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

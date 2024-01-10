@@ -89,7 +89,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
           },
         };
       },
-      providesTags: ["user"],
+      providesTags: ["myProfile"],
     }),
   }),
 });

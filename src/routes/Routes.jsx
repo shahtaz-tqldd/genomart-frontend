@@ -13,6 +13,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import ProductList from "../pages/Dashboard/Products/ProductList";
 import AddProduct from "../pages/Dashboard/Products/AddProduct";
 import UserList from "../pages/Dashboard/Users/UserList";
+import OrderList from "../pages/Dashboard/Orders/OrderList";
 
 export const routes = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const routes = createBrowserRouter([
       {
         path: "/dashboard/users",
         element: <UserList />,
+      },
+      {
+        path: "/dashboard/orders",
+        element: <OrderList />,
       },
     ],
   },
