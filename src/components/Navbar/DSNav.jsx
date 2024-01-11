@@ -130,7 +130,7 @@ const DSNav = ({ toggle, setToggle }) => {
           </div>
         ))}
 
-        <div className="group pb-8">
+        <div className="group pb-8 absolute bottom-0 left-5 right-5">
           <button
             onClick={handleLogout}
             className={`py-2 w-full bg-red-500 hover:bg-red-600 text-white rounded-md flex justify-center transition duration-300`}

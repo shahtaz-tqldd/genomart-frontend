@@ -5,15 +5,18 @@ import ReactQuill from "react-quill";
 import { quillModules } from "../../../utiles/constants/quill-modules";
 import Dropdown from "../../../ui/Dropdown/Dropdown";
 import { dropdownbtnMd } from "../../../ui/tailwind/tailwind-classes";
-import { categories } from "../../../assets/data/mock/categories";
 import UploadImages from "../../../utiles/UploadImages";
-import { HiXMark } from "react-icons/hi2";
+import { HiOutlinePencil, HiXMark } from "react-icons/hi2";
 import { useForm } from "react-hook-form";
 import SubmitButton from "../../../ui/Buttons/SubmitButton";
-import { useCreateProductMutation } from "../../../feature/products/productsApiSlice";
+import {
+  useCreateProductMutation,
+  useGetAllCategoriesQuery,
+} from "../../../feature/products/productsApiSlice";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ColorPickerComponent from "../../../utiles/ColorPicker";
 
 const AddProduct = () => {
   const { token } = useSelector((state) => state?.auth);
@@ -24,6 +27,29 @@ const AddProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [addCat, setAddCat] = useState(false);
 
+  // Sizes add
+  const [sizes, setSizes] = useState([]);
+  const [currentSize, setCurrentSize] = useState("");
+
+  const handleSizeChange = (e) => {
+    setCurrentSize(e.target.value);
+  };
+
+  const handleAddSize = (e) => {
+    e.preventDefault();
+    if (currentSize.trim() !== "") {
+      setSizes([...sizes, currentSize]);
+      setCurrentSize("");
+    }
+  };
+
+  const handleSizeUpdate = (index, updatedSize) => {
+    const updatedSizes = [...sizes];
+    updatedSizes[index] = updatedSize;
+    setSizes(updatedSizes);
+  };
+
+  // Images add
   const handleRemoveImage = (index) => {
     setSelectedImages((prevImages) => {
       const newImages = [...prevImages];
@@ -38,10 +64,23 @@ const AddProduct = () => {
     });
   };
 
+  // colors add
+  const [colors, setColors] = useState([]);
+  const [colorPickerOpen, setColorPickerOpen] = useState(false);
+
+  const handleAddColors = (color) => {
+    if (color) setColors([...colors, color]);
+  };
+
   const { register, handleSubmit } = useForm();
 
-  const [createProduct, { isLoading }] = useCreateProductMutation() || {};
+  // existing category
+  const { data: category } = useGetAllCategoriesQuery({
+    refetchOnReconnect: true,
+  });
 
+  // Add product through rtk api
+  const [createProduct, { isLoading }] = useCreateProductMutation() || {};
   const handleProductSubmit = async (data) => {
     const formData = new FormData();
 
@@ -50,6 +89,15 @@ const AddProduct = () => {
     }
 
     formData.append("specs", quillContent);
+    formData.append("colors", colors);
+
+    const nonEmptySizes = sizes.filter((size) => size.trim() !== "");
+
+    if (nonEmptySizes.length > 0) {
+      nonEmptySizes.forEach((size, index) => {
+        formData.append(`sizes[${index}]`, size);
+      });
+    }
 
     selectedFiles.forEach((photo) => {
       formData.append(`images`, photo);
@@ -130,11 +178,18 @@ const AddProduct = () => {
                 variant="standard"
                 {...register("stock", { required: true })}
               />
+              <TextField
+                label="Brand"
+                type="text"
+                variant="standard"
+                {...register("brand", { required: true })}
+              />
+              <div></div>
               <Dropdown
                 btnstyle={dropdownbtnMd}
                 selectedOption={selectedCategory}
                 setSelectedOption={setSelectedCategory}
-                options={categories?.map((c) => c?.name)}
+                options={category?.data?.map((c) => c?.category)}
                 dropdownNull="Select Category"
               />
               <div></div>
@@ -162,6 +217,79 @@ const AddProduct = () => {
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* sizes */}
+            <div>
+              <h2 className="font-bold text-gray-800 mb-2">Sizes</h2>
+              <div className="flex flex-wrap items-end gap-5">
+                {sizes.map((size, i) => (
+                  <TextField
+                    key={i}
+                    label={`Size ${i + 1}`}
+                    type="text"
+                    variant="standard"
+                    className="w-[120px]"
+                    defaultValue={size}
+                    onChange={(e) => handleSizeUpdate(i, e.target.value)}
+                  />
+                ))}
+                <TextField
+                  label={`Size ${sizes.length > 0 ? sizes?.length + 1 : ""}`}
+                  type="text"
+                  variant="standard"
+                  className="w-[120px]"
+                  value={currentSize}
+                  onChange={handleSizeChange}
+                />
+                <button
+                  onClick={handleAddSize}
+                  className="bg-gray-200 hover:bg-gray-300 tr py-2 text-sm px-3 rounded"
+                >
+                  + Add another
+                </button>
+              </div>
+            </div>
+
+            {/* colors */}
+            <div>
+              <h2 className="font-bold text-gray-800 mb-5">Colors</h2>
+              <div className="flex items-center gap-10">
+                <button
+                  className="flex items-center gap-2 py-2 pl-2 pr-3 bg-gray-200 hover:bg-gray-300 tr rounded"
+                  onClick={(event) => setColorPickerOpen(event.currentTarget)}
+                >
+                  <HiOutlinePencil className="text-xs" />
+                  <span className="text-sm">
+                    {colors.length === 0
+                      ? "pick a color"
+                      : "pick another color"}
+                  </span>
+                </button>
+                <div className="flex items-center gap-4 ">
+                  {colors?.map((color, i) => (
+                    <div
+                      key={i}
+                      style={{ backgroundColor: color }}
+                      className="h-6 w-6 rounded-full relative group"
+                    >
+                      <HiXMark
+                        onClick={() =>
+                          setColors(colors?.filter((c) => c !== color))
+                        }
+                        className="cursor-pointer group-hover:block hidden absolute -top-2 font-bold -right-2 bg-red-500 text-white p-0.5 rounded-full"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {colorPickerOpen && (
+                <ColorPickerComponent
+                  openMenu={colorPickerOpen}
+                  setOpenMenu={setColorPickerOpen}
+                  onClick={handleAddColors}
+                />
+              )}
             </div>
 
             <TextField

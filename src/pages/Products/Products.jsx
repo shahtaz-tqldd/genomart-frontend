@@ -8,7 +8,10 @@ import ProductCardList from "../../components/ProductCards/ProductCardList";
 import { Box, Slider } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useGetAllProductsQuery } from "../../feature/products/productsApiSlice";
+import {
+  useGetAllCategoriesQuery,
+  useGetAllProductsQuery,
+} from "../../feature/products/productsApiSlice";
 
 const Products = () => {
   const { state } = useLocation();
@@ -30,6 +33,10 @@ const Products = () => {
     { page },
     { refetchOnReconnect: true }
   );
+
+  const { data: category } = useGetAllCategoriesQuery({
+    refetchOnReconnect: true,
+  });
 
   return (
     <div className="container mt-12 flex gap-12">
@@ -55,25 +62,27 @@ const Products = () => {
           Range : BDT {value[0] * 1000} - {value[1] * 1000}
         </h2>
         <h2 className="text-xl font-medium mb-3 mt-8">Product Categories</h2>
-        {categories?.map((c, i) => (
+        {category?.data?.map((c, i) => (
           <div
             onClick={() => {
-              selectedCategory.includes(c?.name)
+              selectedCategory.includes(c?.category)
                 ? setSelectedCategory(
-                    selectedCategory?.filter((s) => s !== c?.name)
+                    selectedCategory?.filter((s) => s !== c?.category)
                   )
-                : setSelectedCategory([...selectedCategory, c?.name]);
+                : setSelectedCategory([...selectedCategory, c?.category]);
             }}
             key={i}
-            className="flex items-center gap-2 text-sm cursor-pointer"
+            className="flex items-center justify-between gap-2 cursor-pointer mb-1"
           >
-            <input
-              type="checkbox"
-              checked={selectedCategory.includes(c?.name)}
-            />
-            {c?.name}
+            <div className="flex gap-2 items-center">
+              <input
+                type="checkbox"
+                checked={selectedCategory.includes(c?.category)}
+              />
+              {c?.category}
+            </div>
             <span className="text-gray-400 ml-2 text-sm mt-0.5">
-              ({c?.totalProducts})
+              {c?.totalProducts}
             </span>
           </div>
         ))}

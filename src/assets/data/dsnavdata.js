@@ -61,15 +61,11 @@ export const dsnavdata = [
             icon: FiEdit,
           },
           {
-            title: "Top Sold",
+            title: "Trending Products",
             link: "/banners/create-banner",
             icon: FiEdit,
           },
-          {
-            title: "Pick Of the day",
-            link: "/banners/create-banner",
-            icon: FiEdit,
-          },
+         ,
         ],
       },
     ],
@@ -82,11 +78,6 @@ export const dsnavdata = [
         title: "Customer Support",
         link: "/customer-support",
         icon: RiCustomerServiceLine,
-      },
-      {
-        title: "FAQ",
-        link: "/faq",
-        icon: GoQuestion,
       },
       {
         title: "Settings",

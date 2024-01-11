@@ -30,6 +30,8 @@ const ProductDetails = () => {
     { refetchOnReconnect: true }
   );
 
+  console.log(data?.data)
+
   const [color, setColor] = useState(null);
   const [size, setSize] = useState(null);
   const [quantity, setQuantity] = useState(1);

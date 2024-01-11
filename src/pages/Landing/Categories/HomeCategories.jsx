@@ -4,6 +4,7 @@ import { categories } from "../../../assets/data/mock/categories";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
+import { useGetAllCategoriesQuery } from "../../../feature/products/productsApiSlice";
 
 const HomeCategories = () => {
   const [swiperRef, setSwiperRef] = useState();
@@ -16,10 +17,17 @@ const HomeCategories = () => {
     swiperRef?.slideNext();
   }, [swiperRef]);
 
+  const { data: category } = useGetAllCategoriesQuery({
+    refetchOnReconnect: true,
+  });
+
   const navigate = useNavigate();
+
   const handleNavigateProduct = (name) => {
     navigate("/products", { state: { category: name } });
   };
+
+
   return (
     <div className="w-full my-20 relative container">
       <div className="flex justify-between absolute container top-1/2 -translate-y-1/2 z-10">
@@ -49,20 +57,20 @@ const HomeCategories = () => {
             disableOnInteraction: false,
           }}
         >
-          {categories?.map(({ img, name, totalProducts }, i) => (
+          {category?.data?.map(({ image, category, totalProducts }, i) => (
             <SwiperSlide key={i}>
               <div
-                onClick={() => handleNavigateProduct(name)}
+                onClick={() => handleNavigateProduct(category)}
                 // data-aos="fade-up"
                 // data-aos-duration="1000"
                 // data-aos-delay={`${150 * (i + 1)}`}
                 className="flex flex-col items-center group cursor-pointer"
               >
                 <div className="bg-[#EEF5FF]  group-hover:bg-blue-200 tr h-32 w-32 rounded-full grid place-items-center">
-                  <img src={img} alt="" className="h-16  object-contain" />
+                  <img src={image} alt="" className="h-16  object-contain" />
                 </div>
-                <h1 className="text-lg font-bold text-slate-600 group-hover:text-slate-900 tr mt-4">
-                  {name}
+                <h1 className="text-md text-center font-bold text-slate-700 group-hover:text-slate-900 tr mt-4">
+                  {category}
                 </h1>
                 <p className="text-md text-gray-400">
                   {totalProducts} products
