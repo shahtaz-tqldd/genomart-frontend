@@ -19,7 +19,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           formData: true,
         };
       },
-      invalidatesTags: ["product"],
+      invalidatesTags: ["product", "category"],
     }),
 
     updateProduct: builder.mutation({
@@ -36,7 +36,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           formData: true,
         };
       },
-      invalidatesTags: ["product"],
+      invalidatesTags: ["product", "category"],
     }),
 
     getAllProducts: builder.query({
@@ -77,7 +77,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           },
         };
       },
-      invalidatesTags: ["product"],
+      invalidatesTags: ["product", "category"],
     }),
 
     getAllCategories: builder.query({

@@ -89,8 +89,14 @@ const AddProduct = () => {
     }
 
     formData.append("specs", quillContent);
-    formData.append("colors", colors);
 
+    const nonEmptyColors = colors.filter((color) => color.trim() !== "");
+
+    if (nonEmptyColors.length > 0) {
+      nonEmptyColors.forEach((color, index) => {
+        formData.append(`colors[${index}]`, color);
+      });
+    }
     const nonEmptySizes = sizes.filter((size) => size.trim() !== "");
 
     if (nonEmptySizes.length > 0) {

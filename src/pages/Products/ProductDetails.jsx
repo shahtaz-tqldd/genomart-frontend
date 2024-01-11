@@ -12,10 +12,7 @@ import { HiXMark } from "react-icons/hi2";
 import { addToCart } from "../../feature/cart/cartSlice";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  handleAddToFavourite,
-  handleCheckout,
-} from "../../utiles/functions/handleAuthCheck";
+import { handleAddToFavourite } from "../../utiles/functions/handleAuthCheck";
 import ParsedText from "../../utiles/ParsedText";
 import { useGetSingleProductQuery } from "../../feature/products/productsApiSlice";
 import Ratings from "../../utiles/Ratings";
@@ -30,10 +27,18 @@ const ProductDetails = () => {
     { refetchOnReconnect: true }
   );
 
-  console.log(data?.data)
-
   const [color, setColor] = useState(null);
   const [size, setSize] = useState(null);
+
+  useEffect(() => {
+    if (data?.data?.sizes) {
+      setSize(data?.data?.sizes[0]);
+    }
+    if (data?.data?.colors) {
+      setColor(data?.data?.colors[0]);
+    }
+  }, [data]);
+
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();

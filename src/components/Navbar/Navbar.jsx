@@ -208,7 +208,7 @@ const Navbar = () => {
           toggleDrawer={toggleDrawer}
           data={navdata}
         />
-        <CartSlide state={drawerState} toggleDrawerCart={toggleDrawer} />
+        <CartSlide state={drawerState} toggleDrawerCart={toggleDrawer} setState={setDrawerState} />
       </div>
       <div ref={dropdownRef} onMouseLeave={() => setIsDropdownOpen(false)}>
         {isDropdownOpen && (

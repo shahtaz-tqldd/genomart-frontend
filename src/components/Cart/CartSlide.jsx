@@ -6,9 +6,8 @@ import CartProductCard from "../ProductCards/CartProductCard";
 import { clearCart } from "../../feature/cart/cartSlice";
 import { BiSolidTrash } from "react-icons/bi";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { handleCheckout } from "../../utiles/functions/handleAuthCheck";
 
-const CartSlide = ({ state, toggleDrawerCart }) => {
+const CartSlide = ({ state, setState, toggleDrawerCart }) => {
   const { token } = useSelector((state) => state?.auth);
   const cart = useSelector((state) => state?.cart);
   const dispatch = useDispatch();
@@ -22,6 +21,14 @@ const CartSlide = ({ state, toggleDrawerCart }) => {
     return acc + product.price * product.quantity;
   }, 0);
 
+  const handleCheckout = () => {
+    if (token) {
+      setState({ right: false });
+      navigate("/checkout");
+    } else {
+      dispatch(authModalOpen());
+    }
+  };
   return (
     <div className="w-full absolute">
       <SwipeableDrawer
@@ -47,7 +54,11 @@ const CartSlide = ({ state, toggleDrawerCart }) => {
             {cart?.length > 0 ? (
               <React.Fragment>
                 {cart?.map((data, i) => (
-                  <CartProductCard key={i} data={data} onClose={toggleDrawerCart("right", false)} />
+                  <CartProductCard
+                    key={i}
+                    data={data}
+                    onClose={toggleDrawerCart("right", false)}
+                  />
                 ))}
                 <hr className="mt-6 mb-2" />
                 <div className="flex justify-between text-xl mb-4 px-2">
@@ -55,9 +66,7 @@ const CartSlide = ({ state, toggleDrawerCart }) => {
                   <h2 className="font-bold">${subtotal}</h2>
                 </div>
                 <button
-                  onClick={() =>
-                    handleCheckout(token, dispatch, navigate, toggleDrawerCart("right", false))
-                  }
+                  onClick={handleCheckout}
                   className="group flex items-center gap-3 bg-primaryColor py-2.5 justify-center text-white border border-primaryColor rounded-lg"
                 >
                   Checkout
