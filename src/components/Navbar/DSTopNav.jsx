@@ -2,10 +2,11 @@ import { useState } from "react";
 import { HiMenuAlt1, HiUser } from "react-icons/hi";
 import { FiSearch } from "react-icons/fi";
 import { useSelector } from "react-redux";
-import { IoMdNotifications, IoMdSettings } from "react-icons/io";
-import { RiMessage3Fill } from "react-icons/ri";
+import { IoMdSettings } from "react-icons/io";
 import { HiHome } from "react-icons/hi";
 import Profilemenu from "../../ui/Menu/ProfileMenu";
+import { FaCartShopping } from "react-icons/fa6";
+import { MdContactSupport } from "react-icons/md";
 
 const DSTopNav = ({ toggle, setToggle }) => {
   const [openMenu, setOpenMenu] = useState(null);
@@ -41,15 +42,24 @@ const DSTopNav = ({ toggle, setToggle }) => {
             <FiSearch className="text-gray-500 absolute top-1/2 -translate-y-1/2 left-3" />
           </div>
         </div>
-        <div className="flex gap-3 items-center">
-          <div className="h-10 w-10 hover:bg-slate-100 grid place-items-center rounded-full cursor-pointer">
-            <RiMessage3Fill className="text-gray-500 h-6 w-6" />
+        <div className="flex gap-5 items-center">
+          <div className="flex items-center gap-1">
+            <div className="relative h-10 w-10 hover:bg-slate-100 grid place-items-center rounded-full cursor-pointer">
+              <MdContactSupport className="text-gray-500 h-[26px] w-[26px]" />
+              <span className="w-5 h-5 flex justify-center items-center text-white absolute bottom-[60%] left-[55%] text-[9px] rounded-full bg-red-500 border border-white">
+                2
+              </span>
+            </div>
+            <span className="text-sm text-gray-500">Support</span>
           </div>
-          <div className="relative h-10 w-10 hover:bg-slate-100 grid place-items-center rounded-full cursor-pointer">
-            <IoMdNotifications className="text-gray-500 h-6 w-6" />
-            <span className="w-5 h-5 flex justify-center items-center text-white absolute bottom-[50%] left-[50%] text-[9px] rounded-full bg-red-500 border border-white">
-              6
-            </span>
+          <div className="flex items-center gap-1">
+            <div className="relative h-10 w-10 hover:bg-slate-100 grid place-items-center rounded-full cursor-pointer">
+              <FaCartShopping className="text-gray-500 h-6 w-6" />
+              <span className="w-5 h-5 flex justify-center items-center text-white absolute bottom-[60%] left-[55%] text-[9px] rounded-full bg-red-500 border border-white">
+                6
+              </span>
+            </div>
+            <span className="text-sm text-gray-500">New Orders</span>
           </div>
           <div
             onClick={handleMenuOpne}

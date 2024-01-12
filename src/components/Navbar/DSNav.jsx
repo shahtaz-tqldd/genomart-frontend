@@ -35,7 +35,7 @@ const DSNav = ({ toggle, setToggle }) => {
     <div className="min-h-screen relative bg-white border-r border-gray-300">
       <div
         onClick={() => setToggle(!toggle)}
-        className="h-7 w-7 bg-slate-200 hover:bg-slate-300 text-slate-700 hover:slate-800 rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
+        className="h-7 w-7 bg-primaryColor hover:bg-primaryColorh text-white rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
       >
         <BiChevronLeft className="text-2xl" />
       </div>
@@ -52,7 +52,7 @@ const DSNav = ({ toggle, setToggle }) => {
       <div className="mt-2 mx-4">
         {dsnavdata?.map(({ stackName, data }, index) => (
           <div className="my-5" key={index}>
-            <h2 className="text-gray-400 mb-2 uppercase font-bold text-xs ml-2">
+            <h2 className="text-primaryColor mb-2 uppercase font-semibold text-xs ml-2">
               {stackName}
             </h2>
             {data?.map((item, index) => (
@@ -93,8 +93,8 @@ const DSNav = ({ toggle, setToggle }) => {
                           className={`${
                             isActiveNavLink(childItem.link)
                               ? "text-primaryColor"
-                              : "text-gray-500"
-                          } hover:bg-emerald-50 items-center gap-2 py-1.5 text-sm pl-7 rounded-md ${
+                              : "text-gray-600"
+                          } hover:bg-primaryColorh hover:text-white tr items-center gap-2 py-1.5 text-sm pl-7 rounded-md ${
                             childItem?.roles
                               ? childItem?.roles?.includes(role)
                                 ? "flex"
@@ -114,12 +114,12 @@ const DSNav = ({ toggle, setToggle }) => {
                     to={item.link}
                     onClick={() => setToggle(false)}
                     className={`${
-                      isActiveNavLink(item.link) ? "bg-emerald-100" : ""
+                      isActiveNavLink(item.link) ? "bg-primaryColor text-white" : ""
                     } ${dashboardMenu} ${
                       isActiveNavLink(item.link)
                         ? "text-primaryColor"
                         : "text-gray-500"
-                    }  group-hover:bg-slate-100 rounded-md`}
+                    }  group-hover:bg-primaryColorh group-hover:text-white rounded-md tr`}
                   >
                     <item.icon className="text-base" />
                     {item.title}

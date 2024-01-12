@@ -26,6 +26,7 @@ const AddProduct = () => {
   const [quillContent, setQuillContent] = useState("");
   const [selectedCategory, setSelectedCategory] = useState();
   const [addCat, setAddCat] = useState(false);
+  const [wordLength, setWordLength] = useState(300);
 
   // Sizes add
   const [sizes, setSizes] = useState([]);
@@ -309,9 +310,12 @@ const AddProduct = () => {
               type="text"
               multiline
               maxRows={4}
+              inputProps={{ maxLength: 300 }}
               variant="standard"
+              onChange={(e) => setWordLength(e.target.value)}
               {...register("description", { required: true })}
             />
+            <div className="text-sm -mt-2 flex justify-end">{wordLength}</div>
             <h2 className="text-lg font-medium mt-5 -mb-2">Product Details</h2>
             <ReactQuill
               modules={quillModules}

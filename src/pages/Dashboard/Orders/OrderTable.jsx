@@ -8,6 +8,7 @@ import ModernTable from "../../../components/Table/ModernTable";
 import { useDeleteProductMutation } from "../../../feature/products/productsApiSlice";
 import DeleteModal from "../../../ui/Modals/DeleteModal";
 import { useGetAllOrdersQuery } from "../../../feature/orders/ordersApiSlice";
+import Status from "../../../utiles/Status";
 
 const OrderTable = () => {
   const { token } = useSelector((state) => state?.auth);
@@ -57,7 +58,7 @@ const OrderTable = () => {
     createdAt: moment(data?.createdAt).format("DD MMM YYYY"),
     totalProducts: data?.products?.length || 0,
     amount: "$" + data?.cost,
-    status: data?.status || "pending",
+    status: <Status status={data?.status || "pending"} />,
     collasped: (
       <div className="bg-white p-4 rounded-lg ">
         <h2 className="text-xl font-bold">Products</h2>

@@ -1,13 +1,13 @@
-import { AiOutlineBarChart, AiOutlineProfile } from "react-icons/ai";
-import { FiEdit, FiSettings, FiUsers } from "react-icons/fi";
+import { MdAutoGraph } from "react-icons/md";
+import { FiSettings, FiUsers } from "react-icons/fi";
 
-import { BsViewList } from "react-icons/bs";
+import { TbBrandBackbone, TbBrandFirebase, TbBrandAppgallery } from "react-icons/tb";
 
 import { IoCartOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
-import { GoQuestion } from "react-icons/go";
+import { LuBox } from "react-icons/lu";
 import { RiCustomerServiceLine } from "react-icons/ri";
-import { TbBrandJuejin } from "react-icons/tb";
+import { GrCodeSandbox } from "react-icons/gr";
 
 export const dsnavdata = [
   {
@@ -20,8 +20,8 @@ export const dsnavdata = [
       },
       {
         title: "Analytics",
-        link: "/analytics",
-        icon: AiOutlineBarChart,
+        link: "/dashboard/analytics",
+        icon: MdAutoGraph,
       },
     ],
   },
@@ -42,30 +42,30 @@ export const dsnavdata = [
       {
         title: "Products",
         link: "/dashboard/products",
-        icon: AiOutlineProfile,
+        icon: LuBox,
       },
 
       {
         title: "Featured Products",
         link: "/banners",
-        icon: TbBrandJuejin,
+        icon: GrCodeSandbox,
         children: [
           {
             title: "Banner Products",
-            link: "/banner",
-            icon: BsViewList,
+            link: "/dashboard/banner",
+            icon: TbBrandBackbone,
           },
           {
             title: "Special Offer",
-            link: "/banners/create-banner",
-            icon: FiEdit,
+            link: "/dashboard/special-offer",
+            icon: TbBrandFirebase,
           },
           {
             title: "Trending Products",
-            link: "/banners/create-banner",
-            icon: FiEdit,
+            link: "/dashboard/trending-products",
+            icon: TbBrandAppgallery,
           },
-         ,
+          ,
         ],
       },
     ],
@@ -76,12 +76,12 @@ export const dsnavdata = [
     data: [
       {
         title: "Customer Support",
-        link: "/customer-support",
+        link: "/dashboard/customer-support",
         icon: RiCustomerServiceLine,
       },
       {
         title: "Settings",
-        link: "/settings",
+        link: "/dashboard/settings",
         icon: FiSettings,
       },
     ],

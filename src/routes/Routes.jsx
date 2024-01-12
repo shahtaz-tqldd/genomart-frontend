@@ -14,6 +14,14 @@ import ProductList from "../pages/Dashboard/Products/ProductList";
 import AddProduct from "../pages/Dashboard/Products/AddProduct";
 import UserList from "../pages/Dashboard/Users/UserList";
 import OrderList from "../pages/Dashboard/Orders/OrderList";
+import Analytics from "../pages/Dashboard/Analytics/Analytics";
+import SpecialOffer from "../pages/Dashboard/Banner/SpecialOffer";
+import TrendingProducts from "../pages/Dashboard/Banner/TrendingProducts";
+
+import CustomerSupport from "../pages/Dashboard/CustomerSupport/CustomerSupport";
+import Settings from "../pages/Dashboard/Settings/Settings";
+import BannerList from "../pages/Dashboard/Banner/BannerList";
+import CreateBanner from "../pages/Dashboard/Banner/CreateBanner";
 
 export const routes = createBrowserRouter([
   {
@@ -62,6 +70,10 @@ export const routes = createBrowserRouter([
         element: <Dashboard />,
       },
       {
+        path: "/dashboard/analytics",
+        element: <Analytics />,
+      },
+      {
         path: "/dashboard/products",
         element: <ProductList />,
       },
@@ -76,6 +88,34 @@ export const routes = createBrowserRouter([
       {
         path: "/dashboard/orders",
         element: <OrderList />,
+      },
+      {
+        path: "/dashboard/banner",
+        element: <BannerList />,
+      },
+      {
+        path: "/dashboard/banner/create-banner",
+        element: <CreateBanner />,
+      },
+      {
+        path: "/dashboard/banner/update-banner",
+        element: <CreateBanner />,
+      },
+      {
+        path: "/dashboard/special-offer",
+        element: <SpecialOffer />,
+      },
+      {
+        path: "/dashboard/trending-products",
+        element: <TrendingProducts />,
+      },
+      {
+        path: "/dashboard/settings",
+        element: <Settings />,
+      },
+      {
+        path: "/dashboard/customer-support",
+        element: <CustomerSupport />,
       },
     ],
   },
