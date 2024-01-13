@@ -7,20 +7,31 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
+import { BsFillCartDashFill, BsCartPlusFill } from "react-icons/bs";
 import { HiXMark } from "react-icons/hi2";
-import { addToCart } from "../../feature/cart/cartSlice";
+import {
+  addToCart,
+  removeFromCart,
+  updateColor,
+  updateSize,
+} from "../../feature/cart/cartSlice";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { handleAddToFavourite } from "../../utiles/functions/handleAuthCheck";
 import ParsedText from "../../utiles/ParsedText";
-import { useGetSingleProductQuery } from "../../feature/products/productsApiSlice";
+import {
+  useAddToWishlistMutation,
+  useGetSingleProductQuery,
+} from "../../feature/products/productsApiSlice";
 import Ratings from "../../utiles/Ratings";
 import { authModalOpen } from "../../feature/auth/authModalSlice";
+import useTitle from "../../hooks/useTitle";
 
 const ProductDetails = () => {
-  const { token } = useSelector((state) => state?.auth);
+  const { token, user } = useSelector((state) => state?.auth);
   const { id } = useParams();
+  const cart = useSelector((state) => state?.cart);
+  const isAddedToCart = cart?.find((p) => p?._id === id);
 
   const { data, isLoading, isSuccess, isError } = useGetSingleProductQuery(
     { id },
@@ -32,21 +43,18 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (data?.data?.sizes) {
-      setSize(data?.data?.sizes[0]);
+      setSize(isAddedToCart?.selectedSize || data?.data?.sizes[0]);
     }
     if (data?.data?.colors) {
-      setColor(data?.data?.colors[0]);
+      setColor(isAddedToCart?.selectedColor || data?.data?.colors[0]);
     }
   }, [data]);
 
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state?.cart);
-  const isAddedToCart = cart?.find((p) => p?._id === data?.data?._id);
 
-  const handleAddToCart = (e) => {
-    e.stopPropagation();
+  const handleAddToCart = () => {
     dispatch(
       addToCart({
         _id: data?.data?._id,
@@ -54,25 +62,73 @@ const ProductDetails = () => {
         price: data?.data?.price,
         image: data?.data?.images[0]?.url,
         stock: data?.data?.stock,
-        color: color || null,
-        size: size || null,
+        selectedColor: color || null,
+        colors: data?.data?.colors || [],
+        selectedSize: size || null,
+        sizes: data?.data?.sizes || [],
         quantity,
       })
     );
   };
-  const navigate = useNavigate();
+
+  const handleRemoveFromCart = () => {
+    dispatch(
+      removeFromCart({
+        _id: id,
+      })
+    );
+  };
 
   const [imgSelect, setImgSelect] = useState();
   useEffect(() => {
     setImgSelect(data?.data?.images[0]?.url);
   }, [data]);
+  useTitle(data?.data?.name);
 
-  const handleCheckout = (e) => {
+  useEffect(() => {
+    if (color) {
+      dispatch(updateColor({ _id: id, color }));
+    }
+    if (size) {
+      dispatch(updateSize({ _id: id, size }));
+    }
+  }, [color, size]);
+
+  // CHECKOUT
+  const navigate = useNavigate();
+  const handleCheckout = () => {
     if (token) {
-      handleAddToCart(e);
+      handleAddToCart();
       navigate("/checkout");
     } else {
       dispatch(authModalOpen());
+    }
+  };
+
+  // ADD TO WISHLIST FUNCTIONALITIS
+  const [isAddedToWishList, setIsAddedToWishList] = useState(
+    user?.wishList?.find((pid) => pid === id) ? true : false
+  );
+
+  const [addToWishList] = useAddToWishlistMutation() || {};
+  const handleAddToWishList = async (e) => {
+    e.stopPropagation();
+    setIsAddedToWishList(!isAddedToWishList);
+    try {
+      const res = await addToWishList({
+        token,
+        id: _id,
+        bodyData: { action: isAddedToWishList ? "remove" : "add" },
+      });
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+        dispatch(updateUser(res?.data?.data));
+      } else {
+        toast.error(res?.error?.data?.message);
+        setIsAddedToWishList(!isAddedToWishList);
+      }
+    } catch (error) {
+      setIsAddedToWishList(!isAddedToWishList);
     }
   };
 
@@ -91,7 +147,7 @@ const ProductDetails = () => {
               onClick={() => setImgSelect(data?.data?.images[i]?.url)}
               key={i}
               src={img?.url}
-              className="bg-blue-100 object-contain h-full rounded-xl p-5 cursor-pointer"
+              className="bg-blue-50 hover:bg-blue-100 tr object-contain h-full rounded-xl p-5 cursor-pointer"
             />
           ))}
         </div>
@@ -197,7 +253,7 @@ const ProductDetails = () => {
             </button>
           </div>
           <button
-            onClick={(e) => handleCheckout(e)}
+            onClick={handleCheckout}
             className="group flex items-center gap-3 bg-primaryColor py-2 px-20 text-white border border-primaryColor rounded-lg"
           >
             Checkout
@@ -208,39 +264,34 @@ const ProductDetails = () => {
         <hr className="mt-6" />
         <div className="mt-3 flex items-center gap-10">
           <button
-            onClick={(e) => {
-              !isAddedToCart && handleAddToCart(e);
+            onClick={() => {
+              !isAddedToCart ? handleAddToCart() : handleRemoveFromCart();
             }}
             className="text-gray-600"
           >
             {isAddedToCart ? (
-              <div className="flex items-center gap-2 text-gray-400">
-                <BsCartCheckFill className="text-lg mb-0.5" />{" "}
-                <h2>Added to Cart</h2>
+              <div className="flex items-center gap-2 text-red-500">
+                <BsFillCartDashFill className="text-lg mb-0.5" />{" "}
+                <h2>Remove From Cart</h2>
               </div>
             ) : (
-              <div className=" flex items-center gap-2 text-gray-800">
+              <div className="flex items-center gap-2 text-gray-800">
                 <BsCartPlusFill className="text-lg mb-0.5" />{" "}
                 <h2>Add to Cart</h2>
               </div>
             )}
           </button>
           <button
-            onClick={(e) => {
-              !isAddedToCart && handleAddToCart(e);
-            }}
-            className="text-gray-600"
+            onClick={(e) => handleAddToWishList(e)}
+            className="text-gray-800"
           >
-            {isAddedToCart ? (
-              <div className="flex items-center gap-2 text-gray-400">
+            {isAddedToWishList ? (
+              <div className="flex items-center gap-2">
                 <FaHeart className="text-lg mb-0.5" />{" "}
-                <h2>Added to wishlist</h2>
+                <h2>Added in wishlist</h2>
               </div>
             ) : (
-              <div
-                onClick={(e) => handleAddToFavourite(e, access_token, dispatch)}
-                className=" flex items-center gap-2 text-gray-800"
-              >
+              <div className=" flex items-center gap-2">
                 <FaRegHeart className="text-lg mb-0.5" />{" "}
                 <h2>Add to Wishlist</h2>
               </div>

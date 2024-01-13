@@ -40,9 +40,21 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     }),
 
     getAllProducts: builder.query({
-      query: () => {
+      query: ({ page, searchTerm, category, limit }) => {
+        let url = "products";
+        const queryParams = new URLSearchParams();
+
+        if (searchTerm) queryParams.append("searchTerm", searchTerm);
+        if (page) queryParams.append("page", page);
+        if (limit) queryParams.append("limit", limit);
+        if (category) queryParams.append("category", category);
+
+        if (queryParams.toString()) {
+          url += `?${queryParams.toString()}`;
+        }
+
         return {
-          url: `products`,
+          url,
           method: "GET",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -92,6 +104,21 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["category"],
     }),
+
+    addToWishlist: builder.mutation({
+      query: ({ id, token, bodyData }) => {
+        return {
+          url: `products/wishlist/${id}`,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
+          body: bodyData,
+        };
+      },
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -101,5 +128,6 @@ export const {
   useGetAllProductsQuery,
   useGetSingleProductQuery,
   useDeleteProductMutation,
-  useGetAllCategoriesQuery
+  useGetAllCategoriesQuery,
+  useAddToWishlistMutation,
 } = productsApiSlice;

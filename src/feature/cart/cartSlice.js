@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import toast from "react-hot-toast";
-
 const initialState = JSON.parse(localStorage.getItem("cartProducts")) || [];
 
 const cartSlice = createSlice({
@@ -8,32 +6,15 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const {
-        _id,
-        name,
-        price,
-        image,
-        stock,
-        quantity = 1,
-      } = action.payload;
-      const itemExistInCart = state.find(
-        (item) => item._id === _id
-      );
+      let products = action.payload;
+      products.quantity = action.payload?.quantity || 1;
+      const productId = action.payload?._id;
+
+      const itemExistInCart = state?.find((item) => item?._id === productId);
 
       if (!itemExistInCart) {
-        state.push({
-          _id,
-          name,
-          price,
-          image,
-          stock,
-          quantity,
-        });
-        // toast.success("Product added to Cart");
-      } else {
-        // toast.error("Product already on cart");
+        state.push(products);
       }
-
       localStorage.setItem("cartProducts", JSON.stringify(state));
     },
 
@@ -41,7 +22,6 @@ const cartSlice = createSlice({
       const { _id } = action.payload;
       const updatedState = state.filter((item) => item._id !== _id);
       localStorage.setItem("cartProducts", JSON.stringify(updatedState));
-      // toast.error("Product removed from cart");
       return updatedState;
     },
 
@@ -81,6 +61,38 @@ const cartSlice = createSlice({
       localStorage.setItem("cartProducts", JSON.stringify(updatedState));
       return updatedState;
     },
+
+    updateSize: (state, action) => {
+      const { _id, size } = action.payload;
+      const updatedState = state.map((item) => {
+        if (item._id === _id) {
+          return {
+            ...item,
+            selectedSize: size,
+          };
+        }
+        return item;
+      });
+
+      localStorage.setItem("cartProducts", JSON.stringify(updatedState));
+      return updatedState;
+    },
+    
+    updateColor: (state, action) => {
+      const { _id, color } = action.payload;
+      const updatedState = state.map((item) => {
+        if (item._id === _id) {
+          return {
+            ...item,
+            selectedColor: color,
+          };
+        }
+        return item;
+      });
+
+      localStorage.setItem("cartProducts", JSON.stringify(updatedState));
+      return updatedState;
+    },
   },
 });
 
@@ -90,5 +102,7 @@ export const {
   clearCart,
   incrementQuantity,
   decrementQuantity,
+  updateColor, 
+  updateSize
 } = cartSlice.actions;
 export default cartSlice.reducer;

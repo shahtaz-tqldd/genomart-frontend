@@ -1,9 +1,13 @@
 import React from 'react'
-import { products } from '../../../assets/data/mock/products'
 import ProductCard from '../../../components/ProductCards/ProductCard'
 import shopping from "../../../assets/images/shopping.png";
+import { useGetAllProductsQuery } from '../../../feature/products/productsApiSlice';
 
 const TopSale = () => {
+  const { data, isLoading, isSuccess, isError } = useGetAllProductsQuery(
+    { limit: 5 },
+    { refetchOnReconnect: true }
+  );
   return (
     <div className="container my-20">
       <div className="flex flex-col items-center justify-center">
@@ -14,7 +18,7 @@ const TopSale = () => {
         <div className="border-gray-700 border-2 w-40 mt-5"></div>
       </div>
       <div className="mt-12 grid grid-cols-5 gap-8">
-        {products?.slice(4,9)?.map((data, i) => (
+        {data?.data?.map((data, i) => (
           <ProductCard key={i} data={data} />
         ))}
       </div>

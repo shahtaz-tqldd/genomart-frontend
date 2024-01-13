@@ -5,6 +5,7 @@ import { useCreateOrderMutation } from "../../feature/orders/ordersApiSlice";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../feature/cart/cartSlice";
+import LoadingButton from "../../ui/Buttons/LoadingButton";
 
 const ConfirmOrder = () => {
   const { state } = useLocation();
@@ -17,9 +18,9 @@ const ConfirmOrder = () => {
   const handleSubmit = async () => {
     const bodyData = {
       products: products?.map((p) => ({
-        productId: p._id,
-        color: p?.color || null,
-        size: p?.size || null,
+        productId: p?._id,
+        color: p?.selectedColor || null,
+        size: p?.selectedSize || null,
       })),
       customer,
       payment,
@@ -36,12 +37,15 @@ const ConfirmOrder = () => {
 
   return (
     <div className="max-w-[860px] mx-auto px-4 mt-12">
-      <h2 className="text-2xl text-center mb-10 font-bold">Preview Order</h2>
+      <h2 className="text-2xl text-center font-bold text-slate-800">
+        Preview Order
+      </h2>
+      <div className="border border-gray-500 w-20 mx-auto mb-10 mt-3"></div>
       <div className="grid grid-cols-2 gap-10">
         <div className="flex flex-col gap-6">
           {products?.map((p, i) => (
             <div key={i}>
-              <h2 className="font-bold text-lg">
+              <h2 className="font-bold text-lg text-slate-800">
                 {i + 1}. {p?.name}
               </h2>
               <div className="flex items-center gap-6 text-sm mt-2 text-gray-500">
@@ -49,13 +53,21 @@ const ConfirmOrder = () => {
                   Qunatity :{" "}
                   <strong className="text-gray-700">{p?.quantity}</strong>
                 </p>
-                <p className="flex items-center gap-3">
-                  Color :{" "}
-                  <div className="bg-green-500 h-3 w-3 rounded-full"></div>
-                </p>
-                <p>
-                  Size : <strong className="text-gray-700">28 cm</strong>
-                </p>
+                {p?.selectedColor && (
+                  <p className="flex items-center gap-3">
+                    Color :{" "}
+                    <div
+                      style={{ backgroundColor: p?.selectedColor }}
+                      className="h-3 w-3 rounded-full"
+                    ></div>
+                  </p>
+                )}
+                {p?.selectedSize && (
+                  <p>
+                    Size :{" "}
+                    <strong className="text-gray-700">{p?.selectedSize}</strong>
+                  </p>
+                )}
               </div>
               <div className="flex items-center gap-6 text-sm mt-1 text-gray-500">
                 Price :{" "}
@@ -68,32 +80,32 @@ const ConfirmOrder = () => {
         </div>
         <div>
           <div>
-            <h1>Name : {customer?.fullname}</h1>
-            <h1>Email : {customer?.email}</h1>
-            <h1>Phone : {customer?.phone}</h1>
-            <h1>House : {customer?.house}</h1>
-            <h1>Street : {customer?.street}</h1>
-            <h1>Address : {customer?.address}</h1>
+            <strong>{customer?.fullname}</strong>
+            <p className="text-sm text-gray-700">Email : {customer?.email}</p>
+            <p className="text-sm text-gray-700">Phone : {customer?.phone}</p>
+            <h2 className="text-lg font-semibold mt-5">Address</h2>
+            <p>
+              House {customer?.house}, {customer?.street}
+            </p>
+            <p>{customer?.address}</p>
           </div>
           <hr className="my-5" />
           <div>
             <h1>
-              Total : <strong>${payment?.total}</strong>
+              Subtotal : <strong>${payment?.total}</strong>
             </h1>
             <h1>
-              Payment : <strong>{payment?.method}</strong>
+              Payment Method: <strong>{payment?.method}</strong>
             </h1>
           </div>
         </div>
       </div>
       <div className="mt-10 flex justify-center">
-        <button
+        <LoadingButton
           onClick={handleSubmit}
-          className="py-2 bg-primaryColor pl-8 pr-10 rounded-lg text-white flex items-center gap-2"
-        >
-          <FaRegCheckCircle />
-          Submit
-        </button>
+          loading={isLoading}
+          name={"Submit"}
+        />
       </div>
     </div>
   );

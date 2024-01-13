@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
 import { FaRegHeart, FaStar } from "react-icons/fa";
 import { addToCart } from "../../feature/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { handleAddToFavourite } from "../../utiles/functions/handleAuthCheck";
 import Ratings from "../../utiles/Ratings";
+import { useAddToWishlistMutation } from "../../feature/products/productsApiSlice";
+import toast from "react-hot-toast";
+import { FaHeart } from "react-icons/fa6";
+import { updateUser } from "../../feature/auth/authSlice";
 
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
   const naviagte = useNavigate();
-  const { token } = useSelector((state) => state?.auth);
-  const { _id, img, name, price, description, stock = 10 } = data;
+  const { token, user } = useSelector((state) => state?.auth);
+
+  const { _id, images, name, price, description, stock } = data;
   const cart = useSelector((state) => state?.cart);
+
   const isAddedToCart = cart?.find((p) => p?._id === _id);
 
   const handleAddToCart = (e) => {
@@ -22,10 +27,39 @@ const ProductCard = ({ data }) => {
         _id: _id,
         name: name,
         price: price,
-        image: img,
-        stock: parseInt(stock),
+        image: images[0]?.url,
+        stock: stock,
+        colors: data?.colors || null,
+        sizes: data?.sizes || null,
       })
     );
+  };
+
+  // ADD TO WISHLIST FUNCTIONALITIS
+  const [isAddedToWishList, setIsAddedToWishList] = useState(
+    user?.wishList?.find((pid) => pid === _id) ? true : false
+  );
+  const [addToWishList] = useAddToWishlistMutation() || {};
+
+  const handleAddToWishList = async (e) => {
+    e.stopPropagation();
+    setIsAddedToWishList(!isAddedToWishList);
+    try {
+      const res = await addToWishList({
+        token,
+        id: _id,
+        bodyData: { action: isAddedToWishList ? "remove" : "add" },
+      });
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+        dispatch(updateUser(res?.data?.data));
+      } else {
+        toast.error(res?.error?.data?.message);
+        setIsAddedToWishList(!isAddedToWishList);
+      }
+    } catch (error) {
+      setIsAddedToWishList(!isAddedToWishList);
+    }
   };
 
   const handleNavigate = () => {
@@ -40,15 +74,19 @@ const ProductCard = ({ data }) => {
       <div>
         <div className="h-56 bg-gray-100 w-full rounded-xl overflow-hidden relative">
           <img
-            src={img}
+            src={images[0]?.url || null}
             alt=""
             className="w-full h-full object-contain p-4 group-hover:scale-110 tr"
           />
           <button
-            onClick={(e) => handleAddToFavourite(e, token, dispatch)}
+            onClick={(e) => handleAddToWishList(e)}
             className="absolute top-3 right-3 -translate-y-16 group-hover:translate-y-0 tr bg-[#CAF7E3] hover:bg-green-300 tr h-10 w-10 text-gray-600 rounded-lg grid place-items-center"
           >
-            <FaRegHeart className="text-xl" />
+            {!isAddedToWishList ? (
+              <FaRegHeart className="text-xl" />
+            ) : (
+              <FaHeart className="text-xl" />
+            )}
           </button>
         </div>
         <h4 className="text-md font-bold text-center my-4 text-gray-700">

@@ -1,22 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../feature/cart/cartSlice";
-import { useNavigate } from "react-router-dom";
-import { handleAddToFavourite } from "../../utiles/functions/handleAuthCheck";
+import { Link, useNavigate } from "react-router-dom";
+import { useAddToWishlistMutation } from "../../feature/products/productsApiSlice";
 
 const ProductCardList = ({ data }) => {
-  const { token } = useSelector((state) => state?.auth);
-  const {
-    images,
-    name,
-    price,
-    description,
-    _id,
-    ratings = 4.5,
-    stock,
-  } = data;
+  const { token, user } = useSelector((state) => state?.auth);
+  const { images, name, price, description, _id, ratings = 4.5, stock } = data;
   const dispatch = useDispatch();
   const cart = useSelector((state) => state?.cart);
   const isAddedToCart = cart?.find((p) => p?._id === _id);
@@ -26,29 +18,68 @@ const ProductCardList = ({ data }) => {
     dispatch(
       addToCart({
         _id: _id,
-        name: name,
-        price: price,
+        name,
+        price,
         image: images[0]?.url,
-        stock: parseInt(stock),
+        stock,
+        colors: data?.colors || null,
+        sizes: data?.sizes || null,
       })
     );
   };
+
+  // ADD TO WISHLIST FUNCTIONALITIS
+  const [isAddedToWishList, setIsAddedToWishList] = useState(
+    user?.wishList?.find((pid) => pid === _id) ? true : false
+  );
+
+  const [addToWishList] = useAddToWishlistMutation() || {};
+
+  const handleAddToWishList = async (e) => {
+    e.stopPropagation();
+    setIsAddedToWishList(!isAddedToWishList);
+    try {
+      const res = await addToWishList({
+        token,
+        id: _id,
+        bodyData: { action: isAddedToWishList ? "remove" : "add" },
+      });
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+        dispatch(updateUser(res?.data?.data));
+      } else {
+        toast.error(res?.error?.data?.message);
+        setIsAddedToWishList(!isAddedToWishList);
+      }
+    } catch (error) {
+      setIsAddedToWishList(!isAddedToWishList);
+    }
+  };
+
   const naviagte = useNavigate();
   const handleNavigate = () => {
     naviagte(`/products/${_id}`);
   };
   return (
     <div className="grid grid-cols-5 gap-5 group">
-      <div className="col-span-2 h-48 bg-gray-100 w-full rounded-xl overflow-hidden relative">
+      <Link
+        to={`/products/${_id}`}
+        className="col-span-2 h-48 bg-gray-100 w-full rounded-xl overflow-hidden relative"
+      >
         <img
           src={images[0]?.url}
           alt=""
           className="w-full h-full object-contain p-3 group-hover:scale-110 tr"
         />
-      </div>
+      </Link>
       <div className="col-span-3 flex flex-col justify-between h-full">
         <div>
-          <h4 className="text-md font-bold text-gray-700">{name}</h4>
+          <Link
+            to={`/products/${_id}`}
+            className="text-md font-bold text-gray-700"
+          >
+            {name}
+          </Link>
           <p className="text-sm mt-2 text-gray-600">
             {description?.slice(0, 150)}
           </p>
@@ -86,20 +117,21 @@ const ProductCardList = ({ data }) => {
               }}
               className="text-gray-600"
             >
-              {isAddedToCart ? (
-                <div className="flex items-center gap-2 text-gray-400">
+              {isAddedToWishList ? (
+                <div
+                  onClick={(e) => handleAddToWishList(e)}
+                  className="flex items-center gap-2 text-gray-800"
+                >
                   <FaHeart className="text-lg mb-0.5" />{" "}
-                  <h2>Added to wishlist</h2>
+                  <h2>Added in wishlist</h2>
                 </div>
               ) : (
                 <div
-                  onClick={(e) =>
-                    handleAddToFavourite(e, token, dispatch)
-                  }
+                  onClick={(e) => handleAddToWishList(e)}
                   className=" flex items-center gap-2 text-gray-800"
                 >
                   <FaRegHeart className="text-lg mb-0.5" />{" "}
-                  <h2>Add to Wishlist</h2>
+                  <h2>Add to wishlist</h2>
                 </div>
               )}
             </button>

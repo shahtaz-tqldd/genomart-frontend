@@ -15,6 +15,7 @@ const CartSlide = ({ state, setState, toggleDrawerCart }) => {
 
   const handleRemoveAll = () => {
     dispatch(clearCart());
+    setState({ right: false });
   };
 
   const subtotal = cart.reduce((acc, product) => {

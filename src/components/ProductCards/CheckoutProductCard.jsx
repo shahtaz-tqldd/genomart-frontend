@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import {
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
+  updateColor,
+  updateSize,
 } from "../../feature/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -12,10 +14,20 @@ import { useNavigate } from "react-router-dom";
 const CheckoutProductCard = ({ data }) => {
   const dispatch = useDispatch();
   const { image, name, price, _id, quantity, stock } = data;
-  const colors = ["#223423", "#f23e24", "#ec23f5"];
-  const sizes = ["28 cm", "29 cm", "30 cm"];
-  const [color, setColor] = useState("#223423");
-  const [size, setSize] = useState("28 cm");
+  const [color, setColor] = useState(
+    data?.selectedColor
+      ? data?.selectedColor
+      : data?.colors
+      ? data?.colors[0]
+      : null
+  );
+  const [size, setSize] = useState(
+    data?.selectedSize
+      ? data?.selectedSize
+      : data?.sizes
+      ? data?.sizes[0]
+      : null
+  );
 
   const handleDecrementQuantity = (_id, Quantity) => {
     dispatch(
@@ -43,6 +55,16 @@ const CheckoutProductCard = ({ data }) => {
       })
     );
   };
+
+  useEffect(() => {
+    if (color) {
+      dispatch(updateColor({ _id, color }));
+    }
+    if (size) {
+      dispatch(updateSize({ _id, size }));
+    }
+  }, [color, size]);
+
   const navigate = useNavigate();
   const handleNaviagte = () => {
     navigate(`/products/${_id}`);
@@ -66,43 +88,50 @@ const CheckoutProductCard = ({ data }) => {
           {name}
         </h2>
         {/* colors */}
-        <div className="flex items-center gap-4">
-          <h2 className="text-sm">Colors</h2>
-          <div className="flex items-center gap-3">
-            {colors?.map((c, i) => (
-              <div
-                key={i}
-                onClick={() => setColor(c)}
-                className={`cursor-pointer h-5 w-5 grid place-content-center rounded-full ${
-                  color === c && "border-slate-600 border-2"
-                }`}
-              >
-                <div
-                  style={{ backgroundColor: c }}
-                  className="h-3 w-3 rounded-full"
-                ></div>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* size and price */}
-        <div className="flex justify-between">
+        {data?.colors && (
           <div className="flex items-center gap-4">
-            <h2 className="text-sm">Size</h2>
+            <h2 className="text-sm">Colors</h2>
             <div className="flex items-center gap-3">
-              {sizes?.map((s, i) => (
-                <div
-                  key={i}
-                  onClick={() => setSize(s)}
-                  className={`cursor-pointer py-1 px-2 rounded text-xs grid place-content-center ${
-                    size === s ? "bg-slate-800 text-white" : "text-slate-800"
-                  }`}
-                >
-                  {s}
-                </div>
-              ))}
+              {data?.colors?.length &&
+                data?.colors?.map((c, i) => (
+                  <div
+                    key={i}
+                    onClick={() => setColor(c)}
+                    className={`cursor-pointer h-5 w-5 grid place-content-center rounded-full ${
+                      color === c && "border-slate-600 border-2"
+                    }`}
+                  >
+                    <div
+                      style={{ backgroundColor: c }}
+                      className="h-3 w-3 rounded-full"
+                    ></div>
+                  </div>
+                ))}
             </div>
           </div>
+        )}
+        {/* size and price */}
+        <div className="flex justify-between">
+          {data?.sizes?.length ? (
+            <div className="flex items-center gap-4">
+              <h2 className="text-sm">Size</h2>
+              <div className="flex items-center gap-3">
+                {data?.sizes?.map((s, i) => (
+                  <div
+                    key={i}
+                    onClick={() => setSize(s)}
+                    className={`cursor-pointer py-1 px-2 rounded text-xs grid place-content-center ${
+                      size === s ? "bg-slate-800 text-white" : "text-slate-800"
+                    }`}
+                  >
+                    {s}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
           <div className="flex justify-between items-end">
             <h2 className="text-sm font-bold">
               ${price} x {quantity}

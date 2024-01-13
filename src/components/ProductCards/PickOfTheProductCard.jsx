@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Ratings from "../../utiles/Ratings";
 
 const PickOfTheProductCard = ({ data, color }) => {
-  const { img, name, price, _id } = data;
+  const { images, name, price, _id } = data;
 
   return (
     <div
@@ -29,9 +29,9 @@ const PickOfTheProductCard = ({ data, color }) => {
           </div>
         </div>
       </div>
-      <div className="w-ful">
+      <div className="w-3/4 mx-auto">
         <img
-          src={img}
+          src={images[0]?.url || null}
           alt=""
           className="mx-auto h-[200px] p-4 object-contain group-hover:scale-110 tr"
         />

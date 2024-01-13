@@ -24,9 +24,23 @@ export const authSlice = createSlice({
       state.user = undefined;
       localStorage.removeItem("genomart_auth");
     },
+
+    logoutUser: (state, action) => {
+      // Assuming action.payload.user has the updated user information when logging out
+      state.user = action.payload.user;
+      state.token = initialState.token;
+
+      localStorage.setItem(
+        "genomart_auth",
+        JSON.stringify({
+          user: state.user,
+          token: state.token,
+        })
+      );
+    },
   },
 });
 
-export const { userLoggedIn, userLoggedOut } = authSlice.actions;
+export const { userLoggedIn, userLoggedOut, updateUser } = authSlice.actions;
 
 export default authSlice.reducer;

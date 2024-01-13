@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { products } from "../../assets/data/mock/products";
 import ProductCardsm from "../../components/ProductCards/ProductCardSm";
 import { categories } from "../../assets/data/mock/categories";
@@ -12,15 +12,21 @@ import {
   useGetAllCategoriesQuery,
   useGetAllProductsQuery,
 } from "../../feature/products/productsApiSlice";
+import NotFound from "../../utiles/NotFound";
+import useTitle from "../../hooks/useTitle";
 
 const Products = () => {
+  useTitle('Genomart Product List')
   const { state } = useLocation();
-  const { token } = useSelector((state) => state?.auth);
   const cat = state?.category || "";
-  const [grid, setGrid] = useState(true);
-  const [page, setPage] = useState(1);
+
   const [selectedCategory, setSelectedCategory] = useState([cat]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
+
   const [value, setValue] = useState([20, 37]);
+
   const valuetext = (value) => {
     return `BDT ${value * 100}`;
   };
@@ -30,13 +36,26 @@ const Products = () => {
   };
 
   const { data, isLoading, isSuccess, isError } = useGetAllProductsQuery(
-    { page },
+    { page, limit:12, category: selectedCategory[0], searchTerm },
     { refetchOnReconnect: true }
   );
 
   const { data: category } = useGetAllCategoriesQuery({
     refetchOnReconnect: true,
   });
+
+  const [grid, setGrid] = useState(() => {
+    const gridStored = localStorage.getItem("genomart_display_grid");
+    return gridStored !== null ? gridStored === "true" : true;
+  });
+
+  const toggleGrid = () => {
+    setGrid((prevGrid) => {
+      const newGrid = !prevGrid;
+      localStorage.setItem("genomart_display_grid", newGrid.toString());
+      return newGrid;
+    });
+  };
 
   return (
     <div className="container mt-12 flex gap-12">
@@ -91,7 +110,7 @@ const Products = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <IoGridOutline
-              onClick={() => setGrid(true)}
+              onClick={!grid && toggleGrid}
               className={`text-3xl p-1.5 rounded  border cursor-pointer ${
                 grid
                   ? "bg-slate-800 text-white border-slate-800"
@@ -99,7 +118,7 @@ const Products = () => {
               }`}
             />
             <AiOutlineMenu
-              onClick={() => setGrid(false)}
+              onClick={grid && toggleGrid}
               className={`text-3xl p-1.5  rounded border cursor-pointer ${
                 grid
                   ? "text-gray-600"
@@ -111,23 +130,29 @@ const Products = () => {
             <input
               type="text"
               placeholder="Search Products"
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="py-1 pl-6 focus:outline-none border-b border-b-gray-300 focus:border-gray-600 w-[300px]"
             />
             <IoSearch className="absolute left-0 top-1/2 -translate-y-1/2" />
           </div>
         </div>
-        {grid ? (
-          <div className="grid grid-cols-4 gap-4 mt-8">
-            {data?.data?.map((data, i) => (
-              <ProductCardsm key={i} data={data} />
-            ))}
-          </div>
+
+        {data?.meta?.total > 0 ? (
+          grid ? (
+            <div className="grid grid-cols-4 gap-4 mt-8">
+              {data?.data?.map((data, i) => (
+                <ProductCardsm key={i} data={data} />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 mt-8">
+              {data?.data?.map((data, i) => (
+                <ProductCardList key={i} data={data} />
+              ))}
+            </div>
+          )
         ) : (
-          <div className="grid grid-cols-1 gap-6 mt-8">
-            {data?.data?.map((data, i) => (
-              <ProductCardList key={i} data={data} />
-            ))}
-          </div>
+          <NotFound text={"No products found!"} />
         )}
       </div>
     </div>

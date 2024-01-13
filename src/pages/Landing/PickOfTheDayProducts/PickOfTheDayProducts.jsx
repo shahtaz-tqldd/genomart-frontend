@@ -1,5 +1,4 @@
 import brand from "../../../assets/images/brand-identity.png";
-import { products } from "../../../assets/data/mock/products";
 import { useCallback, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -7,6 +6,8 @@ import { BsArrowDownCircle } from "react-icons/bs";
 import "swiper/css";
 import "swiper/css/pagination";
 import PickOfTheProductCard from "../../../components/ProductCards/PickOfTheProductCard";
+import { useGetAllProductsQuery } from "../../../feature/products/productsApiSlice";
+import { bgcolors } from "../../../assets/data/colors";
 
 const PickOfTheDayProducts = () => {
   const [swiperRef, setSwiperRef] = useState();
@@ -19,15 +20,12 @@ const PickOfTheDayProducts = () => {
     swiperRef?.slideNext();
   }, [swiperRef]);
 
-  const colors = [
-    "bg-[#29ADB2]",
-    "bg-[#BE3144]",
-    "bg-[#3081D0]",
-    "bg-[#FFA732]",
-    "bg-[#FA7070]",
-    "bg-[#22092C]",
-    "bg-[#706233]",
-  ];
+
+  const { data, isLoading, isSuccess, isError } = useGetAllProductsQuery(
+    { limit: 7 },
+    { refetchOnReconnect: true }
+  );
+
   return (
     <div className="container">
       <div className="flex flex-col items-center justify-center">
@@ -66,9 +64,9 @@ const PickOfTheDayProducts = () => {
             className="pb-12"
             
           >
-            {products?.map((data, i) => (
+            {data?.data?.map((data, i) => (
              <SwiperSlide key={i}>
-               <PickOfTheProductCard data={data} color={colors[i % colors.length]} />
+               <PickOfTheProductCard data={data} color={bgcolors[i % bgcolors.length]} />
              </SwiperSlide>
           ))}
           </Swiper>

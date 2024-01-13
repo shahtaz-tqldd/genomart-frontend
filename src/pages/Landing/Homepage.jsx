@@ -1,3 +1,4 @@
+import useTitle from "../../hooks/useTitle";
 import Banner from "./Banner/Banner";
 import HomeCategories from "./Categories/HomeCategories";
 import Features from "./Features/Features";
@@ -7,6 +8,7 @@ import SpecialOfferProducts from "./SpecialOfferProducts/SpecialOfferProducts";
 import TopSale from "./TopSale/TopSale";
 
 const Homepage = () => {
+  useTitle("Genomart")
   return (
     <div>
       <Banner />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CheckoutProductCard from "../../components/ProductCards/CheckoutProductCard";
 import { FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
@@ -9,29 +9,34 @@ import { useForm } from "react-hook-form";
 const Checkout = () => {
   const [payment, setPayment] = useState("cash");
   const { cart, auth } = useSelector((state) => state);
-  const { user } = auth;
   const subtotal = cart.reduce((acc, product) => {
     return acc + product.price * product.quantity;
   }, 0);
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (cart.length < 1) {
+      navigate("/products");
+    }
+  }, [cart]);
+
   const handleConfirmOrder = (data) => {
     navigate("/orders/confirm", {
       state: {
         products: cart,
-        customer: {...data, id:user?._id},
+        customer: { ...data, id: auth?.user?._id },
         payment: { method: payment, total: subtotal },
       },
     });
   };
 
   const initialValues = {
-    fullname: user?.fullname,
-    email: user?.email,
-    phone: user?.phone,
-    house: user?.house,
-    street: user?.street,
-    address: user?.address,
+    fullname: auth?.user?.fullname,
+    email: auth?.user?.email,
+    phone: auth?.user?.phone,
+    house: auth?.user?.house,
+    street: auth?.user?.street,
+    address: auth?.user?.address,
   };
   const { register, handleSubmit } = useForm({ defaultValues: initialValues });
   return (
@@ -69,9 +74,8 @@ const Checkout = () => {
             <TextField
               label="Email"
               type="text"
-              value={user?.email}
+              value={auth?.user?.email || null}
               variant="standard"
-              // {...register("email", { required: true })}
             />
             <TextField
               label="Phone Number"

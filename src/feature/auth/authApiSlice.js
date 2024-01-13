@@ -28,7 +28,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           // do nothing
         }
       },
-      providesTags: [""],
+      providesTags: ["auth"],
     }),
 
     userDetails: builder.query({
@@ -42,7 +42,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           },
         };
       },
-      providesTags: [""],
+      providesTags: ["user"],
     }),
   }),
 });
