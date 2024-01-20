@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
-// import logo from "../../assets/images/logo/logo_with_text.png";
 import { userLoggedOut } from "../../feature/auth/authSlice";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { dashboardMenu } from "../../ui/tailwind/tailwind-classes";
@@ -118,7 +117,7 @@ const DSNav = ({ toggle, setToggle }) => {
                     } ${dashboardMenu} ${
                       isActiveNavLink(item.link)
                         ? "text-primaryColor"
-                        : "text-gray-500"
+                        : "text-gray-600"
                     }  group-hover:bg-primaryColorh group-hover:text-white rounded-md tr`}
                   >
                     <item.icon className="text-base" />

@@ -34,8 +34,8 @@ const Navbar = () => {
       navigate("/");
       handleMenuClose();
     }
-    if (option.item === "Accounts") {
-      navigate("/accounts/reports");
+    if (option.item === "My Profile") {
+      navigate(`/profile/my-info`);
       handleMenuClose();
     }
   };
@@ -176,7 +176,7 @@ const Navbar = () => {
                   handleMenuClose={handleMenuClose}
                   options={[
                     { item: "Home", icon: HiHome },
-                    { item: "Accounts", icon: HiUser },
+                    { item: "My Profile", icon: HiUser },
                     { item: "Settings", icon: IoMdSettings },
                   ]}
                   onClick={handleMenuOptionClick}

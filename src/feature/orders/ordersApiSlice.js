@@ -35,9 +35,20 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     }),
 
     getAllOrders: builder.query({
-      query: ({ token }) => {
+      query: ({ token, page, searchTerm, status, limit }) => {
+        let url = "orders";
+        const queryParams = new URLSearchParams();
+
+        if (searchTerm) queryParams.append("searchTerm", searchTerm);
+        if (page) queryParams.append("page", page);
+        if (limit) queryParams.append("limit", limit);
+        if (status) queryParams.append("status", JSON.stringify(status));
+
+        if (queryParams.toString()) {
+          url += `?${queryParams.toString()}`;
+        }
         return {
-          url: `orders`,
+          url,
           method: "GET",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -76,6 +87,21 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["order"],
     }),
+
+    changeOrderStatus: builder.mutation({
+      query: ({ id, token, bodyData }) => {
+        return {
+          url: `/orders/status/${id}`,
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          body: bodyData,
+        };
+      },
+      invalidatesTags: ["order"],
+    }),
   }),
 });
 
@@ -85,4 +111,5 @@ export const {
   useGetAllOrdersQuery,
   useGetSingleOrderQuery,
   useDeleteOrderMutation,
+  useChangeOrderStatusMutation,
 } = orderApiSlice;

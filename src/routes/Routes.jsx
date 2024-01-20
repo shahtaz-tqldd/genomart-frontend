@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import UserRoute from "./UserRoute";
 import PrivateRoute from "./PrivateRoute";
 import Homepage from "../pages/Landing/Homepage";
 import Main from "../layouts/Main";
@@ -21,18 +20,16 @@ import TrendingProducts from "../pages/Dashboard/Banner/TrendingProducts";
 import CustomerSupport from "../pages/Dashboard/CustomerSupport/CustomerSupport";
 import Settings from "../pages/Dashboard/Settings/Settings";
 import BannerList from "../pages/Dashboard/Banner/BannerList";
-import CreateBanner from "../pages/Dashboard/Banner/CreateBanner";
+import Profile from "../pages/Profile/Profile";
+import InfoPage from "../pages/Profile/InfoPage";
+import Wishlistpage from "../pages/Profile/Wishlistpage";
+import MyOrder from "../pages/Profile/MyOrder";
+import ResponsePage from "../pages/Profile/ResponsePage";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: (
-      // <PrivateRoute
-      // allowedRoles={["Admin", "User", "HR", "Line Manager", "Super Admin"]}
-      // path={"/login"}>
-      <Main />
-      // </PrivateRoute>
-    ),
+    element: <Main />,
     children: [
       {
         path: "/",
@@ -48,11 +45,42 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <Checkout />,
+        element: (
+          <PrivateRoute
+            allowedRoles={["admin", "user", "super admin"]}
+            path={"/products"}
+          >
+            <Checkout />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/orders/confirm",
-        element: <ConfirmOrder />,
+        element: (
+          <PrivateRoute
+            allowedRoles={["admin", "user", "super admin"]}
+            path={"/products"}
+          >
+            <ConfirmOrder />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute
+            allowedRoles={["admin", "user", "super admin"]}
+            path={"/products"}
+          >
+            <Profile />
+          </PrivateRoute>
+        ),
+        children: [
+          { path: "/profile/my-info", element: <InfoPage /> },
+          { path: "/profile/wishlist", element: <Wishlistpage /> },
+          { path: "/profile/my-orders", element: <MyOrder /> },
+          { path: "/profile/response", element: <ResponsePage /> },
+        ],
       },
     ],
   },
@@ -60,7 +88,7 @@ export const routes = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <PrivateRoute allowedRoles={["Admin", "User", "Super Admin"]} path={"/"}>
+      <PrivateRoute allowedRoles={["admin", "super admin"]} path={"/"}>
         <DashboardLayout />
       </PrivateRoute>
     ),
@@ -92,14 +120,6 @@ export const routes = createBrowserRouter([
       {
         path: "/dashboard/banner",
         element: <BannerList />,
-      },
-      {
-        path: "/dashboard/banner/create-banner",
-        element: <CreateBanner />,
-      },
-      {
-        path: "/dashboard/banner/update-banner",
-        element: <CreateBanner />,
       },
       {
         path: "/dashboard/special-offer",

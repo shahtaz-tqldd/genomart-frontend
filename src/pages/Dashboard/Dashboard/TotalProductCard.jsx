@@ -11,15 +11,20 @@ const TotalProductCard = ({ totalProducts }) => {
           Total Product
         </h2>
       </div>
-      <h1 className="text-7xl font-extrabold text-slate-900">
+      <h1 className="text-7xl font-extrabold text-slate-800">
+        {totalProducts < 9 && 0}
         {totalProducts}
       </h1>
       <div className="w-full flex justify-between text-white mt-8">
-        <p className="">
-          Total Stock: <strong className="text-2xl">3000</strong>
+        <p>
+          <strong className="text-3xl">3000</strong>
+          <br />
+          Total Stock
         </p>
-        <p className="">
-          Categories: <strong className="text-2xl">5</strong>
+        <p>
+          <strong className="text-3xl">5</strong>
+          <br />
+          Categories
         </p>
       </div>
     </div>

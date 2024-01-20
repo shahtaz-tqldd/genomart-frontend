@@ -17,7 +17,6 @@ import {
 } from "../../feature/cart/cartSlice";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
-import { handleAddToFavourite } from "../../utiles/functions/handleAuthCheck";
 import ParsedText from "../../utiles/ParsedText";
 import {
   useAddToWishlistMutation,
@@ -26,6 +25,8 @@ import {
 import Ratings from "../../utiles/Ratings";
 import { authModalOpen } from "../../feature/auth/authModalSlice";
 import useTitle from "../../hooks/useTitle";
+import toast from "react-hot-toast";
+import { updateUserState } from "../../feature/auth/authSlice";
 
 const ProductDetails = () => {
   const { token, user } = useSelector((state) => state?.auth);
@@ -111,18 +112,17 @@ const ProductDetails = () => {
   );
 
   const [addToWishList] = useAddToWishlistMutation() || {};
-  const handleAddToWishList = async (e) => {
-    e.stopPropagation();
+  const handleAddToWishList = async () => {
     setIsAddedToWishList(!isAddedToWishList);
     try {
       const res = await addToWishList({
         token,
-        id: _id,
+        id,
         bodyData: { action: isAddedToWishList ? "remove" : "add" },
       });
       if (res?.data?.success) {
         toast.success(res?.data?.message);
-        dispatch(updateUser(res?.data?.data));
+        dispatch(updateUserState({ user: res?.data?.data }));
       } else {
         toast.error(res?.error?.data?.message);
         setIsAddedToWishList(!isAddedToWishList);
@@ -282,7 +282,7 @@ const ProductDetails = () => {
             )}
           </button>
           <button
-            onClick={(e) => handleAddToWishList(e)}
+            onClick={handleAddToWishList}
             className="text-gray-800"
           >
             {isAddedToWishList ? (

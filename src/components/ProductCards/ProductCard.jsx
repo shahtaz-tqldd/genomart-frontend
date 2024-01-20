@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
-import { FaRegHeart, FaStar } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import { addToCart } from "../../feature/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Ratings from "../../utiles/Ratings";
-import { useAddToWishlistMutation } from "../../feature/products/productsApiSlice";
+import {
+  useAddToWishlistMutation,
+  useGetMyWishListQuery,
+} from "../../feature/products/productsApiSlice";
 import toast from "react-hot-toast";
 import { FaHeart } from "react-icons/fa6";
-import { updateUser } from "../../feature/auth/authSlice";
+import { authModalOpen } from "../../feature/auth/authModalSlice";
 
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
   const naviagte = useNavigate();
-  const { token, user } = useSelector((state) => state?.auth);
+  const { token } = useSelector((state) => state?.auth);
 
   const { _id, images, name, price, description, stock } = data;
   const cart = useSelector((state) => state?.cart);
@@ -35,35 +38,47 @@ const ProductCard = ({ data }) => {
     );
   };
 
+  const handleNavigate = () => {
+    naviagte(`/products/${_id}`);
+  };
+
   // ADD TO WISHLIST FUNCTIONALITIS
-  const [isAddedToWishList, setIsAddedToWishList] = useState(
-    user?.wishList?.find((pid) => pid === _id) ? true : false
+  const {
+    data: wishlist,
+    isLoading,
+    isSuccess,
+  } = useGetMyWishListQuery(
+    { token },
+    { refetchOnReconnect: true, skip: !token }
   );
+  const [isAddedToWishList, setIsAddedToWishList] = useState(false);
+
+  useEffect(() => {
+    if (wishlist?.success) {
+      setIsAddedToWishList(
+        wishlist?.data?.find((p) => p?._id === _id) ? true : false
+      );
+    }
+  }, [wishlist]);
+
   const [addToWishList] = useAddToWishlistMutation() || {};
 
   const handleAddToWishList = async (e) => {
     e.stopPropagation();
-    setIsAddedToWishList(!isAddedToWishList);
-    try {
-      const res = await addToWishList({
-        token,
-        id: _id,
-        bodyData: { action: isAddedToWishList ? "remove" : "add" },
-      });
-      if (res?.data?.success) {
-        toast.success(res?.data?.message);
-        dispatch(updateUser(res?.data?.data));
-      } else {
-        toast.error(res?.error?.data?.message);
-        setIsAddedToWishList(!isAddedToWishList);
-      }
-    } catch (error) {
-      setIsAddedToWishList(!isAddedToWishList);
+    if (!token) {
+      return dispatch(authModalOpen());
     }
-  };
 
-  const handleNavigate = () => {
-    naviagte(`/products/${_id}`);
+    const res = await addToWishList({
+      token,
+      id: _id,
+      bodyData: { action: isAddedToWishList ? "remove" : "add" },
+    });
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.error?.data?.message);
+    }
   };
 
   return (

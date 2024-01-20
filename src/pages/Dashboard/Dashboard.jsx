@@ -14,6 +14,8 @@ import PiChart from "../../components/Chart/PiChart";
 import { useGetAllCategoriesQuery } from "../../feature/products/productsApiSlice";
 import TopSoldProducts from "./Dashboard/TopSoldProducts";
 import Heading from "../../ui/Heading/Heading";
+import NewOrders from "./Dashboard/NewOrders";
+import SpecialOfferProducts from "./Dashboard/SpecialOfferProducts";
 
 const Dashboard = () => {
   const { token } = useSelector((state) => state?.auth);
@@ -55,13 +57,22 @@ const Dashboard = () => {
           img={cart}
         />
       </div>
-      <div className="grid grid-cols-3 gap-16 mt-16">
-        <div className="col-span-2">
+      <div className="grid grid-cols-7 gap-16 mt-16">
+        <div className="col-span-5">
           <BarChart data={monthlySoldData} name={"Monthly Sold"} />
         </div>
-        <div className="col-span-1 mb-16">
+        <div className="col-span-2 mb-16">
           <TotalProductCard totalProducts={data?.data?.totalProducts || 0} />
         </div>
+      </div>
+      <div className="grid grid-cols-5 gap-16 mt-20">
+        <div className="col-span-3">
+          <NewOrders />
+        </div>
+        <div className="col-span-2">
+          <SpecialOfferProducts />
+        </div>
+       
       </div>
       <div className="grid grid-cols-5 gap-16 mt-20">
         <div className="col-span-3">

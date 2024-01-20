@@ -9,9 +9,6 @@ const UserList = () => {
     <div>
       <div className="flex justify-between items-start">
         <Greetings page={"User List"} />
-        <Link to={"/dashboard/products/add-product"}>
-          <AddButton name={"Add Product"} />
-        </Link>
       </div>
       <UserTable />
     </div>

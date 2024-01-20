@@ -58,7 +58,7 @@ const Profilemenu = ({ openMenu, handleMenuClose, options, onClick }) => {
             </div>
           </MenuItem>
         ))}
-        {user?.email === "admin@genomart.com" && (
+        {user?.role === "admin" && (
           <MenuItem
             sx={{ fontSize: "15px", minWidth: "200px" }}
             onClick={() => navigate('/dashboard')}

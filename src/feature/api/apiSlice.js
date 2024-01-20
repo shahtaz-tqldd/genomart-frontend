@@ -11,10 +11,12 @@ export const apiSlice = createApi({
   tagTypes: [
     "user",
     "product",
+    "wishlist",
     "order",
     "myProfile",
     "category",
     "stats",
+    "settings",
     "banner",
   ],
   endpoints: (builder) => ({}),

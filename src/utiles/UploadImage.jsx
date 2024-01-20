@@ -9,8 +9,9 @@ const UploadImage = ({
   accept,
   id,
   maxSize,
+  selectedImage,
+  setSelectedImage
 }) => {
-  const [selectedImage, setSelectedImage] = useState("");
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];

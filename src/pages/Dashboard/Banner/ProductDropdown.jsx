@@ -67,8 +67,8 @@ const ProductDropdown = ({
         className={btnstyle}
       >
         {selectedOption
-          ? selectedOption?.name?.slice(0, 30) +
-            (selectedOption?.name?.length > 30 ? " ..." : "")
+          ? selectedOption?.name?.slice(0, 50) +
+            (selectedOption?.name?.length > 50 ? " ..." : "")
           : dropdownNull}{" "}
         <BiChevronDown />
       </button>

@@ -1,14 +1,21 @@
 import { useCallback, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { BsArrowDownCircle } from "react-icons/bs";
-import { MdFormatQuote, MdLocalOffer } from "react-icons/md";
+import { IoIosArrowForward } from "react-icons/io";
 import "swiper/css";
 import "swiper/css/pagination";
-// import "../../../assets/styles/swipper.css";
 import { banners } from "../../../assets/data/mock/banner";
+import { useGetSettingsInfoQuery } from "../../../feature/dashboard/dashboardApiSlice";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
+  const { token } = useSelector((state) => state?.auth);
+
+  const { data: info, isSuccess } = useGetSettingsInfoQuery(
+    { token },
+    { refetchOnReconnect: true, skip: !token }
+  );
   const [swiperRef, setSwiperRef] = useState();
 
   const handlePrevious = useCallback(() => {
@@ -23,14 +30,14 @@ const Banner = () => {
     <div className="w-full relative bg-[#DCF2F1]">
       <div className="container px-20">
         <div className="flex gap-8 mb-6 absolute bottom-6 z-10">
-          <BsArrowDownCircle
+          <IoIosArrowForward
             onClick={handlePrevious}
-            className="text-3xl text-orange-500 hover:text-red-500 tr rotate-90 cursor-pointer"
+            className="text-3xl bg-[#222] text-white rounded-full p-1.5 hover:bg-secondary tr rotate-180 cursor-pointer"
           />
 
-          <BsArrowDownCircle
+          <IoIosArrowForward
             onClick={handleNext}
-            className="text-3xl text-orange-500 hover:text-red-500 tr -rotate-90 cursor-pointer"
+            className="text-3xl bg-[#222] text-white rounded-full p-1.5 hover:bg-secondary tr cursor-pointer"
           />
         </div>
       </div>
@@ -49,30 +56,25 @@ const Banner = () => {
           disableOnInteraction: false,
         }}
       >
-        {banners?.map(({ img, productName, text, price, specialOffer }, i) => (
+        {info?.data?.banners?.map(({ url, productId }, i) => (
           <SwiperSlide key={i}>
             <div
-              // data-aos="fade-up"
-              // data-aos-duration="1000"
-              // data-aos-delay={`${150 * (i + 1)}`}
-              className=""
+              style={{
+                height: "560px",
+                backgroundImage: `url(${url})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                width: "100%",
+              }}
             >
-              <div className="grid grid-cols-2 items-center container py-20 px-20">
-                <div>
-                  <p className="text-lg mt-2 fl gap-2">
-                    <MdLocalOffer />
-                    {specialOffer}
-                  </p>
-                  <h1 className="text-5xl font-bold">{productName}</h1>
-                  <p className="text-lg mt-2">{text}</p>
-                  <p className="text-lg mt-2">{price}</p>
-                  <button className="mt-8 border-2 font-medium py-2 px-12 border-gray-500 rounded-full hover:bg-primaryColor hover:text-white hover:border-primaryColor tr">
-                    Buy Now
-                  </button>
-                </div>
-                <div className="flex justify-end">
-                  <img src={img} alt="" className="h-[380px] object-contain" />
-                </div>
+              <div className="container pl-20">
+                <Link
+                  to={`/products/${productId}`}
+                  className="mt-[380px] inline-block text-center w-40 border-2 py-2 rounded-full bg-primaryColor text-white font-bold border-primaryColor hover:bg-primaryColorh tr"
+                >
+                  Buy Now
+                </Link>
               </div>
             </div>
           </SwiperSlide>

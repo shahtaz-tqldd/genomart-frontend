@@ -14,6 +14,7 @@ import {
 } from "../../feature/products/productsApiSlice";
 import NotFound from "../../utiles/NotFound";
 import useTitle from "../../hooks/useTitle";
+import SearchInput from "../../ui/InputField/SearchInput";
 
 const Products = () => {
   useTitle('Genomart Product List')
@@ -126,15 +127,7 @@ const Products = () => {
               }`}
             />
           </div>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search Products"
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="py-1 pl-6 focus:outline-none border-b border-b-gray-300 focus:border-gray-600 w-[300px]"
-            />
-            <IoSearch className="absolute left-0 top-1/2 -translate-y-1/2" />
-          </div>
+          <SearchInput setSearchTerm={setSearchTerm} placeholder={'Products'} />
         </div>
 
         {data?.meta?.total > 0 ? (

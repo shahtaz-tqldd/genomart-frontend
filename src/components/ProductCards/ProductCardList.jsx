@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../feature/cart/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { useAddToWishlistMutation } from "../../feature/products/productsApiSlice";
+import {
+  useAddToWishlistMutation,
+  useGetMyWishListQuery,
+} from "../../feature/products/productsApiSlice";
+import toast from "react-hot-toast";
+import { updateUserState } from "../../feature/auth/authSlice";
 
 const ProductCardList = ({ data }) => {
   const { token, user } = useSelector((state) => state?.auth);
   const { images, name, price, description, _id, ratings = 4.5, stock } = data;
   const dispatch = useDispatch();
+
+  // CART FUNCTIONALITY
   const cart = useSelector((state) => state?.cart);
   const isAddedToCart = cart?.find((p) => p?._id === _id);
-
   const handleAddToCart = (e) => {
     e.stopPropagation();
     dispatch(
@@ -28,38 +34,47 @@ const ProductCardList = ({ data }) => {
     );
   };
 
+  const naviagte = useNavigate();
+  const handleNavigate = () => {
+    naviagte(`/products/${_id}`);
+  };
+
   // ADD TO WISHLIST FUNCTIONALITIS
-  const [isAddedToWishList, setIsAddedToWishList] = useState(
-    user?.wishList?.find((pid) => pid === _id) ? true : false
+  const {
+    data: wishlist,
+    isLoading,
+    isSuccess,
+  } = useGetMyWishListQuery(
+    { token },
+    { refetchOnReconnect: true, skip: !token }
   );
+  const [isAddedToWishList, setIsAddedToWishList] = useState(false);
+
+  useEffect(() => {
+    if (wishlist?.success) {
+      setIsAddedToWishList(
+        wishlist?.data?.find((p) => p?._id === _id) ? true : false
+      );
+    }
+  }, [wishlist]);
 
   const [addToWishList] = useAddToWishlistMutation() || {};
 
   const handleAddToWishList = async (e) => {
     e.stopPropagation();
-    setIsAddedToWishList(!isAddedToWishList);
-    try {
-      const res = await addToWishList({
-        token,
-        id: _id,
-        bodyData: { action: isAddedToWishList ? "remove" : "add" },
-      });
-      if (res?.data?.success) {
-        toast.success(res?.data?.message);
-        dispatch(updateUser(res?.data?.data));
-      } else {
-        toast.error(res?.error?.data?.message);
-        setIsAddedToWishList(!isAddedToWishList);
-      }
-    } catch (error) {
-      setIsAddedToWishList(!isAddedToWishList);
+
+    const res = await addToWishList({
+      token,
+      id: _id,
+      bodyData: { action: isAddedToWishList ? "remove" : "add" },
+    });
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.error?.data?.message);
     }
   };
 
-  const naviagte = useNavigate();
-  const handleNavigate = () => {
-    naviagte(`/products/${_id}`);
-  };
   return (
     <div className="grid grid-cols-5 gap-5 group">
       <Link

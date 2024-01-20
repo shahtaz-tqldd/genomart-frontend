@@ -6,6 +6,7 @@ import CartProductCard from "../ProductCards/CartProductCard";
 import { clearCart } from "../../feature/cart/cartSlice";
 import { BiSolidTrash } from "react-icons/bi";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { authModalOpen } from "../../feature/auth/authModalSlice";
 
 const CartSlide = ({ state, setState, toggleDrawerCart }) => {
   const { token } = useSelector((state) => state?.auth);

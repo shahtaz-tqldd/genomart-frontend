@@ -5,41 +5,43 @@ import moment from "moment";
 import TableSkeleton from "../../../components/Skeletons/TableSkeleton";
 import toast from "react-hot-toast";
 import ModernTable from "../../../components/Table/ModernTable";
-import { useDeleteProductMutation } from "../../../feature/products/productsApiSlice";
 import DeleteModal from "../../../ui/Modals/DeleteModal";
-import { useGetAllOrdersQuery } from "../../../feature/orders/ordersApiSlice";
+import {
+  useChangeOrderStatusMutation,
+  useDeleteOrderMutation,
+  useGetAllOrdersQuery,
+} from "../../../feature/orders/ordersApiSlice";
 import Status from "../../../utiles/Status";
+import StatusChangeModal from "../../../ui/Modals/StatusChangeModal";
 
-const OrderTable = () => {
+const OrderTable = ({ searchTerm, selectedStatus }) => {
   const { token } = useSelector((state) => state?.auth);
   const [page, setPage] = useState(1);
   const [isDeleteMopen, setIsDeleteMopen] = useState(null);
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(null);
   const [action, setAction] = useState("");
+
+  const { data, isLoading, isSuccess, isError } = useGetAllOrdersQuery(
+    { token, page, searchTerm, status: selectedStatus },
+    { refetchOnReconnect: true, skip: !token }
+  );
 
   useEffect(() => {
     if (action.action === "Delete") {
       setIsDeleteMopen(action?.itemId);
     }
+    if (action.action === "Change Status") {
+      setIsStatusModalOpen({
+        id: action?.itemId,
+        status: data?.data?.find((p) => p?._id === action?.itemId)?.status,
+      });
+    }
   }, [action]);
 
-  const { data, isLoading, isSuccess, isError } = useGetAllOrdersQuery(
-    { token, page },
-    { refetchOnReconnect: true, skip: !token }
-  );
-
-  console.log(data?.data[0]?.products[0]?.productId);
-  const colors = [
-    "#6DA4AA",
-    "#864AF9",
-    "#FF4B91",
-    "#7077A1",
-    "#525CEB",
-    "#4F6F52",
-    "#FF9843",
-  ];
   const tableColumns = [
     { header: "Order", field: "order" },
-    { header: "Date", field: "createdAt" },
+    { header: "Order Date", field: "orderDate" },
+    { header: "Delivery Date", field: "deliveryDate" },
     { header: "Total Products", field: "totalProducts" },
     { header: "Amount", field: "amount" },
     { header: "Order By", field: "user" },
@@ -55,9 +57,14 @@ const OrderTable = () => {
         <h2 className="text-sm mt-1">{data?.user?.email}</h2>
       </div>
     ),
-    createdAt: moment(data?.createdAt).format("DD MMM YYYY"),
+    orderDate: moment(data?.createdAt).format("DD MMM YYYY"),
+    deliveryDate: data?.deliveryDate ? (
+      moment(data?.deliveryDate).format("DD MMM YYYY")
+    ) : (
+      <span className="text-xs text-orange-500">Not Delivered</span>
+    ),
     totalProducts: data?.products?.length || 0,
-    amount: "$" + data?.cost,
+    amount: <strong>$ {data?.cost}</strong>,
     status: <Status status={data?.status || "pending"} />,
     collasped: (
       <div className="bg-white p-4 rounded-lg ">
@@ -68,12 +75,30 @@ const OrderTable = () => {
               <img
                 src={productId?.images[0]?.url}
                 alt=""
-                className="h-14 w-14 object-contain bg-gray-50 rounded"
+                className="h-16 w-16 object-contain bg-gray-50 rounded"
               />
               <div>
-                <h2 className="font-bold">{productId?.name}</h2>
-                <h2 className="">${productId?.price}</h2>
-                <h2 className="">{productId?.category}</h2>
+                <h2 className="text-xs">{productId?.category}</h2>
+                <h2 className="font-bold text-slate-800">{productId?.name}</h2>
+                <div className="grid grid-cols-3 justify-between gap-4 mt-2">
+                  <p>
+                    <strong>Price:</strong> ${productId?.price}
+                  </p>
+                  {color && (
+                    <p className="flex items-center gap-2">
+                      <strong>Color:</strong>{" "}
+                      <div
+                        style={{ backgroundColor: color }}
+                        className="h-[14px] w-[14px] rounded-full"
+                      ></div>
+                    </p>
+                  )}
+                  {size && (
+                    <p>
+                      <strong>Size:</strong> {size}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -82,11 +107,12 @@ const OrderTable = () => {
     ),
   }));
 
-  const [deleteProduct, { isLoading: deleteLoading }] =
-    useDeleteProductMutation() || {};
+  //DELETE ORDER
+  const [deleteOrder, { isLoading: deleteLoading }] =
+    useDeleteOrderMutation() || {};
 
-  const handleDeleteProduct = async (id) => {
-    const res = await deleteProduct({ token, id });
+  const handleDeleteOrder = async (id) => {
+    const res = await deleteOrder({ token, id });
     if (res && res?.data?.success) {
       toast.success(res?.data?.message);
       setIsDeleteMopen(null);
@@ -95,7 +121,22 @@ const OrderTable = () => {
     }
   };
 
-  const menuData = ["View", "Edit", "Delete"];
+  //CHANGE ORDER STATUS
+  const [changeOrderStatus, { isLoading: statusLoading }] =
+    useChangeOrderStatusMutation() || {};
+
+  const handleChangeStatus = async (id, status) => {
+    const bodyData = { status };
+    const res = await changeOrderStatus({ token, id, bodyData });
+    if (res && res?.data?.success) {
+      toast.success(res?.data?.message);
+      setIsStatusModalOpen(null);
+    } else {
+      toast.error(res?.error?.data?.message);
+    }
+  };
+
+  const menuData = ["View", "Change Status", "Delete"];
 
   let content;
   if (isLoading && !isSuccess && !isError) {
@@ -110,6 +151,7 @@ const OrderTable = () => {
         menuData={menuData}
         setAction={setAction}
         setPage={setPage}
+        totalCount={data?.meta?.total}
       />
     );
   }
@@ -122,9 +164,18 @@ const OrderTable = () => {
           <DeleteModal
             open={isDeleteMopen}
             setOpen={setIsDeleteMopen}
-            target={"Product"}
+            target={"Order"}
             loading={deleteLoading}
-            handleDelete={handleDeleteProduct}
+            handleDelete={handleDeleteOrder}
+          />
+        )}
+        {isStatusModalOpen && (
+          <StatusChangeModal
+            open={isStatusModalOpen}
+            setOpen={setIsStatusModalOpen}
+            loading={statusLoading}
+            target={"Order"}
+            handleDelete={handleChangeStatus}
           />
         )}
       </div>

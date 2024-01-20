@@ -13,7 +13,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { HiTrash } from "react-icons/hi";
 import { AiFillEye } from "react-icons/ai";
-import { MdOutlineEditNote, MdAssignmentTurnedIn } from "react-icons/md";
+import { MdOutlineEditNote } from "react-icons/md";
+import { TbStatusChange } from "react-icons/tb";
+import { BiSolidUserX } from "react-icons/bi";
 
 const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
   const [open, setOpen] = useState(false);
@@ -124,23 +126,26 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
           {menuData?.map((item, index) => (
             <MenuItem
               sx={{
-                padding: "5px",
-                margin: "0 10px",
-                borderRadius: "0.375rem",
-                width: "120px",
+                padding: "5px 10px 5px 6px",
+                margin: "0 10px 0 7px",
+                borderRadius: "4px",
               }}
               onClick={() => handleMenuAction(item)}>
-              <div className="flex items-center gap-2 tex text-md text-gray-600">
+              <div className="flex items-center gap-2 tex text-sm font-semibold text-gray-600">
                 {item === "Edit" ? (
-                  <MdOutlineEditNote className="text-xl" />
+                  <MdOutlineEditNote className="text-lg" />
                 ) : item === "View" ? (
-                  <AiFillEye className="text-xl" />
-                ) : item === "Assign Issue" ? (
-                  <MdAssignmentTurnedIn className="text-lg" />
+                  <AiFillEye className="text-lg" />
+                ) : item === "Disable" ? (
+                  <BiSolidUserX className="text-lg text-red-500" />
+                ) : item === "Make Admin" ? (
+                  <BiSolidUserX className="text-lg text-red-500" />
+                ) : item === "Change Status" ? (
+                  <TbStatusChange className="text-lg" />
                 ) : (
-                  <HiTrash className="text-xl text-red-500" />
+                  <HiTrash className="text-red-500 text-lg" />
                 )}
-                <span className="mt-0.5">{item}</span>
+                <span className={` ${item==="Delete" ? "text-red-500": item==="Disable" ? "text-red-500": "text-gray-600"}`}>{item}</span>
               </div>
             </MenuItem>
           ))}

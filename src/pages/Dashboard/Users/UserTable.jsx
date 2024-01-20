@@ -32,7 +32,7 @@ const UserTable = () => {
     { header: "User", field: "user" },
     { header: "Contact", field: "contact" },
     { header: "Address", field: "address" },
-    { header: "role", field: "role" },
+    { header: "Role", field: "role" },
     { header: "Last Update", field: "createdAt" },
   ];
 
@@ -63,12 +63,7 @@ const UserTable = () => {
     createdAt: moment(data?.updatedAt).format("DD MMM YYYY"),
     contact: data?.phone || "Not provided",
     address: data?.address || "Not prodvided",
-    role: data?.role,
-    collasped: (
-      <div className="bg-white p-5 rounded-lg grid grid-cols-5 gap-4">
-        <h2>Description</h2>
-      </div>
-    ),
+    role: data?.role
   }));
 
   const [deleteProduct, { isLoading: deleteLoading }] =
@@ -84,7 +79,7 @@ const UserTable = () => {
     }
   };
 
-  const menuData = ["View", "Edit", "Delete"];
+  const menuData = ["View", "Make Admin", "Disable"];
 
   let content;
   if (isLoading && !isSuccess && !isError) {

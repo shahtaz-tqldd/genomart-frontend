@@ -117,7 +117,21 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           body: bodyData,
         };
       },
-      invalidatesTags: ["user"],
+      invalidatesTags: ["wishlist"],
+    }),
+
+    getMyWishList: builder.query({
+      query: ({ token }) => {
+        return {
+          url: `products/wishlist/all`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
+      providesTags: ["wishlist"],
     }),
   }),
 });
@@ -130,4 +144,5 @@ export const {
   useDeleteProductMutation,
   useGetAllCategoriesQuery,
   useAddToWishlistMutation,
+  useGetMyWishListQuery,
 } = productsApiSlice;

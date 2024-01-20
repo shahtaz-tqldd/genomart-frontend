@@ -18,11 +18,11 @@ export const dsnavdata = [
         link: "/dashboard",
         icon: RxDashboard,
       },
-      {
-        title: "Analytics",
-        link: "/dashboard/analytics",
-        icon: MdAutoGraph,
-      },
+      // {
+      //   title: "Analytics",
+      //   link: "/dashboard/analytics",
+      //   icon: MdAutoGraph,
+      // },
     ],
   },
   {
@@ -46,12 +46,12 @@ export const dsnavdata = [
       },
 
       {
-        title: "Featured Products",
+        title: "Featured",
         link: "/banners",
         icon: GrCodeSandbox,
         children: [
           {
-            title: "Banner Products",
+            title: "Hero Banner",
             link: "/dashboard/banner",
             icon: TbBrandBackbone,
           },
@@ -59,11 +59,6 @@ export const dsnavdata = [
             title: "Special Offer",
             link: "/dashboard/special-offer",
             icon: TbBrandFirebase,
-          },
-          {
-            title: "Trending Products",
-            link: "/dashboard/trending-products",
-            icon: TbBrandAppgallery,
           },
           ,
         ],

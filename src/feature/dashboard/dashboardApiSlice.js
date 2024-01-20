@@ -35,7 +35,45 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["banner"],
     }),
+
+    createInfo: builder.mutation({
+      query: ({ bodyData, token }) => {
+        return {
+          url: `dashboard/settings`,
+          method: "POST",
+          preparedHeaders: (headers) => {
+            headers.set("Content-type", "multipart/form-data");
+            return headers;
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: bodyData,
+          formData: true,
+        };
+      },
+      invalidatesTags: ["settings"],
+    }),
+
+    getSettingsInfo: builder.query({
+      query: ({ token }) => {
+        return {
+          url: `dashboard/settings`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      },
+      providesTags: ["settings"],
+    }),
   }),
 });
 
-export const { useGetStatsQuery, useCreateBannerMutation } = dashboardApiSlice;
+export const {
+  useGetStatsQuery,
+  useCreateBannerMutation,
+  useCreateInfoMutation,
+  useGetSettingsInfoQuery,
+} = dashboardApiSlice;

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  token: localStorage.getItem("token") || null,
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  token: localStorage.getItem("genomart_auth") || null,
+  user: JSON.parse(localStorage.getItem("genomart_auth")) || null,
 };
 
 export const authSlice = createSlice({
@@ -16,6 +16,7 @@ export const authSlice = createSlice({
         "genomart_auth",
         JSON.stringify({
           token: action.payload.token,
+          user: action.payload.user,
         })
       );
     },
@@ -25,22 +26,21 @@ export const authSlice = createSlice({
       localStorage.removeItem("genomart_auth");
     },
 
-    logoutUser: (state, action) => {
-      // Assuming action.payload.user has the updated user information when logging out
+    updateUserState: (state, action) => {
       state.user = action.payload.user;
-      state.token = initialState.token;
-
+      token = state.token;
       localStorage.setItem(
         "genomart_auth",
         JSON.stringify({
-          user: state.user,
-          token: state.token,
+          user: action.payload.user,
+          token: token,
         })
       );
     },
   },
 });
 
-export const { userLoggedIn, userLoggedOut, updateUser } = authSlice.actions;
+export const { userLoggedIn, userLoggedOut, updateUserState } =
+  authSlice.actions;
 
 export default authSlice.reducer;
