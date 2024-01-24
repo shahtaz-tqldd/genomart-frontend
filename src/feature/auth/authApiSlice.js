@@ -31,6 +31,21 @@ export const authApiSlice = apiSlice.injectEndpoints({
       providesTags: ["auth"],
     }),
 
+    userSocialLogin: builder.mutation({
+      query: (data) => {
+        const { bodyData } = data;
+        return {
+          url: `auth/login/social`,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+          body: bodyData,
+        };
+      },
+      providesTags: ["auth"],
+    }),
+
     userDetails: builder.query({
       query: (token) => {
         return {
@@ -47,4 +62,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useUserLoginMutation, useUserDetailsQuery } = authApiSlice;
+export const {
+  useUserLoginMutation,
+  useUserDetailsQuery,
+  useUserSocialLoginMutation,
+} = authApiSlice;

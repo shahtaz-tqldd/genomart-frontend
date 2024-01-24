@@ -29,6 +29,8 @@ const Dashboard = () => {
   const { data: category } = useGetAllCategoriesQuery({
     refetchOnReconnect: true,
   });
+
+  console.log(data?.data);
   return (
     <div>
       <div className="grid grid-cols-4 gap-5">
@@ -62,7 +64,11 @@ const Dashboard = () => {
           <BarChart data={monthlySoldData} name={"Monthly Sold"} />
         </div>
         <div className="col-span-2 mb-16">
-          <TotalProductCard totalProducts={data?.data?.totalProducts || 0} />
+          <TotalProductCard
+            totalProducts={data?.data?.totalProducts || 0}
+            totalStock={data?.data?.totalStock || 0}
+            totalCategories={data?.data?.totalCategories || 0}
+          />
         </div>
       </div>
       <div className="grid grid-cols-5 gap-16 mt-20">
@@ -72,14 +78,13 @@ const Dashboard = () => {
         <div className="col-span-2">
           <SpecialOfferProducts />
         </div>
-       
       </div>
       <div className="grid grid-cols-5 gap-16 mt-20">
         <div className="col-span-3">
           <TopSoldProducts />
         </div>
         <div className="col-span-2 flex flex-col gap-2 justify-between">
-          <Heading title={'Product Categories'}/>
+          <Heading title={"Product Categories"} />
           <PiChart data={category?.data || []} />
         </div>
       </div>

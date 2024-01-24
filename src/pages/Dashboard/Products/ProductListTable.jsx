@@ -11,6 +11,7 @@ import {
   useGetAllProductsQuery,
 } from "../../../feature/products/productsApiSlice";
 import DeleteModal from "../../../ui/Modals/DeleteModal";
+import { useAddToSpecialOfferMutation } from "../../../feature/dashboard/dashboardApiSlice";
 
 const ProductListTable = () => {
   const { token } = useSelector((state) => state?.auth);
@@ -21,6 +22,9 @@ const ProductListTable = () => {
   useEffect(() => {
     if (action.action === "Delete") {
       setIsDeleteMopen(action?.itemId);
+    }
+    if (action.action === "Special Offer") {
+      handleAddToSpecialOffer(action?.itemId);
     }
   }, [action]);
 
@@ -80,7 +84,18 @@ const ProductListTable = () => {
     }
   };
 
-  const menuData = ["View", "Edit", "Delete"];
+  const [addToSpecialOffer] = useAddToSpecialOfferMutation();
+  const handleAddToSpecialOffer = async (id) => {
+    const bodyData = { productId: id };
+    const res = await addToSpecialOffer({ token, bodyData });
+    if (res && res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.error?.data?.message);
+    }
+  };
+
+  const menuData = ["View", "Edit", "Special Offer", "Delete"];
 
   let content;
   if (isLoading && !isSuccess && !isError) {

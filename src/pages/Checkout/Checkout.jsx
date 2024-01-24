@@ -15,7 +15,8 @@ const Checkout = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (cart.length < 1) {
+    if (cart?.length <= 0) {
+      console.log("true")
       navigate("/products");
     }
   }, [cart]);

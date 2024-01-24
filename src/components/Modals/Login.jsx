@@ -70,7 +70,7 @@ const Login = ({ setRegOpen, handleClose }) => {
           </button>
         </form>
         <p className="text-center mt-4 text-sm">or continue with</p>
-        <SocialLogin />
+        <SocialLogin handleClose={handleClose} />
 
         <div className="flex gap-1 text-sm justify-center mt-7">
           New to genomart?

@@ -21,6 +21,7 @@ const ConfirmOrder = () => {
         productId: p?._id,
         color: p?.selectedColor || null,
         size: p?.selectedSize || null,
+        quantity: p?.quantity || 1,
       })),
       customer,
       payment,

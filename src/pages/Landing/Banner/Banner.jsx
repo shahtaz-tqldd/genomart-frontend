@@ -1,21 +1,24 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { IoIosArrowForward } from "react-icons/io";
 import "swiper/css";
 import "swiper/css/pagination";
-import { banners } from "../../../assets/data/mock/banner";
 import { useGetSettingsInfoQuery } from "../../../feature/dashboard/dashboardApiSlice";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Banner = () => {
-  const { token } = useSelector((state) => state?.auth);
-
+  const [banners, setBanners] = useState([]);
   const { data: info, isSuccess } = useGetSettingsInfoQuery(
-    { token },
-    { refetchOnReconnect: true, skip: !token }
+    {},
+    { refetchOnReconnect: true }
   );
+  useEffect(() => {
+    if (info?.success) {
+      setBanners(info?.data?.banners || []);
+    }
+  }, [info]);
+
   const [swiperRef, setSwiperRef] = useState();
 
   const handlePrevious = useCallback(() => {
@@ -56,7 +59,7 @@ const Banner = () => {
           disableOnInteraction: false,
         }}
       >
-        {info?.data?.banners?.map(({ url, productId }, i) => (
+        {banners?.map(({ url, productId }, i) => (
           <SwiperSlide key={i}>
             <div
               style={{

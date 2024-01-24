@@ -4,6 +4,7 @@ import useRole from "../hooks/useRole";
 const PrivateRoute = ({ children, allowedRoles, path }) => {
   const isLoggedIn = useAuth();
   const role = useRole();
+  
   let isAllowed;
 
   if (allowedRoles?.includes(role)) {

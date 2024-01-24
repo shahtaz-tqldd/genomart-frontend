@@ -7,7 +7,10 @@ const SpecialOfferProducts = () => {
     {},
     { refetchOnReconnect: true }
   );
-
+  console.log(data?.data[2]?.numSold);
+  console.log(data?.data[2]?.stock);
+  console.log((3 / 230) * 100);
+  console.log(`${(data?.data[2]?.numSold || 0 / data?.data[2]?.stock) * 100}%`);
   return (
     <div>
       <Heading title={"Special Offer"} />
@@ -30,18 +33,22 @@ const SpecialOfferProducts = () => {
             />
             <div>
               <p className="text-xs text-gray-500">{p?.brand || "Not found"}</p>
-              <h3 className="text-sm text-slate-800 font-semibold">{p?.name}</h3>
-              <h3 className="text-xs mt-1 text-red-500">{p?.specialOffer || "Special Offer"}</h3>
+              <h3 className="text-sm text-slate-800 font-semibold">
+                {p?.name}
+              </h3>
+              <h3 className="text-xs mt-1 text-red-500">
+                {p?.specialOffer || "Special Offer"}
+              </h3>
             </div>
           </div>
           <div className="col-span-1">
             <div className="text-end text-xs mb-1 -mt-2">
-              {p?.totalSold || 12}/{p?.stock || 0}
+              {p?.numSold || 0}/{p?.stock || 0}
             </div>
             <div className="relative">
               <div className="absolute top-0 left-0 right-0 h-[5px] bg-orange-200">
                 <div
-                  style={{ width: `${(p?.totalSold || 12 / p?.stock) * 100}%` }}
+                  style={{ width: `${(p?.numSold / p?.stock) * 100}%` }}
                   className="bg-orange-500 h-[5px]"
                 ></div>
               </div>

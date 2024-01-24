@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAddToWishlistMutation } from "../../feature/products/productsApiSlice";
 import toast from "react-hot-toast";
 
@@ -103,8 +103,9 @@ const WishListProductCard = ({ data }) => {
           ) : (
             <div></div>
           )}
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-center gap-10">
             <h2 className="text-sm font-bold">${price}</h2>
+            <Link to={`/products/${data?._id}`} className="text-sm py-1 px-3 bg-primaryColor hover:bg-primaryColorh tr rounded text-white font-bold">Buy Now</Link>
           </div>
         </div>
         {/* delete button */}

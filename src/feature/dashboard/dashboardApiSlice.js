@@ -55,14 +55,28 @@ export const dashboardApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["settings"],
     }),
 
+    addToSpecialOffer: builder.mutation({
+      query: ({ bodyData, token }) => {
+        return {
+          url: `dashboard/special-offer`,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
+          body: bodyData,
+        };
+      },
+      invalidatesTags: ["settings"],
+    }),
+
     getSettingsInfo: builder.query({
-      query: ({ token }) => {
+      query: () => {
         return {
           url: `dashboard/settings`,
           method: "GET",
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            Authorization: `Bearer ${token}`,
           },
         };
       },
@@ -76,4 +90,5 @@ export const {
   useCreateBannerMutation,
   useCreateInfoMutation,
   useGetSettingsInfoQuery,
+  useAddToSpecialOfferMutation,
 } = dashboardApiSlice;

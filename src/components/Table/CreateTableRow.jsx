@@ -13,8 +13,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { HiTrash } from "react-icons/hi";
 import { AiFillEye } from "react-icons/ai";
-import { MdOutlineEditNote } from "react-icons/md";
-import { TbStatusChange } from "react-icons/tb";
+import { MdOutlineEditNote, MdOutlinePostAdd } from "react-icons/md";
+import { TbMessageReport, TbStatusChange } from "react-icons/tb";
+import { CgSandClock } from "react-icons/cg";
 import { BiSolidUserX } from "react-icons/bi";
 
 const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
@@ -142,6 +143,12 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
                   <BiSolidUserX className="text-lg text-red-500" />
                 ) : item === "Change Status" ? (
                   <TbStatusChange className="text-lg" />
+                ) : item === "Special Offer" ? (
+                  <MdOutlinePostAdd className="text-lg" />
+                ) : item === "Report" ? (
+                  <TbMessageReport className="text-lg" />
+                ) : item === "Order Progress" ? (
+                  <CgSandClock className="text-lg" />
                 ) : (
                   <HiTrash className="text-red-500 text-lg" />
                 )}

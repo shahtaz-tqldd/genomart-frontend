@@ -35,7 +35,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     }),
 
     getAllOrders: builder.query({
-      query: ({ token, page, searchTerm, status, limit }) => {
+      query: ({ token, page, searchTerm, status, limit, myOrder }) => {
         let url = "orders";
         const queryParams = new URLSearchParams();
 
@@ -43,6 +43,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         if (page) queryParams.append("page", page);
         if (limit) queryParams.append("limit", limit);
         if (status) queryParams.append("status", JSON.stringify(status));
+        if (myOrder) queryParams.append("myOrder", myOrder);
 
         if (queryParams.toString()) {
           url += `?${queryParams.toString()}`;
