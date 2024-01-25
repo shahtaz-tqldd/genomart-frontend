@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { MdArrowDropDown } from "react-icons/md";
 import Greetings from "../../../utiles/Greetings";
 import useTitle from "../../../hooks/useTitle";
 import LogoImage from "../../../ui/Images/LogoImage";
@@ -16,7 +15,7 @@ import {
 import toast from "react-hot-toast";
 
 const InfoPage = () => {
-  useTitle("Settings");
+  useTitle("Admin Dashboard | Settings");
   const { token, user } = useSelector((state) => state?.auth);
   const [terms, setTerms] = useState("");
   const [policy, setPolicy] = useState("");
@@ -39,6 +38,8 @@ const InfoPage = () => {
         description: info?.data?.description,
       };
       setSelectedImage(info?.data?.logo?.url);
+      setPolicy(info?.data?.policy);
+      setTerms(info?.data?.terms);
       reset(initialValues);
     }
   }, [info, reset]);
@@ -86,6 +87,7 @@ const InfoPage = () => {
             <TextField
               label="Shop Name"
               type="text"
+              InputLabelProps={{ shrink: info?.data?.name ? true : false }}
               {...register("name", { required: false })}
               variant="standard"
             />
@@ -93,6 +95,7 @@ const InfoPage = () => {
               label="Contact"
               type="text"
               variant="standard"
+              InputLabelProps={{ shrink: info?.data?.contact ? true : false }}
               {...register("contact", { required: false })}
             />
           </div>
@@ -101,12 +104,14 @@ const InfoPage = () => {
               label="Email"
               type="email"
               variant="standard"
+              InputLabelProps={{ shrink: info?.data?.email ? true : false }}
               {...register("email", { required: false })}
             />
             <TextField
               label="Location"
               type="text"
               variant="standard"
+              InputLabelProps={{ shrink: info?.data?.location ? true : false }}
               {...register("location", { required: false })}
             />
           </div>
@@ -117,6 +122,7 @@ const InfoPage = () => {
             multiline="true"
             maxRows={4}
             variant="standard"
+            InputLabelProps={{ shrink: info?.data?.description ? true : false }}
             {...register("description", { required: false })}
           />
         </div>

@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import toast from "react-hot-toast";
-import { useGetAllOrdersQuery } from "../../feature/orders/ordersApiSlice";
-import Status from "../../utiles/Status";
-import ModernTable from "../../components/Table/ModernTable";
-import DeleteModal from "../../ui/Modals/DeleteModal";
-import TableSkeleton from "../../components/Skeletons/TableSkeleton";
+import { useGetAllOrdersQuery } from "../../../feature/orders/ordersApiSlice";
+import Status from "../../../utiles/Status";
+import ModernTable from "../../../components/Table/ModernTable";
+import TableSkeleton from "../../../components/Skeletons/TableSkeleton";
+import ProgressModal from "./ProgressModal";
+import RefundModal from "./RefundModal";
+import CancelOrderModal from "./CancelOrderModal";
 
 const MyOrderTable = () => {
   const { token } = useSelector((state) => state?.auth);
   const [page, setPage] = useState(1);
-  const [isDeleteMopen, setIsDeleteMopen] = useState(null);
+
+  const [isProgressModalOpen, setIsProgressModalOpen] = useState(null);
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState(null);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(null);
+
+  // Table Options
   const [action, setAction] = useState("");
+  const menuData = ["Order Progress", "Refund", "Cancel"];
 
   useEffect(() => {
-    if (action.action === "Delete") {
-      setIsDeleteMopen(action?.itemId);
+    if (action.action === "Order Progress") {
+      setIsProgressModalOpen(action?.itemId);
+    }
+    if (action.action === "Refund") {
+      setIsRefundModalOpen(action?.itemId);
+    }
+    if (action.action === "Cancel") {
+      setIsCancelModalOpen(action?.itemId);
     }
   }, [action]);
 
@@ -90,22 +103,8 @@ const MyOrderTable = () => {
     ),
   }));
 
-  // const [deleteProduct, { isLoading: deleteLoading }] =
-  //   useDeleteProductMutation() || {};
-
-  // const handleDeleteProduct = async (id) => {
-  //   const res = await deleteProduct({ token, id });
-  //   if (res && res?.data?.success) {
-  //     toast.success(res?.data?.message);
-  //     setIsDeleteMopen(null);
-  //   } else {
-  //     toast.error(res?.error?.data?.message);
-  //   }
-  // };
-
-  const menuData = ["Order Progress", "Report", "Cancel"];
-
   let content;
+
   if (isLoading && !isSuccess && !isError) {
     content = <TableSkeleton />;
   }
@@ -126,13 +125,25 @@ const MyOrderTable = () => {
     <div className="mt-10">
       <div className="mb-4">
         {content}
-        {isDeleteMopen && (
-          <DeleteModal
-            open={isDeleteMopen}
-            setOpen={setIsDeleteMopen}
-            target={"Product"}
-            // loading={deleteLoading}
-            // handleDelete={handleDeleteProduct}
+        {isProgressModalOpen && (
+          <ProgressModal
+            isOpen={isProgressModalOpen}
+            setIsOpen={setIsProgressModalOpen}
+            data={data?.data?.find((p) => p?._id === isProgressModalOpen)}
+          />
+        )}
+        {isRefundModalOpen && (
+          <RefundModal
+            isOpen={isRefundModalOpen}
+            setIsOpen={setIsRefundModalOpen}
+            data={data?.data?.find((p) => p?._id === isRefundModalOpen)}
+          />
+        )}
+        {isCancelModalOpen && (
+          <CancelOrderModal
+            isOpen={isCancelModalOpen}
+            setIsOpen={setIsCancelModalOpen}
+            data={data?.data?.find((p) => p?._id === isCancelModalOpen)}
           />
         )}
       </div>

@@ -14,8 +14,6 @@ import AddProduct from "../pages/Dashboard/Products/AddProduct";
 import UserList from "../pages/Dashboard/Users/UserList";
 import OrderList from "../pages/Dashboard/Orders/OrderList";
 import Analytics from "../pages/Dashboard/Analytics/Analytics";
-import SpecialOffer from "../pages/Dashboard/Banner/SpecialOffer";
-import TrendingProducts from "../pages/Dashboard/Banner/TrendingProducts";
 
 import CustomerSupport from "../pages/Dashboard/CustomerSupport/CustomerSupport";
 import Settings from "../pages/Dashboard/Settings/Settings";
@@ -23,8 +21,13 @@ import BannerList from "../pages/Dashboard/Banner/BannerList";
 import Profile from "../pages/Profile/Profile";
 import InfoPage from "../pages/Profile/InfoPage";
 import Wishlistpage from "../pages/Profile/Wishlistpage";
-import MyOrder from "../pages/Profile/MyOrder";
+import MyOrder from "../pages/Profile/MyOrder/MyOrder";
 import ResponsePage from "../pages/Profile/ResponsePage";
+import ContactPage from "../pages/Contact/ContactPage";
+import About from "../pages/About/About";
+import Privacy from "../pages/About/Privacy";
+import TermsAndConditions from "../pages/About/TermsAndConditions";
+import SpecialOffer from "../pages/Dashboard/SpecialOffer/SpecialOffer";
 
 export const routes = createBrowserRouter([
   {
@@ -42,6 +45,22 @@ export const routes = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/policy",
+        element: <Privacy />,
+      },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsAndConditions />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
       },
       {
         path: "/checkout",
@@ -124,10 +143,6 @@ export const routes = createBrowserRouter([
       {
         path: "/dashboard/special-offer",
         element: <SpecialOffer />,
-      },
-      {
-        path: "/dashboard/trending-products",
-        element: <TrendingProducts />,
       },
       {
         path: "/dashboard/settings",

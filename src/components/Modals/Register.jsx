@@ -76,7 +76,11 @@ const Register = ({ setRegOpen, handleClose }) => {
           </button>
         </form>
 
-        <p className="text-center mt-3 text-sm">or continue with</p>
+        <div className="text-sm flex items-center justify-center gap-3 my-3">
+          <hr className="w-1/2" />
+          or
+          <hr className="w-1/2" />
+        </div>
         <SocialLogin handleClose={handleClose} />
 
         <div className="flex gap-1 text-sm justify-center mt-5">

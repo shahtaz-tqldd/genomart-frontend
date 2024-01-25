@@ -1,24 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { IoIosArrowForward } from "react-icons/io";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useGetSettingsInfoQuery } from "../../../feature/dashboard/dashboardApiSlice";
 import { Link } from "react-router-dom";
 
-const Banner = () => {
-  const [banners, setBanners] = useState([]);
-  const { data: info, isSuccess } = useGetSettingsInfoQuery(
-    {},
-    { refetchOnReconnect: true }
-  );
-  useEffect(() => {
-    if (info?.success) {
-      setBanners(info?.data?.banners || []);
-    }
-  }, [info]);
-
+const Banner = ({ banners }) => {
   const [swiperRef, setSwiperRef] = useState();
 
   const handlePrevious = useCallback(() => {
@@ -59,12 +47,12 @@ const Banner = () => {
           disableOnInteraction: false,
         }}
       >
-        {banners?.map(({ url, productId }, i) => (
+        {banners?.map((banner, i) => (
           <SwiperSlide key={i}>
             <div
               style={{
                 height: "560px",
-                backgroundImage: `url(${url})`,
+                backgroundImage: `url(${banner?.url})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -73,7 +61,7 @@ const Banner = () => {
             >
               <div className="container pl-20">
                 <Link
-                  to={`/products/${productId}`}
+                  to={`/products/${banner?.productId}`}
                   className="mt-[380px] inline-block text-center w-40 border-2 py-2 rounded-full bg-primaryColor text-white font-bold border-primaryColor hover:bg-primaryColorh tr"
                 >
                   Buy Now

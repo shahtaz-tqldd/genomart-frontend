@@ -1,10 +1,10 @@
 import React from "react";
-import { FaFacebook, FaGoogle, FaTwitter } from "react-icons/fa";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../../firebase/firebase.config";
 import { useDispatch } from "react-redux";
 import { userLoggedIn } from "../../feature/auth/authSlice";
 import toast from "react-hot-toast";
+import googleImg from "../../assets/images/google.png";
 import { useUserSocialLoginMutation } from "../../feature/auth/authApiSlice";
 const auth = getAuth(app);
 
@@ -41,13 +41,12 @@ const SocialLogin = ({ handleClose }) => {
   };
 
   return (
-    <div className="flex gap-6 justify-center mt-3">
-      <FaGoogle
-        onClick={handleGoogleLogin}
-        className="text-xl cursor-pointer text-red-500 hover:text-red-600 tr"
-      />
-      <FaFacebook className="text-xl cursor-pointer text-blue-600 hover:text-blue-700 tr" />
-      <FaTwitter className="text-xl cursor-pointer text-blue-400 hover:text-blue-500 tr" />
+    <div
+      onClick={handleGoogleLogin}
+      className="flex items-center gap-2 justify-center text-sm font-semibold cursor-pointer border py-2.5 rounded-lg hover:bg-slate-800 hover:text-white tr"
+    >
+      <img src={googleImg} alt="" className="h-4 w-4" />
+      Continue with Google
     </div>
   );
 };

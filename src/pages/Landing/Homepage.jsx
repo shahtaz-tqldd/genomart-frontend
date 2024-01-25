@@ -1,23 +1,28 @@
+import { useGetSettingsInfoQuery } from "../../feature/dashboard/dashboardApiSlice";
 import useTitle from "../../hooks/useTitle";
-import Banner from "./Banner/Banner";
-import HomeCategories from "./Categories/HomeCategories";
-import Features from "./Features/Features";
-import HomeProducts from "./HomeProducts/HomeProducts";
-import PickOfTheDayProducts from "./PickOfTheDayProducts/PickOfTheDayProducts";
-import SpecialOfferProducts from "./SpecialOfferProducts/SpecialOfferProducts";
-import TopSale from "./TopSale/TopSale";
+import Banner from "./blocks/Banner";
+import HomeCategories from "./blocks/HomeCategories";
+import Features from "./blocks/Features";
+import HomeProducts from "./blocks/HomeProducts";
+import PickOfTheDayProducts from "./blocks/PickOfTheDayProducts";
+import SpecialOfferProducts from "./blocks/SpecialOfferProducts";
+import TopSale from "./blocks/TopSale";
 
 const Homepage = () => {
-  useTitle("Genomart")
+  const { data: info, isSuccess } = useGetSettingsInfoQuery(
+    {},
+    { refetchOnReconnect: true }
+  );
+  useTitle(info?.data?.name || "Shop Name");
   return (
     <div>
-      <Banner />
+      <Banner banners={info?.data?.banners} />
       <HomeCategories />
-      <Features/>
-      <HomeProducts/>
-      <SpecialOfferProducts/>
-      <PickOfTheDayProducts/>
-      <TopSale/>
+      <Features />
+      <HomeProducts />
+      <SpecialOfferProducts specialOffer={info?.data?.specialOffer} />
+      <PickOfTheDayProducts />
+      <TopSale />
     </div>
   );
 };

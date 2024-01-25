@@ -20,6 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ParsedText from "../../utiles/ParsedText";
 import {
   useAddToWishlistMutation,
+  useGetMyWishListQuery,
   useGetSingleProductQuery,
 } from "../../feature/products/productsApiSlice";
 import Ratings from "../../utiles/Ratings";
@@ -107,28 +108,34 @@ const ProductDetails = () => {
   };
 
   // ADD TO WISHLIST FUNCTIONALITIS
-  const [isAddedToWishList, setIsAddedToWishList] = useState(
-    user?.wishList?.find((pid) => pid === id) ? true : false
+  const { data: wishlist } = useGetMyWishListQuery(
+    { token },
+    { refetchOnReconnect: true, skip: !token }
   );
+  const [isAddedToWishList, setIsAddedToWishList] = useState(false);
+
+  useEffect(() => {
+    if (wishlist?.success) {
+      setIsAddedToWishList(
+        wishlist?.data?.find((p) => p?._id === id) ? true : false
+      );
+    }
+  }, [wishlist]);
 
   const [addToWishList] = useAddToWishlistMutation() || {};
   const handleAddToWishList = async () => {
-    setIsAddedToWishList(!isAddedToWishList);
-    try {
-      const res = await addToWishList({
-        token,
-        id,
-        bodyData: { action: isAddedToWishList ? "remove" : "add" },
-      });
-      if (res?.data?.success) {
-        toast.success(res?.data?.message);
-        dispatch(updateUserState({ user: res?.data?.data }));
-      } else {
-        toast.error(res?.error?.data?.message);
-        setIsAddedToWishList(!isAddedToWishList);
-      }
-    } catch (error) {
-      setIsAddedToWishList(!isAddedToWishList);
+    if (!token) {
+      return dispatch(authModalOpen());
+    }
+    const res = await addToWishList({
+      token,
+      id,
+      bodyData: { action: isAddedToWishList ? "remove" : "add" },
+    });
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.error?.data?.message);
     }
   };
 
@@ -281,10 +288,7 @@ const ProductDetails = () => {
               </div>
             )}
           </button>
-          <button
-            onClick={handleAddToWishList}
-            className="text-gray-800"
-          >
+          <button onClick={handleAddToWishList} className="text-gray-800">
             {isAddedToWishList ? (
               <div className="flex items-center gap-2">
                 <FaHeart className="text-lg mb-0.5" />{" "}

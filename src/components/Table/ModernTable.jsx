@@ -25,7 +25,6 @@ const ModernTable = ({
         boxShadow: "none",
         border: "1px solid #e4e4e4",
         borderRadius: "12px",
-        // padding:'0 20px'
       }}
       component={Paper}>
       <Table aria-label="collapsible table">

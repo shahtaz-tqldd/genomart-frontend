@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import { FaAngleLeft } from "react-icons/fa";
-import { categories } from "../../../assets/data/mock/categories";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
@@ -61,9 +60,6 @@ const HomeCategories = () => {
             <SwiperSlide key={i}>
               <div
                 onClick={() => handleNavigateProduct(category)}
-                // data-aos="fade-up"
-                // data-aos-duration="1000"
-                // data-aos-delay={`${150 * (i + 1)}`}
                 className="flex flex-col items-center group cursor-pointer"
               >
                 <div className="bg-[#EEF5FF]  group-hover:bg-blue-200 tr h-32 w-32 rounded-full grid place-items-center">

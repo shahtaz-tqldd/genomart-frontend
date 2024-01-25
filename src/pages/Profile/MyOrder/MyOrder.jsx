@@ -1,7 +1,7 @@
 import React from "react";
-import Heading from "../../ui/Heading/Heading";
+import Heading from "../../../ui/Heading/Heading";
 import MyOrderTable from "./MyOrderTable";
-import useTitle from "../../hooks/useTitle";
+import useTitle from "../../../hooks/useTitle";
 
 const MyOrder = () => {
   useTitle("My Orders")

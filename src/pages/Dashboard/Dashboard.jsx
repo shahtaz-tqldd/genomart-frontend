@@ -30,7 +30,6 @@ const Dashboard = () => {
     refetchOnReconnect: true,
   });
 
-  console.log(data?.data);
   return (
     <div>
       <div className="grid grid-cols-4 gap-5">
