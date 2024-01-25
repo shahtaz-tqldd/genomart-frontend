@@ -62,9 +62,9 @@ const Banner = ({ banners }) => {
               <div className="container pl-20">
                 <Link
                   to={`/products/${banner?.productId}`}
-                  className="mt-[380px] inline-block text-center w-40 border-2 py-2 rounded-full bg-primaryColor text-white font-bold border-primaryColor hover:bg-primaryColorh tr"
+                  className="mt-[380px] inline-block text-center w-60 py-3 text-xl rounded-full bg-slate-800 text-white font-bold hover:bg-secondary tr"
                 >
-                  Buy Now
+                  Shop Now
                 </Link>
               </div>
             </div>

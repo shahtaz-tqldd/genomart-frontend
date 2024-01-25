@@ -1,16 +1,35 @@
 import React from "react";
 import ProductCard from "../../../components/ProductCards/ProductCard";
-import { products } from "../../../assets/data/mock/products";
 import creative from "../../../assets/images/creative.png";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useGetAllProductsQuery } from "../../../feature/products/productsApiSlice";
+import HomeProductSkeleton from "../../../components/Skeletons/HomeProductSkeleton";
 
 const HomeProducts = () => {
   const { data, isLoading, isSuccess, isError } = useGetAllProductsQuery(
     { limit: 10 },
     { refetchOnReconnect: true }
   );
+  const getNumberOfColumns = () => {
+    if (window.innerWidth >= 1024) {
+      return 10;
+    } else if (window.innerWidth >= 768) {
+      return 6;
+    } else {
+      return 4;
+    }
+  };
+
+  let content;
+
+  if ((isLoading && !isSuccess) || isError) {
+    content = Array(getNumberOfColumns())
+      .fill(null)
+      .map((_, i) => <HomeProductSkeleton key={i} />);
+  } else if (!isLoading && isSuccess && !isError) {
+    content = data?.data?.map((data, i) => <ProductCard key={i} data={data} />);
+  }
 
   return (
     <div className="container my-20">
@@ -21,11 +40,8 @@ const HomeProducts = () => {
         </h2>
         <div className="border-gray-700 border-2 w-40 mt-5"></div>
       </div>
-      <div className="mt-12 grid grid-cols-5 gap-8">
-        {data?.data?.map((data, i) => (
-          <ProductCard key={i} data={data} />
-        ))}
-      </div>
+      <div className="mt-12 grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-8">{content}</div>
+
       <div className="flex justify-center mt-12">
         <Link
           to={"/products"}
