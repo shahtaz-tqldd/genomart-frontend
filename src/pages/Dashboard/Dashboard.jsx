@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { useGetStatsQuery } from "../../feature/dashboard/dashboardApiSlice";
-import StatCard from "./shared/StatCard";
 import { bgcolors } from "../../assets/data/colors";
 import cart from "../../assets/images/cart.png";
 import cart2 from "../../assets/images/cart2.png";
@@ -16,6 +15,7 @@ import TopSoldProducts from "./Dashboard/TopSoldProducts";
 import Heading from "../../ui/Heading/Heading";
 import NewOrders from "./Dashboard/NewOrders";
 import SpecialOfferProducts from "./Dashboard/SpecialOfferProducts";
+import StatCard from "./Dashboard/StatCard";
 
 const Dashboard = () => {
   const { token } = useSelector((state) => state?.auth);

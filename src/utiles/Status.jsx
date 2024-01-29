@@ -8,6 +8,8 @@ const Status = ({ status }) => {
       "bg-blue-100 text-blue-600": status === "processing",
       "bg-emerald-100 text-emerald-500": status === "completed",
       "bg-gray-100 text-gray-400": status === "cancel",
+      "bg-emerald-50 text-emerald-500": status === "user",
+      "bg-blue-500 text-white": status === "admin",
     }
   );
   return (

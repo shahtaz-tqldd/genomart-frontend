@@ -87,7 +87,7 @@ const ProductCard = ({ data }) => {
       className="flex flex-col justify-between group cursor-pointer"
     >
       <div>
-        <div className="h-56 bg-gray-100 w-full rounded-xl overflow-hidden relative">
+        <div className="lg:h-56 md:h-48 h-40 bg-gray-100 w-full rounded-xl overflow-hidden relative">
           <img
             src={images[0]?.url || null}
             alt=""
@@ -111,7 +111,7 @@ const ProductCard = ({ data }) => {
       <div className="overflow-hidden h-[118px]">
         <div className="flex flex-col items-center translate-y-0 group-hover:-translate-y-10 tr">
           <p className="text-sm text-gray-600 text-center">
-            {description?.slice(0, 56) + "..."}
+            {description?.slice(0, 48) + "..."}
           </p>
           <h2 className="text-2xl mt-2 text-orange-500">${price}</h2>
           <Ratings rating={4} size={12} mt={8} />

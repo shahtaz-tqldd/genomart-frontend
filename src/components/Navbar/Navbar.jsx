@@ -11,6 +11,8 @@ import NavDropdown from "./NavDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { authModalOpen } from "../../feature/auth/authModalSlice";
 import Profilemenu from "../../ui/Menu/ProfileMenu";
+import { FiBox } from "react-icons/fi";
+import { HiMiniArchiveBox } from "react-icons/hi2";
 
 const Navbar = () => {
   const { user } = useSelector((state) => state?.auth);
@@ -26,8 +28,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleMenuOptionClick = (e, option) => {
-    if (option.item === "Settings") {
-      navigate("/settings");
+    if (option.item === "My Orders") {
+      navigate("/profile/my-orders");
       handleMenuClose();
     }
     if (option.item === "Home") {
@@ -177,7 +179,7 @@ const Navbar = () => {
                   options={[
                     { item: "Home", icon: HiHome },
                     { item: "My Profile", icon: HiUser },
-                    { item: "Settings", icon: IoMdSettings },
+                    { item: "My Orders", icon: HiMiniArchiveBox },
                   ]}
                   onClick={handleMenuOptionClick}
                 />

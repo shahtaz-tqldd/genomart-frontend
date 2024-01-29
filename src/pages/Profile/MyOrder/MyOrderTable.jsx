@@ -117,6 +117,7 @@ const MyOrderTable = () => {
         menuData={menuData}
         setAction={setAction}
         setPage={setPage}
+        totalCount={data?.meta?.total || 0}
       />
     );
   }

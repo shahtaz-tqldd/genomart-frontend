@@ -11,6 +11,9 @@ const HomeProducts = () => {
     { limit: 10 },
     { refetchOnReconnect: true }
   );
+
+  let content;
+
   const getNumberOfColumns = () => {
     if (window.innerWidth >= 1024) {
       return 10;
@@ -20,8 +23,6 @@ const HomeProducts = () => {
       return 4;
     }
   };
-
-  let content;
 
   if ((isLoading && !isSuccess) || isError) {
     content = Array(getNumberOfColumns())
@@ -40,7 +41,9 @@ const HomeProducts = () => {
         </h2>
         <div className="border-gray-700 border-2 w-40 mt-5"></div>
       </div>
-      <div className="mt-12 grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-8">{content}</div>
+      <div className="mt-12 grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-8 md:gap-6 gap-4">
+        {content}
+      </div>
 
       <div className="flex justify-center mt-12">
         <Link

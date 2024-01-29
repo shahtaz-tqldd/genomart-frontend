@@ -31,7 +31,7 @@ const Wishlistpage = () => {
   return (
     <div>
       <Heading title={"My Wishlist"} />
-      <div className="grid grid-cols-2 gap-8 mt-10">{content}</div>
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-5 mt-10">{content}</div>
       {wishlist?.data <= 0 && (
         <h2 className="text-2xl text-gray-400">
           You have no items in wishlist!

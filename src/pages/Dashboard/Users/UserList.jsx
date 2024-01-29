@@ -1,10 +1,10 @@
 import React from "react";
 import UserTable from "./UserTable";
-import AddButton from "../../../ui/Buttons/AddButton";
 import Greetings from "../../../utiles/Greetings";
-import { Link } from "react-router-dom";
+import useTitle from "../../../hooks/useTitle";
 
 const UserList = () => {
+  useTitle("User List")
   return (
     <div>
       <div className="flex justify-between items-start">

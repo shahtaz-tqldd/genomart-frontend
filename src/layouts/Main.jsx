@@ -1,18 +1,19 @@
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { useSelector } from "react-redux";
-import AuthModal from "../components/Modals/AuthModal";
+import AuthModal from "../components/AuthModal/AuthModal";
 
 const Main = () => {
   const authModal = useSelector((state) => state?.authModal);
   return (
-    <div>
+    <React.Fragment>
       <Navbar />
       <Outlet />
       <Footer />
       {authModal?.isOpen && <AuthModal />}
-    </div>
+    </React.Fragment>
   );
 };
 

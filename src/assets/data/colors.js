@@ -17,3 +17,4 @@ export const bgcolors = [
   "bg-[#22092C]",
   "bg-[#706233]",
 ];
+

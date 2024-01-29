@@ -32,7 +32,7 @@ const TopSoldProducts = () => {
           </div>
           <div className="col-span-2 text-center text-xs">{p?.category}</div>
           <div className="col-span-1 text-center text-sm font-bold">
-            {p?.totalSold || 12}
+            {p?.numSold || 0}
           </div>
           <div className="col-span-1 text-end mr-2 text-sm">
             {p?.stock || 0}

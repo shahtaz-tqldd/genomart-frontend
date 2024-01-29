@@ -63,7 +63,7 @@ const Login = ({ setRegOpen, handleClose }) => {
             type="email"
             variant="standard"
             defaultValue={initialValue?.email}
-            InputLabelProps={{ shrink: initialValue?.email ? true : false }}
+            InputLabelProps={{ shrink: initialValue?.email && true  }}
             {...register("email", { required: true })}
           />
           <TextField
@@ -72,7 +72,7 @@ const Login = ({ setRegOpen, handleClose }) => {
             autoComplete="current-password"
             variant="standard"
             defaultValue={initialValue?.password}
-            InputLabelProps={{ shrink: initialValue?.password ? true : false }}
+            InputLabelProps={{ shrink: initialValue?.password && true }}
             {...register("password", { required: true })}
           />
           <div className="flex justify-end mb-5">

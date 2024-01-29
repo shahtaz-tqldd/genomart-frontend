@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa";
 const HomeProductSkeleton = () => {
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full h-56 rounded-xl bg-gray-300 animate-pulse"></div>
+      <div className="w-full lg:h-56 md:h-48 h-36 rounded-xl bg-gray-300 animate-pulse"></div>
       <div className="w-[95%] bg-gray-300 h-5 animate-pulse mt-3"></div>
       <div className="w-28 bg-gray-300 h-5 animate-pulse mt-1.5 mb-3"></div>
       <div className="w-full bg-gray-300 h-3.5 animate-pulse mt-3"></div>

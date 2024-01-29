@@ -20,7 +20,6 @@ const PickOfTheDayProducts = () => {
     swiperRef?.slideNext();
   }, [swiperRef]);
 
-
   const { data, isLoading, isSuccess, isError } = useGetAllProductsQuery(
     { limit: 7 },
     { refetchOnReconnect: true }
@@ -61,14 +60,34 @@ const PickOfTheDayProducts = () => {
               delay: 4000,
               disableOnInteraction: false,
             }}
+            breakpoints={{
+              350: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 16,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              1200: {
+                slidesPerView: 4,
+                spaceBetween: 24,
+              },
+            }}
             className="pb-12"
-            
           >
             {data?.data?.map((data, i) => (
-             <SwiperSlide key={i}>
-               <PickOfTheProductCard data={data} color={bgcolors[i % bgcolors.length]} />
-             </SwiperSlide>
-          ))}
+              <SwiperSlide key={i}>
+                <PickOfTheProductCard
+                  data={data}
+                  color={bgcolors[i % bgcolors.length]}
+                />
+              </SwiperSlide>
+            ))}
           </Swiper>
         </div>
       </div>

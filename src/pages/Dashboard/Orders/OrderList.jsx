@@ -3,8 +3,10 @@ import OrderTable from "./OrderTable";
 import Greetings from "../../../utiles/Greetings";
 import SearchInput from "../../../ui/InputField/SearchInput";
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import useTitle from "../../../hooks/useTitle";
 
 const OrderList = () => {
+  useTitle("Order List");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState([]);
 

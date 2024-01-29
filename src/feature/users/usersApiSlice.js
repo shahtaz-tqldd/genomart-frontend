@@ -18,14 +18,16 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
 
     updateUser: builder.mutation({
-      query: (data) => {
-        const { id, bodyData } = data;
+      query: ({ bodyData, id, token }) => {
         return {
-          url: `/user/${id}`,
+          url: `/user/update/${id}`,
           method: "PATCH",
           preparedHeaders: (headers) => {
             headers.set("Content-type", "multipart/form-data");
             return headers;
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
           body: bodyData,
           formData: true,
@@ -36,9 +38,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     getAllUser: builder.query({
       query: (data) => {
-        const { token } = data;
+        const { token, page } = data;
         return {
-          url: `user`,
+          url: `user?page=${page}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,35 +50,35 @@ export const userApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["user"],
     }),
-    // getSingleUser: builder.query({
-    //   query: (data) => {
-    //     const { access_token, id } = data;
-    //     return {
-    //       url: `/user/${id}`,
-    //       method: "GET",
-    //       headers: {
-    //         Authorization: `Bearer ${access_token}`,
-    //         "Content-Type": "application/json;charset=UTF-8",
-    //       },
-    //     };
-    //   },
-    //   providesTags: ["User"],
-    // }),
 
-    // deleteSingleUser: builder.mutation({
-    //   query: (data) => {
-    //     const { id, access_token, bodyData } = data;
-    //     return {
-    //       url: `/user/${id}`,
-    //       method: "DELETE",
-    //       headers: {
-    //         Authorization: `Bearer ${access_token}`,
-    //         "Content-Type": "application/json;charset=UTF-8",
-    //       },
-    //     };
-    //   },
-    //   invalidatesTags: ["User"],
-    // }),
+    disableUser: builder.mutation({
+      query: ({ id, token, disable }) => {
+        return {
+          url: `/user/${id}?disable=${disable}`,
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        };
+      },
+      invalidatesTags: ["user"],
+    }),
+
+    updateUserRole: builder.mutation({
+      query: ({ id, token, role }) => {
+        return {
+          url: `/user/update-role/${id}?role=${role}`,
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        };
+      },
+      invalidatesTags: ["user"],
+    }),
+
     getUserProfile: builder.query({
       query: (data) => {
         const { access_token } = data;
@@ -99,4 +101,6 @@ export const {
   useGetAllUserQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
+  useDisableUserMutation,
+  useUpdateUserRoleMutation,
 } = userApiSlice;

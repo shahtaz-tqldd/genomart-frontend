@@ -23,10 +23,8 @@ const NewOrders = () => {
       </div>
       <hr className="my-2" />
       {data?.data?.slice(1, 7)?.map((order, i) => (
-        <a
+        <div
           key={i}
-          target="_blank"
-          href={`/products/${order?._id}`}
           className="grid grid-cols-6 items-center hover:bg-green-100 tr cursor-pointer px-1 py-2 rounded-lg border-b"
         >
           <div className="col-span-1 text-sm font-bold ml-2">
@@ -41,14 +39,14 @@ const NewOrders = () => {
             {order?.products?.map(({ productId, color, size }, i) => (
               <h2 key={i} className="text-slate-800">
                 <strong>{i + 1}.</strong> {productId?.name}
-                {order?.products?.length > i+1 && ", "}
+                {order?.products?.length > i + 1 && ", "}
               </h2>
             ))}
           </div>
           <div className="col-span-1 text-end mr-2 text-xs">
             {duration(order?.createdAt)}
           </div>
-        </a>
+        </div>
       ))}
     </div>
   );

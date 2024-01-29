@@ -9,10 +9,9 @@ import {
   useGetMyWishListQuery,
 } from "../../feature/products/productsApiSlice";
 import toast from "react-hot-toast";
-import { updateUserState } from "../../feature/auth/authSlice";
 
 const ProductCardList = ({ data }) => {
-  const { token, user } = useSelector((state) => state?.auth);
+  const { token } = useSelector((state) => state?.auth);
   const { images, name, price, description, _id, ratings = 4.5, stock } = data;
   const dispatch = useDispatch();
 

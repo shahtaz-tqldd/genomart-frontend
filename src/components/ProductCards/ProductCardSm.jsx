@@ -76,7 +76,7 @@ const ProductCardsm = ({ data }) => {
 
   return (
     <div onClick={handleNavigate} className="group cursor-pointer">
-      <div className="h-48 bg-gray-100 w-full rounded-xl overflow-hidden relative">
+      <div className="lg:h-48 md:h-42 h-36 bg-gray-100 w-full rounded-xl overflow-hidden relative">
         <img
           src={images[0]?.url}
           alt=""
@@ -100,7 +100,7 @@ const ProductCardsm = ({ data }) => {
         <div className="overflow-hidden h-[106px]">
           <div className="flex flex-col items-center translate-y-0 group-hover:-translate-y-10 tr">
             <p className="text-xs text-gray-600 text-center">
-              {description.slice(0, 60)}
+              {description.slice(0, 46) + "..."}
             </p>
             <h2 className="text-xl mt-2 text-orange-500">$ {price}</h2>
             <Ratings rating={4.5} size={13} mt={8} />

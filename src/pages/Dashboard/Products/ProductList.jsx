@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import useTitle from "../../../hooks/useTitle";
 
 const ProductList = () => {
-  useTitle("Admin Dashboard | Product List")
+  useTitle("Product List")
   return (
     <div>
       <div className="flex justify-between items-start">

@@ -14,9 +14,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { HiTrash } from "react-icons/hi";
 import { AiFillEye } from "react-icons/ai";
 import { MdOutlineEditNote, MdOutlinePostAdd } from "react-icons/md";
-import { TbArrowBackUpDouble, TbMessageReport, TbStatusChange } from "react-icons/tb";
+import {
+  TbArrowBackUpDouble,
+  TbMessageReport,
+  TbStatusChange,
+} from "react-icons/tb";
 import { CgSandClock } from "react-icons/cg";
-import { BiSolidUserX } from "react-icons/bi";
+import { BiSolidUser, BiSolidUserX } from "react-icons/bi";
+import { FaUserCheck, FaUserShield } from "react-icons/fa";
 
 const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
   const [open, setOpen] = useState(false);
@@ -42,7 +47,8 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
           "& > *": {
             borderBottom: "none",
           },
-        }}>
+        }}
+      >
         {columns?.map((column, index) => (
           <TableCell
             key={index}
@@ -54,7 +60,8 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
                   : index === columns?.length - 1 && !Boolean(item?.collasped)
                   ? "right"
                   : "center",
-            }}>
+            }}
+          >
             <div
               className={`${
                 (column?.field === "status" &&
@@ -62,7 +69,8 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
                   "text-green-600 bg-green-100 px-2 py-1 rounded text-sm font-bold") ||
                 (item?.status === "Banned" &&
                   "text-red-600 bg-red-100 px-2 py-1 rounded text-sm font-bold")
-              }`}>
+              }`}
+            >
               {item[column.field]}
             </div>
           </TableCell>
@@ -71,12 +79,14 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
           <TableCell
             sx={
               item?.collasped ? { textAlign: "right" } : { textAlign: "center" }
-            }>
+            }
+          >
             {item?.collasped && (
               <IconButton
                 aria-label="expand row"
                 size="small"
-                onClick={() => setOpen(!open)}>
+                onClick={() => setOpen(!open)}
+              >
                 {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
               </IconButton>
             )}
@@ -88,7 +98,8 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
               aria-expanded={Boolean(openThreeDot) ? "true" : undefined}
               onClick={handleThreeDotClick}
               aria-label="delete"
-              size="small">
+              size="small"
+            >
               <MoreVertIcon fontSize="small" />
             </IconButton>
           </TableCell>
@@ -98,7 +109,8 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
         <TableRow>
           <TableCell
             style={{ paddingBottom: 0, paddingTop: 0, background: "#F4F6F8" }}
-            colSpan={columns.length + 1}>
+            colSpan={columns.length + 1}
+          >
             <Collapse
               in={open}
               timeout="auto"
@@ -106,7 +118,8 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
               style={{
                 transition: "height 300ms",
                 overflow: "hidden",
-              }}>
+              }}
+            >
               <Box sx={{ padding: "1rem 0" }}>{item?.collasped}</Box>
             </Collapse>
           </TableCell>
@@ -115,7 +128,7 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
 
       {threeDot === false ? null : (
         <Menu
-          sx={{ marginLeft: "-3rem", }}
+          sx={{ marginLeft: "-3rem" }}
           id="basic-menu"
           disableScrollLock={true}
           anchorEl={openThreeDot}
@@ -123,15 +136,18 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
           onClose={handleThreeDotClose}
           MenuListProps={{
             "aria-labelledby": "basic-button",
-          }}>
+          }}
+        >
           {menuData?.map((item, index) => (
             <MenuItem
+              key={index}
               sx={{
                 padding: "5px 10px 5px 6px",
                 margin: "0 10px 0 7px",
                 borderRadius: "4px",
               }}
-              onClick={() => handleMenuAction(item)}>
+              onClick={() => handleMenuAction(item)}
+            >
               <div className="flex items-center gap-2 tex text-sm font-semibold text-gray-600">
                 {item === "Edit" ? (
                   <MdOutlineEditNote className="text-lg" />
@@ -139,8 +155,12 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
                   <AiFillEye className="text-lg" />
                 ) : item === "Disable" ? (
                   <BiSolidUserX className="text-lg text-red-500" />
+                ) : item === "Enable" ? (
+                  <BiSolidUser className="text-lg" />
                 ) : item === "Make Admin" ? (
-                  <BiSolidUserX className="text-lg text-red-500" />
+                  <FaUserShield className="text-[16px] ml-[2px]" />
+                ) : item === "Make User" ? (
+                  <FaUserCheck className="text-[16px] ml-[2px]" />
                 ) : item === "Change Status" ? (
                   <TbStatusChange className="text-lg" />
                 ) : item === "Special Offer" ? (
@@ -154,7 +174,17 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
                 ) : (
                   <HiTrash className="text-red-500 text-lg" />
                 )}
-                <span className={` ${item==="Delete" ? "text-red-500": item==="Disable" ? "text-red-500": "text-gray-600"}`}>{item}</span>
+                <span
+                  className={` ${
+                    item === "Delete"
+                      ? "text-red-500"
+                      : item === "Disable"
+                      ? "text-red-500"
+                      : "text-gray-600"
+                  }`}
+                >
+                  {item}
+                </span>
               </div>
             </MenuItem>
           ))}

@@ -1,7 +1,7 @@
 import { MdAutoGraph } from "react-icons/md";
 import { FiSettings, FiUsers } from "react-icons/fi";
 
-import { TbBrandBackbone, TbBrandFirebase, TbBrandAppgallery } from "react-icons/tb";
+import { TbBrandBackbone, TbBrandFirebase, TbBrandAppgallery, TbBrandBumble } from "react-icons/tb";
 
 import { IoCartOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
@@ -48,7 +48,7 @@ export const dsnavdata = [
       {
         title: "Featured",
         link: "/banners",
-        icon: GrCodeSandbox,
+        icon: TbBrandBumble,
         children: [
           {
             title: "Hero Banner",

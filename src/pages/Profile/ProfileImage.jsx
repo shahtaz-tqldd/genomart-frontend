@@ -9,8 +9,9 @@ const ProfileImage = ({
   accept,
   id,
   maxSize,
+  currentImage
 }) => {
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImage, setSelectedImage] = useState(currentImage);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];

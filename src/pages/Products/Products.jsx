@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { products } from "../../assets/data/mock/products";
+import React, { useState } from "react";
 import ProductCardsm from "../../components/ProductCards/ProductCardSm";
-import { categories } from "../../assets/data/mock/categories";
-import { IoGridOutline, IoSearch } from "react-icons/io5";
+import { IoGridOutline } from "react-icons/io5";
 import { AiOutlineMenu } from "react-icons/ai";
 import ProductCardList from "../../components/ProductCards/ProductCardList";
 import { Box, Slider } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import {
   useGetAllCategoriesQuery,
   useGetAllProductsQuery,
@@ -15,14 +12,15 @@ import {
 import NotFound from "../../utiles/NotFound";
 import useTitle from "../../hooks/useTitle";
 import SearchInput from "../../ui/InputField/SearchInput";
+import ProductCardSkeleton from "../../components/Skeletons/ProductCardSkeleton";
+import ProductCardListSkeleton from "../../components/Skeletons/ProductCardListSkeleton";
 
 const Products = () => {
-  useTitle('Genomart Product List')
+  useTitle("Genomart Product List");
   const { state } = useLocation();
   const cat = state?.category || "";
 
   const [selectedCategory, setSelectedCategory] = useState([cat]);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
 
@@ -37,7 +35,7 @@ const Products = () => {
   };
 
   const { data, isLoading, isSuccess, isError } = useGetAllProductsQuery(
-    { page, limit:12, category: selectedCategory[0], searchTerm },
+    { page, limit: 12, category: selectedCategory[0], searchTerm },
     { refetchOnReconnect: true }
   );
 
@@ -58,9 +56,60 @@ const Products = () => {
     });
   };
 
+  let content;
+
+  const getNumberOfColumns = () => {
+    if (window.innerWidth >= 1024) {
+      return 8;
+    } else if (window.innerWidth >= 768) {
+      return 6;
+    } else {
+      return 4;
+    }
+  };
+
+  if ((isLoading && !isSuccess) || isError) {
+    content = grid ? (
+      <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-8">
+        {Array(getNumberOfColumns())
+          .fill(null)
+          .map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 gap-6 mt-8">
+        {Array(getNumberOfColumns())
+          .fill(null)
+          .map((_, i) => (
+            <ProductCardListSkeleton key={i} />
+          ))}
+      </div>
+    );
+  } else if (!isLoading && isSuccess && !isError) {
+    content =
+      data?.meta?.total > 0 ? (
+        grid ? (
+          <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-8">
+            {data?.data?.map((data, i) => (
+              <ProductCardsm key={i} data={data} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 mt-8">
+            {data?.data?.map((data, i) => (
+              <ProductCardList key={i} data={data} />
+            ))}
+          </div>
+        )
+      ) : (
+        <NotFound text={"No products found!"} />
+      );
+  }
+
   return (
-    <div className="container mt-12 flex gap-12">
-      <div className="w-[25%] h-full sticky top-28">
+    <div className="container mt-12 flex md:flex-row flex-col gap-12">
+      <div className="lg:w-[25%] md:w-[40%] w-full lg:block md:block hidden h-full sticky top-28">
         <h2 className="text-xl font-medium mb-3">Product Status</h2>
         {["All Items", "On Stock", "New Arival"]?.map((c, i) => (
           <div key={i} className="flex items-center gap-2 text-sm">
@@ -71,10 +120,9 @@ const Products = () => {
         <h2 className="text-xl font-medium mb-3 mt-8">Price Range</h2>
         <Box sx={{ width: 300 }}>
           <Slider
-            getAriaLabel={() => "Temperature range"}
+            getAriaLabel={() => "Price Range"}
             value={value}
             onChange={handleChange}
-            // valueLabelDisplay="auto"
             getAriaValueText={valuetext}
           />
         </Box>
@@ -107,7 +155,7 @@ const Products = () => {
           </div>
         ))}
       </div>
-      <div className="w-[75%]">
+      <div className="lg:w-[75%] md:w-[60%] w-full">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <IoGridOutline
@@ -127,26 +175,10 @@ const Products = () => {
               }`}
             />
           </div>
-          <SearchInput setSearchTerm={setSearchTerm} placeholder={'Products'} />
+          <SearchInput setSearchTerm={setSearchTerm} placeholder={"Products"} />
         </div>
 
-        {data?.meta?.total > 0 ? (
-          grid ? (
-            <div className="grid grid-cols-4 gap-4 mt-8">
-              {data?.data?.map((data, i) => (
-                <ProductCardsm key={i} data={data} />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-6 mt-8">
-              {data?.data?.map((data, i) => (
-                <ProductCardList key={i} data={data} />
-              ))}
-            </div>
-          )
-        ) : (
-          <NotFound text={"No products found!"} />
-        )}
+        {content}
       </div>
     </div>
   );

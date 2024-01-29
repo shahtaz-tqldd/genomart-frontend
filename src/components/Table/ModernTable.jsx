@@ -1,4 +1,3 @@
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,7 +15,6 @@ const ModernTable = ({
   setAction,
   totalCount,
   setPage,
-  limit,
   threeDot,
 }) => {
   return (

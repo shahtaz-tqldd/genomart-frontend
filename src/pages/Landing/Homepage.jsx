@@ -9,14 +9,14 @@ import SpecialOfferProducts from "./blocks/SpecialOfferProducts";
 import TopSale from "./blocks/TopSale";
 
 const Homepage = () => {
-  const { data: info, isSuccess } = useGetSettingsInfoQuery(
+  const { data: info } = useGetSettingsInfoQuery(
     {},
     { refetchOnReconnect: true }
   );
   useTitle(info?.data?.name || "Shop Name");
   return (
     <div>
-      <Banner banners={info?.data?.banners} />
+      <Banner banners={info?.data?.banners || []} />
       <HomeCategories />
       <Features />
       <HomeProducts />

@@ -95,7 +95,7 @@ const HomeCategories = () => {
                 onClick={() => handleNavigateProduct(category)}
                 className="flex flex-col items-center group cursor-pointer"
               >
-                <div className="lg:w-32 lg:h-32 md:h-28 md:w-28 w-20 h-20 bg-orange-100 group-hover:bg-orange-200 tr rounded-full grid place-items-center">
+                <div className="lg:w-32 lg:h-32 md:h-28 md:w-28 w-20 h-20 bg-blue-50 group-hover:bg-blue-200 tr rounded-full grid place-items-center">
                   <img
                     src={image}
                     alt=""
@@ -117,18 +117,18 @@ const HomeCategories = () => {
   }
 
   return (
-    <div className="w-full my-20 relative container">
-      <div className="flex justify-between absolute container top-1/2 -translate-y-1/2 z-10">
+    <div className="my-20 container relative">
+    
         <FaAngleLeft
           onClick={handlePrevious}
-          className="text-3xl text-black hover:text-red-500 tr cursor-pointer"
+          className="absolute top-1/2 -translate-y-1/2 ml-2 left-0 text-3xl text-black hover:text-red-500 tr cursor-pointer"
         />
 
         <FaAngleLeft
           onClick={handleNext}
-          className="text-3xl text-black hover:text-red-500 tr -rotate-180 cursor-pointer"
+          className="absolute top-1/2 -translate-y-1/2 mr-2 right-0 text-3xl text-black hover:text-red-500 tr -rotate-180 cursor-pointer"
         />
-      </div>
+     
       {content}
     </div>
   );

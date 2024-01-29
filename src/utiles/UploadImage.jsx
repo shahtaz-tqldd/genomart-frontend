@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import placeholder from "../assets/images/placeholder.png";
 import { HiXMark } from "react-icons/hi2";
 
@@ -31,7 +31,7 @@ const UploadImage = ({
         <label
           htmlFor={id}
           id="image-preview"
-          className="bg-[#F7F7F7] rounded-xl w-full h-[240px] border-gray-400 items-center mx-auto text-center cursor-pointer justify-center flex"
+          className="bg-[#F7F7F7] rounded-xl w-full h-[350px] border-gray-400 items-center mx-auto text-center cursor-pointer justify-center flex"
         >
           <input
             id={id}
@@ -41,7 +41,7 @@ const UploadImage = ({
             onChange={(e) => handleImageUpload(e)}
           />
           {selectedImage ? (
-            <div className="h-[240px] w-full relative">
+            <div className="h-[350px] w-full relative">
               <button
                 onClick={(e) => {
                   e.preventDefault();

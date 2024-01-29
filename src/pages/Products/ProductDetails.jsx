@@ -27,10 +27,11 @@ import Ratings from "../../utiles/Ratings";
 import { authModalOpen } from "../../feature/auth/authModalSlice";
 import useTitle from "../../hooks/useTitle";
 import toast from "react-hot-toast";
-import { updateUserState } from "../../feature/auth/authSlice";
+import Heading from "../../ui/Heading/Heading";
+import placeholder from "../../assets/images/placeholder.png";
 
 const ProductDetails = () => {
-  const { token, user } = useSelector((state) => state?.auth);
+  const { token } = useSelector((state) => state?.auth);
   const { id } = useParams();
   const cart = useSelector((state) => state?.cart);
   const isAddedToCart = cart?.find((p) => p?._id === id);
@@ -140,21 +141,21 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="container grid grid-cols-2 gap-20 mt-12">
+    <div className="container grid lg:grid-cols-2 grid-cols-1 lg:gap-20 md:gap-16 gap-10 lg:mt-12 md:mt-12 mt-4">
       {/* product images */}
       <div>
         <img
-          src={imgSelect}
+          src={isLoading ? placeholder : imgSelect}
           alt=""
-          className="w-full h-[500px] object-contain p-20 bg-gray-100 rounded-xl"
+          className="w-full lg:h-[500px] md:h-[400px] h-[300px] object-contain lg:p-20 md:p-16 p-8 bg-gray-100 rounded-xl"
         />
-        <div className="grid grid-cols-4 gap-6 mt-5">
+        <div className="grid grid-cols-4 lg:gap-6 md:gap-4 gap-3 mt-5">
           {data?.data?.images?.map((img, i) => (
             <img
               onClick={() => setImgSelect(data?.data?.images[i]?.url)}
               key={i}
               src={img?.url}
-              className="bg-blue-50 hover:bg-blue-100 tr object-contain h-full rounded-xl p-5 cursor-pointer"
+              className="bg-blue-50 hover:bg-blue-100 tr object-contain lg:h-[120px] md:h-[100px] h-[72px] w-full rounded-xl lg:p-5 p-2 cursor-pointer"
             />
           ))}
         </div>
@@ -162,8 +163,15 @@ const ProductDetails = () => {
 
       {/* product details */}
       <div>
-        <p>{data?.data?.category}</p>
-        <h2 className="text-3xl font-medium mt-2 mb-4">{data?.data?.name}</h2>
+        <p>
+          {data?.data?.category}{" "}
+          <span className="ml-5 font-bold text-blue-500">
+            {data?.data?.brand}
+          </span>
+        </p>
+        <h2 className="md:text-3xl text-2xl font-medium mt-2 mb-4">
+          {data?.data?.name}
+        </h2>
         <div className="flex items-center gap-4">
           <div
             className={`w-fit flex items-center gap-2 py-1 pl-2 pr-3 rounded ${
@@ -261,7 +269,7 @@ const ProductDetails = () => {
           </div>
           <button
             onClick={handleCheckout}
-            className="group flex items-center gap-3 bg-primaryColor py-2 px-20 text-white border border-primaryColor rounded-lg"
+            className="group flex items-center gap-3 bg-primaryColor py-2 lg:px-20 md:px-16 px-12 text-white border border-primaryColor rounded-lg"
           >
             Checkout
             <FaArrowRightLong className="mt-0.5 group-hover:translate-x-2 tr" />
@@ -269,7 +277,7 @@ const ProductDetails = () => {
         </div>
 
         <hr className="mt-6" />
-        <div className="mt-3 flex items-center gap-10">
+        <div className="mt-3 flex flex-wrap lg:gap-10 md:gap-8 gap-5">
           <button
             onClick={() => {
               !isAddedToCart ? handleAddToCart() : handleRemoveFromCart();
@@ -310,7 +318,7 @@ const ProductDetails = () => {
 
       {/* product specefication */}
       <div>
-        <h2 className="text-xl font-medium mb-4">Product Specefication</h2>
+        <Heading title={"Product Specefication"} />
         <ParsedText
           content={data?.data?.specs}
           className={"text-gray-600 text-sm"}
@@ -319,7 +327,7 @@ const ProductDetails = () => {
 
       {/* comments */}
       <div>
-        <h2 className="text-xl font-medium mb-4">Comments</h2>
+        <Heading title={"Comments"} />
       </div>
     </div>
   );

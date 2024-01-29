@@ -42,7 +42,7 @@ const WishListProductCard = ({ data }) => {
   };
 
   return (
-    <div className="flex gap-5">
+    <div className="flex lg:gap-5 gap-4 border rounded-xl p-2  hover:border-primaryColor tr">
       <div>
         <img
           src={images[0]?.url}
@@ -54,7 +54,7 @@ const WishListProductCard = ({ data }) => {
         {/* name of the product */}
         <h2
           onClick={handleNaviagte}
-          className="font-bold cursor-pointer hover:text-slate-900 tr"
+          className="font-bold cursor-pointer hover:text-slate-900 tr md:text-md text-sm"
         >
           {name}
         </h2>
