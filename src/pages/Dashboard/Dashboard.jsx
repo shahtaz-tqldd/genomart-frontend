@@ -58,11 +58,11 @@ const Dashboard = () => {
           img={cart}
         />
       </div>
-      <div className="grid grid-cols-7 gap-16 mt-16">
-        <div className="col-span-5">
+      <div className="grid grid-cols-7 gap-6 mt-10">
+        <div className="col-span-5 bg-white shadow rounded-xl border border-black/10 p-5">
           <BarChart data={monthlySoldData} name={"Monthly Sold"} />
         </div>
-        <div className="col-span-2 mb-16">
+        <div className="col-span-2">
           <TotalProductCard
             totalProducts={data?.data?.totalProducts || 0}
             totalStock={data?.data?.totalStock || 0}

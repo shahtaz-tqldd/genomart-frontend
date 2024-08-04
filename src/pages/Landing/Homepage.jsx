@@ -7,6 +7,7 @@ import HomeProducts from "./blocks/HomeProducts";
 import PickOfTheDayProducts from "./blocks/PickOfTheDayProducts";
 import SpecialOfferProducts from "./blocks/SpecialOfferProducts";
 import TopSale from "./blocks/TopSale";
+import Hero from "./blocks/Hero";
 
 const Homepage = () => {
   const { data: info } = useGetSettingsInfoQuery(
@@ -16,13 +17,14 @@ const Homepage = () => {
   useTitle(info?.data?.name || "Shop Name");
   return (
     <div>
-      <Banner banners={info?.data?.banners || []} />
+      <Hero/>
       <HomeCategories />
-      <Features />
       <HomeProducts />
       <SpecialOfferProducts specialOffer={info?.data?.specialOffer} />
+      <Banner banners={info?.data?.banners || []} />
       <PickOfTheDayProducts />
       <TopSale />
+      <Features />
     </div>
   );
 };

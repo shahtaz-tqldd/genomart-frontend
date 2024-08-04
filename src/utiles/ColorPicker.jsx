@@ -52,7 +52,7 @@ const ColorPickerComponent = ({ openMenu, setOpenMenu, onClick }) => {
               handleMenuClose();
             }}
             // style={{backgroundColor:hover color.hex}}
-            className="py-2 w-full text-sm text-white bg-primaryColor tr border rounded-lg"
+            className="py-2 w-full text-sm text-white bg-primary tr border rounded-lg"
           >
             Select
           </button>

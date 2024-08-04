@@ -22,7 +22,7 @@ const Footer = () => {
     { name: "Refund Policy", path: "/policy" },
   ];
   return (
-    <div className="bg-[#8ADAB2] bg-opacity-40">
+    <div className="bg-[#232323] text-white">
       <footer className="container px-6 mt-16">
         <section className="grid lg:grid-cols-4 grid-cols-2 mb-4 pt-12">
           <div>
@@ -38,7 +38,7 @@ const Footer = () => {
           </div>
           <div>
             <h2 className="mb-2 font-bold">Menubar</h2>
-            <ul className="flex flex-col text-xs">
+            <ul className="flex flex-col text-sm">
               {navItems.map((item, index) => (
                 <li key={index} className="mb-2">
                   <Link to={item.path} className="hover:underline">

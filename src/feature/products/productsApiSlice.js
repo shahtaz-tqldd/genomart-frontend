@@ -40,7 +40,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     }),
 
     getAllProducts: builder.query({
-      query: ({ page, searchTerm, category, limit }) => {
+      query: ({ page, searchTerm, category, tags, limit }) => {
         let url = "products";
         const queryParams = new URLSearchParams();
 
@@ -48,6 +48,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         if (page) queryParams.append("page", page);
         if (limit) queryParams.append("limit", limit);
         if (category) queryParams.append("category", category);
+        if (tags) queryParams.append("tags", tags);
 
         if (queryParams.toString()) {
           url += `?${queryParams.toString()}`;

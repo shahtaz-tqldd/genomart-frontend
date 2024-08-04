@@ -105,7 +105,7 @@ const ProductCardsm = ({ data }) => {
             <h2 className="text-xl mt-2 text-orange-500">$ {price}</h2>
             <Ratings rating={4.5} size={13} mt={8} />
             <div className="w-full grid grid-cols-5 gap-2 mt-[18px]">
-              <button className="col-span-4 tr bg-primaryColor hover:bg-secondary text-white w-full text-sm py-2 rounded-lg">
+              <button className="col-span-4 tr bg-primary hover:bg-secondary text-white w-full text-sm py-2 rounded-lg">
                 Buy Now
               </button>
               <button

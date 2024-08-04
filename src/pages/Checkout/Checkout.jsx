@@ -131,7 +131,7 @@ const Checkout = () => {
         <div className="mt-10 flex justify-end">
           <button
             type="submit"
-            className="py-2.5 bg-primaryColor pl-8 pr-10 rounded-lg text-white flex items-center gap-2"
+            className="py-2.5 bg-primary pl-8 pr-10 rounded-lg text-white flex items-center gap-2"
           >
             <FaRegCheckCircle />
             Confirm Order

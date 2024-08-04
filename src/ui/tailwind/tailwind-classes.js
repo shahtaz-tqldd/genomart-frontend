@@ -6,21 +6,21 @@ export const dashboardMenu = classNames(
 
 // buttons
 export const primarybtn = classNames(
-  "py-2 pl-4 pr-5 rounded bg-primaryColor text-white flex items-center gap-2"
+  "py-2 pl-4 pr-5 rounded bg-primary text-white flex items-center gap-2"
 );
 export const dotbtn = classNames(
   "-mr-4 h-8 w-8 p-2 hover:bg-slate-100 rounded-full rotate-90 cursor-pointer"
 );
 
 export const btn = classNames(
-  "bg-primaryColor hover:bg-transparent hover:text-primaryColor border-primaryColor border lg:py-2 py-1 lg:px-6 px-3 rounded-md text-base text-white transition duration-300"
+  "bg-primary hover:bg-transparent hover:text-primary border-primary border lg:py-2 py-1 lg:px-6 px-3 rounded-md text-base text-white transition duration-300"
 );
 export const btnsm = classNames(
-  "bg-primaryColor hover:bg-transparent hover:text-primaryColor border-primaryColor border py-1 pl-2 pr-3 rounded-md text-sm text-white transition duration-300"
+  "bg-primary hover:bg-transparent hover:text-primary border-primary border py-1 pl-2 pr-3 rounded-md text-sm text-white transition duration-300"
 );
 
 export const btnOutline = classNames(
-  "bg-transparent hover:bg-primaryColor hover:text-white border-primaryColor border text-primaryColor py-2 px-6 rounded-md text-base transition duration-300"
+  "bg-transparent hover:bg-primary hover:text-white border-primary border text-primary py-2 px-6 rounded-md text-base transition duration-300"
 );
 
 export const dropdownbtn = classNames(

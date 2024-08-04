@@ -42,7 +42,7 @@ const WishListProductCard = ({ data }) => {
   };
 
   return (
-    <div className="flex lg:gap-5 gap-4 border rounded-xl p-2  hover:border-primaryColor tr">
+    <div className="flex lg:gap-5 gap-4 border rounded-xl p-2  hover:border-primary tr">
       <div>
         <img
           src={images[0]?.url}
@@ -105,7 +105,7 @@ const WishListProductCard = ({ data }) => {
           )}
           <div className="flex justify-between items-center gap-10">
             <h2 className="text-sm font-bold">${price}</h2>
-            <Link to={`/products/${data?._id}`} className="text-sm py-1 px-3 bg-primaryColor hover:bg-primaryColorh tr rounded text-white font-bold">Buy Now</Link>
+            <Link to={`/products/${data?._id}`} className="text-sm py-1 px-3 bg-primary hover:bg-primaryh tr rounded text-white font-bold">Buy Now</Link>
           </div>
         </div>
         {/* delete button */}

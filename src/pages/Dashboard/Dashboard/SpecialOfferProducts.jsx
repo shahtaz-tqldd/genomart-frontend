@@ -7,10 +7,7 @@ const SpecialOfferProducts = () => {
     {},
     { refetchOnReconnect: true }
   );
-  console.log(data?.data[2]?.numSold);
-  console.log(data?.data[2]?.stock);
-  console.log((3 / 230) * 100);
-  console.log(`${(data?.data[2]?.numSold || 0 / data?.data[2]?.stock) * 100}%`);
+  
   return (
     <div>
       <Heading title={"Special Offer"} />

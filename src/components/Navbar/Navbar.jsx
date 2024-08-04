@@ -1,18 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { navdata } from "../../assets/data/navdata";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PiShoppingCartFill } from "react-icons/pi";
 import { BiSolidUser } from "react-icons/bi";
 import { HiHome, HiMenuAlt1, HiUser } from "react-icons/hi";
-import { IoIosArrowDown, IoMdSettings } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import MobileMenuDrawer from "./MobileMenuDrawer";
 import CartSlide from "../Cart/CartSlide";
 import NavDropdown from "./NavDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { authModalOpen } from "../../feature/auth/authModalSlice";
 import Profilemenu from "../../ui/Menu/ProfileMenu";
-import { FiBox } from "react-icons/fi";
 import { HiMiniArchiveBox } from "react-icons/hi2";
+import logo from "../../assets/images/logo.png";
 
 const Navbar = () => {
   const { user } = useSelector((state) => state?.auth);
@@ -79,10 +79,34 @@ const Navbar = () => {
   const handleOpenAuthModal = () => {
     dispatch(authModalOpen());
   };
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
 
   return (
-    <div className="bg-[#8ADAB2] sticky top-0 z-50">
-      <div className="cont flex items-center justify-between py-3 text-[#31304D]">
+    <div
+      className={`w-full sticky top-0 z-[100]  ${
+        isScrolled ? "bg-[#232323]" : isHome ? "bg-transparent" : "bg-[#232323]"
+      } text-gray-100`}
+    >
+      <div className="container flex items-center justify-between py-4">
         <button
           onClick={() => setDrawerState({ left: true })}
           className="md:hidden block"
@@ -92,13 +116,13 @@ const Navbar = () => {
 
         <Link
           to={"/"}
-          className="text-3xl font-nav hover:text-black transition"
+          className="text-[2rem] font-bold w-fit font-nav text-gradient"
         >
-          geno mart
+          <img src={logo} alt="" className="h-8" />
         </Link>
 
-        <div className="flex items-center gap-12">
-          <div className="items-center gap-8 font-medium md:flex hidden">
+        <div className="flex items-center gap-16 text-white/70 text-poppins text-lg">
+          <div className="items-center gap-12 font-medium md:flex hidden">
             <button
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -142,8 +166,9 @@ const Navbar = () => {
 
           <div className="flex items-center gap-3 relative mr-2">
             <button
+              id="cart"
               onClick={() => setDrawerState({ right: true })}
-              className="bg-white hover:bg-gray-700 transition rounded-full group overflow-hidden h-8 w-8 grid place-items-center"
+              className="bg-white hover:bg-emerald-500 text-black/80 transition rounded-full group overflow-hidden h-8 w-8 grid place-items-center"
             >
               <div className="group-hover:-translate-y-9 transition duration-700 flex flex-col gap-4 pt-[7px]">
                 {[...Array(2)].map((_, index) => (
@@ -162,7 +187,7 @@ const Navbar = () => {
               <>
                 <button
                   onClick={handleMenuOpne}
-                  className="bg-white hover:bg-gray-700 transition rounded-full group overflow-hidden h-8 w-8 grid place-items-center"
+                  className="bg-white text-black/80 hover:bg-emerald-500 transition rounded-full group overflow-hidden h-8 w-8 grid place-items-center"
                 >
                   <div className="group-hover:-translate-y-9 transition duration-700 flex flex-col gap-4 pt-[7px]">
                     {[...Array(2)].map((_, index) => (
@@ -187,13 +212,13 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={handleOpenAuthModal}
-                className="bg-white hover:bg-gray-700 transition rounded-full group overflow-hidden h-9 px-4 grid place-items-center ml-4"
+                className="text-white hover:bg-white bg-emerald-500 transition rounded-full group overflow-hidden h-9 px-4 grid place-items-center ml-4"
               >
                 <div className="group-hover:-translate-y-9 transition duration-700 flex flex-col gap-4 pt-[8px]">
                   {[...Array(2)].map((_, index) => (
                     <h2
                       key={index}
-                      className=" group-hover:text-white transform transition-transform text-sm font-medium"
+                      className=" group-hover:text-emerald-500 transform transition-transform text-sm font-medium"
                     >
                       Get Started
                     </h2>
@@ -210,7 +235,11 @@ const Navbar = () => {
           toggleDrawer={toggleDrawer}
           data={navdata}
         />
-        <CartSlide state={drawerState} toggleDrawerCart={toggleDrawer} setState={setDrawerState} />
+        <CartSlide
+          state={drawerState}
+          toggleDrawerCart={toggleDrawer}
+          setState={setDrawerState}
+        />
       </div>
       <div ref={dropdownRef} onMouseLeave={() => setIsDropdownOpen(false)}>
         {isDropdownOpen && (

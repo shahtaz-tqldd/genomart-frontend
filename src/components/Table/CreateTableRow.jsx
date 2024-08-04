@@ -22,6 +22,7 @@ import {
 import { CgSandClock } from "react-icons/cg";
 import { BiSolidUser, BiSolidUserX } from "react-icons/bi";
 import { FaUserCheck, FaUserShield } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
   const [open, setOpen] = useState(false);
@@ -38,6 +39,24 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
     setAction({ action, itemId: item?.id, product: item?.productInfo });
     handleThreeDotClose();
   };
+
+  // if it is user table
+  let filteredMenuData = menuData;
+
+  const { pathname } = useLocation();
+  if (pathname === "/dashboard/users") {
+    if (item.role.props.children === "User") {
+      filteredMenuData = menuData.filter(
+        (item) => item !== "Make User" && item !== "Enable"
+      );
+    }
+    if (item.role.props.children === "Admin") {
+      filteredMenuData = menuData.filter((item) => item !== "Make Admin" && item !== "Enable");
+    }
+    if (item.role.props.children === "Disabled") {
+      filteredMenuData = menuData.filter((item) => item !== "Disable" && item !== "Make User" && item !== "Make Admin");
+    }
+  }
 
   return (
     <React.Fragment>
@@ -138,7 +157,7 @@ const CreateTableRow = ({ item, columns, menuData, setAction, threeDot }) => {
             "aria-labelledby": "basic-button",
           }}
         >
-          {menuData?.map((item, index) => (
+          {filteredMenuData?.map((item, index) => (
             <MenuItem
               key={index}
               sx={{

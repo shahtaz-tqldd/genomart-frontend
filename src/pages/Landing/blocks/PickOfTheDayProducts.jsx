@@ -26,9 +26,9 @@ const PickOfTheDayProducts = () => {
   );
 
   return (
-    <div className="container">
+    <div className="container mt-32">
       <div className="flex flex-col items-center justify-center">
-        <img src={brand} alt="" className="h-16 w-16 object-contain mb-2" />
+        {/* <img src={brand} alt="" className="h-16 w-16 object-contain mb-2" /> */}
         <h2 className="text-4xl font-bold flex items-end gap-3">
           Pick of the day
         </h2>

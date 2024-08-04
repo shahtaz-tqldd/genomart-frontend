@@ -1,13 +1,13 @@
 import React from "react";
 
-const SubmitButton = ({ name, loading }) => {
+const SubmitButton = ({ name, loading, icon:Icon }) => {
   return (
     <button
       type="submit"
       className={
         loading
-          ? "py-2 px-7 border-2 border-gray-200 rounded-lg bg-primaryColor text-white"
-          : `py-2 px-7 border-2 border-primaryColor rounded-lg bg-primaryColor text-white hover:bg-[#1d8f86] hover:border-[#1d8f86] transition duration-200`
+          ? "py-2 px-7 border-2 border-gray-200 rounded-lg bg-primary text-white"
+          : `py-2 px-7 border-2 border-primary rounded-lg bg-primary text-white hover:bg-[#1d8f86] hover:border-[#1d8f86] transition duration-200`
       }
       disabled={loading}
     >

@@ -269,7 +269,7 @@ const ProductDetails = () => {
           </div>
           <button
             onClick={handleCheckout}
-            className="group flex items-center gap-3 bg-primaryColor py-2 lg:px-20 md:px-16 px-12 text-white border border-primaryColor rounded-lg"
+            className="group flex items-center gap-3 bg-primary py-2 lg:px-20 md:px-16 px-12 text-white border border-primary rounded-lg"
           >
             Checkout
             <FaArrowRightLong className="mt-0.5 group-hover:translate-x-2 tr" />

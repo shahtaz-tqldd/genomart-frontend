@@ -20,8 +20,8 @@ const Profile = () => {
             to={item.to}
             className={`py-2 px-5 ${
               isCurrentTab(item.to)
-                ? "bg-primaryColor text-white"
-                : "hover:bg-green-100 hover:text-primaryColor tr"
+                ? "bg-primary text-white"
+                : "hover:bg-green-100 hover:text-primary tr"
             }  rounded-lg w-full text-start flex items-center gap-2`}
           >
             {item.icon}

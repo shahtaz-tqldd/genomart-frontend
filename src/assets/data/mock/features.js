@@ -9,6 +9,7 @@ export const features = [
     img: bike,
     text: "Get 24/7 home delivery service from our store and order items anytime",
     colors: "bg-[#CDF0EA]",
+    icon: "evyuuwna",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ export const features = [
     title: "Wide Product Selection",
     text: "Explore a diverse range of products, from fashion to electronics, ensuring you find what you need.",
     colors: "bg-[#FFBBCC]",
+    icon: "mfmkufkr",
   },
   {
     id: 3,
@@ -23,6 +25,7 @@ export const features = [
     img: wallet,
     text: "Enjoy peace of mind with our secure payment gateway, ensuring your transactions are safe and protected.",
     colors: "bg-[#B6C9F0]",
+    icon: "synhlagt",
   },
   {
     id: 4,
@@ -30,5 +33,6 @@ export const features = [
     img: support,
     text: "Receive top-notch customer support around the clock to assist you with any inquiries or issues you may have.",
     colors: "bg-[#F0E4D7]",
+    icon: "iafviozl",
   },
 ];

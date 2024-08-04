@@ -85,7 +85,7 @@ const Login = ({ setRegOpen, handleClose }) => {
           </div>
           <button
             type="submit"
-            className="bg-primaryColor hover:bg-secondary tr py-2 w-full rounded-lg text-white"
+            className="bg-primary hover:bg-secondary tr py-2 w-full rounded-lg text-white"
           >
             Login
           </button>

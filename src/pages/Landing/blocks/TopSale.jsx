@@ -33,7 +33,7 @@ const TopSale = () => {
   return (
     <div className="container my-20">
       <div className="flex flex-col items-center justify-center">
-        <img src={shopping} alt="" className="h-16 w-16 object-contain mb-2" />
+        {/* <img src={shopping} alt="" className="h-16 w-16 object-contain mb-2" /> */}
         <h2 className="text-4xl font-bold flex items-end gap-3">
           Top Sale Products
         </h2>

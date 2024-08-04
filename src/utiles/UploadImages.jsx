@@ -28,11 +28,11 @@ const UploadImages = ({
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-between">
+    <div className="w-full h-[300px] flex items-center justify-between border rounded-xl bg-white p-10">
       <label
         htmlFor={id}
         id="image-preview"
-        className="bg-[#F7F7F7] rounded-xl w-full h-[300px] border-gray-400 items-center mx-auto text-center cursor-pointer justify-center flex"
+        className="border w-full h-full rounded-xl border-black/40 border-dashed  items-center mx-auto text-center cursor-pointer justify-center flex"
       >
         <input
           id={id}
@@ -48,7 +48,7 @@ const UploadImages = ({
           <img
             src={placeholder}
             alt="Upload image"
-            className="h-[160px] mb-6"
+            className="h-20 mb-6"
           />
           <h2 className="text-xl font-bold text-[#434343]">
             + Upload product images

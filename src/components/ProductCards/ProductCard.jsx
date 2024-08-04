@@ -81,6 +81,10 @@ const ProductCard = ({ data }) => {
     }
   };
 
+  const handleCartOpen = ()=>{
+    document.querySelector("#cart").click()
+  }
+
   return (
     <div
       onClick={handleNavigate}
@@ -109,26 +113,26 @@ const ProductCard = ({ data }) => {
         </h4>
       </div>
       <div className="overflow-hidden h-[118px]">
-        <div className="flex flex-col items-center translate-y-0 group-hover:-translate-y-10 tr">
-          <p className="text-sm text-gray-600 text-center">
-            {description?.slice(0, 48) + "..."}
-          </p>
-          <h2 className="text-2xl mt-2 text-orange-500">${price}</h2>
+        <div className="flex flex-col items-center">
           <Ratings rating={4} size={12} mt={8} />
-          <div className="w-full grid grid-cols-5 gap-2 mt-[18px]">
-            <button className="col-span-4 tr bg-primaryColor hover:bg-secondary text-white w-full py-2 rounded-lg">
-              Buy Now
-            </button>
+          <div className="flex items-center gap-2 mt-[18px]">
+            <h2 className="text-xl text-orange-500">${price}.00</h2>
             <button
               onClick={
                 !isAddedToCart ? handleAddToCart : (e) => e.stopPropagation()
               }
-              className=" col-span-1 w-full rounded-lg grid place-items-center"
+              className="text-white w-full text-sm"
             >
               {isAddedToCart ? (
-                <BsCartCheckFill className="text-xl text-green-700" />
+                <div className="bg-primary/80 py-2 px-3 rounded-lg fl gap-2 tr cursor-default">
+                  <BsCartCheckFill className="text-white " />
+                  Added to Cart
+                </div>
               ) : (
-                <BsCartPlusFill className="text-xl text-gray-700 hover:text-slate-800" />
+                <div onClick={handleCartOpen} className="fl gap-2 bg-emerald-500 hover:bg-primary/80 py-2 px-3 rounded-lg tr">
+                  <BsCartPlusFill className="text-white" />
+                  Add to Cart
+                </div>
               )}
             </button>
           </div>

@@ -6,7 +6,7 @@ const AddButton = ({ name }) => {
     <div>
       <button
         className={
-          "py-2 pl-3 pr-5 bg-primaryColor hover:bg-secondary tr rounded-lg text-white flex items-center gap-2"
+          "py-2 pl-3 pr-5 bg-primary hover:bg-secondary tr rounded-lg text-white flex items-center gap-2"
         }
       >
         <FiPlus /> <span>{name}</span>

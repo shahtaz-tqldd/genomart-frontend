@@ -70,7 +70,7 @@ const Register = ({ setRegOpen, handleClose }) => {
           />
           <button
             type="submit"
-            className="bg-secondary hover:bg-primaryColor tr mt-4 py-2 w-full rounded-lg text-white"
+            className="bg-secondary hover:bg-primary tr mt-4 py-2 w-full rounded-lg text-white"
           >
             Register
           </button>

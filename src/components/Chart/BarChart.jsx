@@ -102,7 +102,7 @@ const BarChart = ({ data, name }) => {
         options={state.options}
         series={state.series}
         type="bar"
-        height={400}
+        height={350}
       />
       <div className="flex justify-center text-xl font-bold text-gray-700">{name} Report</div>
     </div>

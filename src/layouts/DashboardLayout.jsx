@@ -20,7 +20,7 @@ const DashboardLayout = () => {
       </div>
       <div className="w-full md:w-[87%] lg:w-[82%] lg:ml-[18%] md:ml-[13%] ml-0 h-full">
         <DSTopNav toggle={toggle} setToggle={setToggle} />
-        <div className="lg:p-8 md:p-4 p-2 w-[100vw] md:w-full overflow-hidden md:overflow-auto">
+        <div className="lg:p-8 md:p-4 p-2 w-[100vw] md:w-full overflow-hidden md:overflow-auto bg-gray-50">
           <Outlet />
         </div>
       </div>

@@ -1,7 +1,12 @@
 import { MdAutoGraph } from "react-icons/md";
 import { FiSettings, FiUsers } from "react-icons/fi";
 
-import { TbBrandBackbone, TbBrandFirebase, TbBrandAppgallery, TbBrandBumble } from "react-icons/tb";
+import {
+  TbBrandBackbone,
+  TbBrandFirebase,
+  TbBrandAppgallery,
+  TbBrandBumble,
+} from "react-icons/tb";
 
 import { IoCartOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
@@ -44,25 +49,29 @@ export const dsnavdata = [
         link: "/dashboard/products",
         icon: LuBox,
       },
-
       {
-        title: "Featured",
-        link: "/banners",
+        title: "Featured Banner",
+        link: "/dashboard/banner",
         icon: TbBrandBumble,
-        children: [
-          {
-            title: "Hero Banner",
-            link: "/dashboard/banner",
-            icon: TbBrandBackbone,
-          },
-          {
-            title: "Special Offer",
-            link: "/dashboard/special-offer",
-            icon: TbBrandFirebase,
-          },
-          ,
-        ],
       },
+      // {
+      //   title: "Featured",
+      //   link: "/banners",
+      //   icon: TbBrandBumble,
+      //   children: [
+      //     {
+      //       title: "Hero Banner",
+      //       link: "/dashboard/banner",
+      //       icon: TbBrandBackbone,
+      //     },
+      //     {
+      //       title: "Special Offer",
+      //       link: "/dashboard/special-offer",
+      //       icon: TbBrandFirebase,
+      //     },
+      //     ,
+      //   ],
+      // },
     ],
   },
 

@@ -151,7 +151,7 @@ const ProductCardList = ({ data }) => {
             </button>
             <button
               onClick={handleNavigate}
-              className="tr bg-primaryColor hover:bg-secondary tr text-white font-semibold text-sm py-2.5 px-8 rounded-lg"
+              className="tr bg-primary hover:bg-secondary tr text-white font-semibold text-sm py-2.5 px-8 rounded-lg"
             >
               Buy Now
             </button>

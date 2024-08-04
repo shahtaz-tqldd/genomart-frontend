@@ -35,7 +35,7 @@ const HomeProducts = () => {
   return (
     <div className="container my-20">
       <div className="flex flex-col items-center justify-center">
-        <img src={creative} alt="" className="h-20 w-20 object-contain mb-2" />
+        {/* <img src={creative} alt="" className="h-20 w-20 object-contain mb-2" /> */}
         <h2 className="text-4xl font-bold flex items-end gap-3">
           Discover our latest products
         </h2>
@@ -48,7 +48,7 @@ const HomeProducts = () => {
       <div className="flex justify-center mt-12">
         <Link
           to={"/products"}
-          className="flex text-xl items-center gap-4 group hover:text-primaryColor tr"
+          className="flex text-xl items-center gap-4 group hover:text-primary tr"
         >
           See All Products{" "}
           <FaArrowRightLong className="group-hover:translate-x-3 tr" />

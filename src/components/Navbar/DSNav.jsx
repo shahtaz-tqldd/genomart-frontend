@@ -10,16 +10,16 @@ const DSNav = ({ toggle, setToggle }) => {
   const { user } = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
   const role = user?.role;
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   const isActiveNavLink = (path) => {
-    return location.pathname === path;
+    return pathname === path;
   };
 
   const handleLogout = () => {
     dispatch(userLoggedOut());
   };
-
+  console.log(pathname.split("/")[2]);
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const toggleDropdown = (index) => {
@@ -31,27 +31,29 @@ const DSNav = ({ toggle, setToggle }) => {
   };
 
   return (
-    <div className="min-h-screen relative bg-white border-r border-gray-300">
+    <div className="min-h-screen relative bg-gradient-to-br from-[#232323] to-[#2f3e46]">
       <div
         onClick={() => setToggle(!toggle)}
-        className="h-7 w-7 bg-primaryColor hover:bg-primaryColorh text-white rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
+        className="h-7 w-7 bg-primary hover:bg-primaryh text-white rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
       >
         <BiChevronLeft className="text-2xl" />
       </div>
       <div className="py-4 flex flex-col items-center justify-center gap-2">
         <Link
           to={"/"}
-          className="text-3xl font-nav text-primaryColor hover:text-emerald-500 transition"
+          className="text-3xl font-nav text-primary hover:text-emerald-500 transition"
         >
           geno mart
         </Link>
-        <h2 className="uppercase tracking-widest text-sm">Admin Dashboard</h2>
+        <h2 className="uppercase tracking-widest text-sm text-white">
+          Admin Dashboard
+        </h2>
       </div>
 
       <div className="mt-2 mx-4">
         {dsnavdata?.map(({ stackName, data }, index) => (
           <div className="my-5" key={index}>
-            <h2 className="text-primaryColor mb-2 uppercase font-semibold text-xs ml-2">
+            <h2 className="text-primary mb-2 uppercase font-semibold text-xs ml-2">
               {stackName}
             </h2>
             {data?.map((item, index) => (
@@ -62,10 +64,10 @@ const DSNav = ({ toggle, setToggle }) => {
                       onClick={() => toggleDropdown(item.title)}
                       className={`
                       ${dashboardMenu} ${
-                        location.pathname
-                          .split("/")[1]
+                        pathname
+                          .split("/")[2]
                           .includes(item.title.toLocaleLowerCase())
-                          ? "text-primaryColor bg-emerald-100"
+                          ? "text-primary bg-emerald-100"
                           : "text-gray-600"
                       } group-hover:bg-slate-100 rounded-md`}
                     >
@@ -91,9 +93,9 @@ const DSNav = ({ toggle, setToggle }) => {
                           onClick={() => setToggle(false)}
                           className={`${
                             isActiveNavLink(childItem.link)
-                              ? "text-primaryColor"
+                              ? "text-primary"
                               : "text-gray-600"
-                          } hover:bg-primaryColorh hover:text-white tr items-center gap-2 py-1.5 text-sm pl-7 rounded-md ${
+                          } hover:bg-primaryh hover:text-white tr items-center gap-2 py-1.5 text-sm pl-7 rounded-md ${
                             childItem?.roles
                               ? childItem?.roles?.includes(role)
                                 ? "flex"
@@ -113,12 +115,10 @@ const DSNav = ({ toggle, setToggle }) => {
                     to={item.link}
                     onClick={() => setToggle(false)}
                     className={`${
-                      isActiveNavLink(item.link) ? "bg-primaryColor text-white" : ""
-                    } ${dashboardMenu} ${
                       isActiveNavLink(item.link)
-                        ? "text-primaryColor"
-                        : "text-gray-600"
-                    }  group-hover:bg-primaryColorh group-hover:text-white rounded-md tr`}
+                        ? "bg-[#90D26D] text-white"
+                        : "text-white/70 group-hover:bg-primaryh group-hover:text-white"
+                    } ${dashboardMenu} rounded-md tr`}
                   >
                     <item.icon className="text-base" />
                     {item.title}

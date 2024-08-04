@@ -103,7 +103,7 @@ const StatusChangeModal = ({
             className={
               loading
                 ? "py-2 border-2 border-gray-200 rounded-lg bg-gray-200"
-                : `py-2  border-2 border-primaryColor rounded-lg bg-primaryColor text-white hover:bg-primaryColorh hover:border-primaryColorh tr`
+                : `py-2  border-2 border-primary rounded-lg bg-primary text-white hover:bg-primaryh hover:border-primaryh tr`
             }
             disabled={loading}
           >

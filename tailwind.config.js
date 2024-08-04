@@ -24,13 +24,15 @@ module.exports = {
     },
     extend: {
       colors: {
-        primaryColor: "#6DA4AA",
-        primaryColorh: "#62949A",
+        primary: "#2ec4b6",
+        primaryh: "#62949A",
         secondary: "#EC6A4B",
         bgColor: "#F3E8FF",
         lightText: "#80735F",
+        accent: "#e2e2e2",
         textColor: "#292929",
         textGray: "#6C6666",
+        tan: "#120120",
       },
       keyframes: {
         leftRight: {
