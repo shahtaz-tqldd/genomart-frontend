@@ -8,6 +8,7 @@ import PickOfTheDayProducts from "./blocks/PickOfTheDayProducts";
 import SpecialOfferProducts from "./blocks/SpecialOfferProducts";
 import TopSale from "./blocks/TopSale";
 import Hero from "./blocks/Hero";
+import HeroNew from "./blocks/HeroNew";
 
 const Homepage = () => {
   const { data: info } = useGetSettingsInfoQuery(
@@ -17,7 +18,8 @@ const Homepage = () => {
   useTitle(info?.data?.name || "Shop Name");
   return (
     <div>
-      <Hero/>
+      {/* <Hero/> */}
+      <HeroNew />
       <HomeCategories />
       <HomeProducts />
       <SpecialOfferProducts specialOffer={info?.data?.specialOffer} />

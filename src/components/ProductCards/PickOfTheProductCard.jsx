@@ -7,7 +7,7 @@ const PickOfTheProductCard = ({ data, color }) => {
 
   return (
     <div
-      className={`group cursor-pointer p-5 flex flex-col justify-between gap-4 rounded-xl bg-opacity-20 ${color}`}
+      className={`group cursor-pointer p-5 flex flex-col justify-between gap-4 rounded-xl bg-opacity-10 ${color}`}
     >
       <div className="flex flex-col items-center h-[200px]">
         <div className="h-full flex flex-col justify-between">
@@ -16,13 +16,13 @@ const PickOfTheProductCard = ({ data, color }) => {
           </h4>
 
           <div className="flex flex-col items-center ">
-            <h2 className="text-2xl text-orange-500">${price}</h2>
+            <h2 className="text-xl text-red-500 font-semibold">${price}.00</h2>
             <div className="flex gap-2 mt-2 mb-8">
               <Ratings rating={4} mt={8} />
             </div>
             <Link
               to={`/products/${_id}`}
-              className={`text-sm w-fit px-8 text-white bg-opacity-80 hover:bg-opacity-100 font-medium py-2 tr  ${color}`}
+              className={`text-sm w-fit px-8 text-white bg-opacity-80 hover:bg-black font-medium py-2 tr rounded-full  ${color}`}
             >
               Buy Now
             </Link>

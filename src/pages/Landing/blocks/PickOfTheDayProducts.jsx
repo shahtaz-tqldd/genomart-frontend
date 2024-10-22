@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import PickOfTheProductCard from "../../../components/ProductCards/PickOfTheProductCard";
 import { useGetAllProductsQuery } from "../../../feature/products/productsApiSlice";
 import { bgcolors } from "../../../assets/data/colors";
+import { RiArrowRightSLine } from "react-icons/ri";
 
 const PickOfTheDayProducts = () => {
   const [swiperRef, setSwiperRef] = useState();
@@ -27,25 +28,29 @@ const PickOfTheDayProducts = () => {
 
   return (
     <div className="container mt-32">
-      <div className="flex flex-col items-center justify-center">
-        {/* <img src={brand} alt="" className="h-16 w-16 object-contain mb-2" /> */}
-        <h2 className="text-4xl font-bold flex items-end gap-3">
-          Pick of the day
-        </h2>
-        <div className="border-gray-700 border-2 w-40 mt-5"></div>
-
-        <div className="w-full relative mt-20">
-          <div className="flex gap-8 absolute right-0 -top-14 z-10">
-            <BsArrowDownCircle
+      <div>
+        <div className="flex items-center justify-between">
+          <h2 className="text-4xl text-black/80 font-semibold uppercase items-start gap-3">
+            Pick of the day
+          </h2>
+          <div className="flex gap-4">
+            <button
               onClick={handlePrevious}
-              className="text-3xl text-black hover:text-red-500 tr rotate-90 cursor-pointer"
-            />
-
-            <BsArrowDownCircle
+              className="h-10 w-10 rounded-full border border-primary/10 center bg-primary/10 text-primary hover:text-black hover:bg-primary/20 tr"
+            >
+              <RiArrowRightSLine className="rotate-180 text-2xl -translate-x-[1px]" />
+            </button>
+            <button
               onClick={handleNext}
-              className="text-3xl text-black hover:text-red-500 tr -rotate-90 cursor-pointer"
-            />
+              className="h-10 w-10 rounded-full border border-primary/10 center bg-primary/10 text-primary hover:text-black hover:bg-primary/20 tr"
+            >
+              <RiArrowRightSLine className="text-2xl translate-x-[1px]" />
+            </button>
           </div>
+        </div>
+        <div className="border-primary/20 border w-full mt-4"></div>
+
+        <div className="w-full mt-10">
           <Swiper
             onSwiper={setSwiperRef}
             slidesPerView={4}
@@ -54,6 +59,7 @@ const PickOfTheDayProducts = () => {
             speed={700}
             pagination={{
               clickable: true,
+              dynamicBullets: true,
             }}
             modules={[Autoplay, Pagination]}
             autoplay={{

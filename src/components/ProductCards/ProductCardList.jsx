@@ -75,36 +75,34 @@ const ProductCardList = ({ data }) => {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-5 group">
+    <div className="flex flex-row gap-6 group bg-gray-50 p-4 rounded-xl border border-green-100">
       <Link
         to={`/products/${_id}`}
-        className="col-span-2 h-48 bg-gray-100 w-full rounded-xl overflow-hidden relative"
+        className="h-48 w-72 bg-gradient-to-tr from-blue-100 via-green-50 to-rose-50 rounded-xl overflow-hidden relative"
       >
         <img
           src={images[0]?.url}
           alt=""
-          className="w-full h-full object-contain p-3 group-hover:scale-110 tr"
+          className="w-full h-full object-contain p-4 group-hover:scale-110 tr"
         />
       </Link>
-      <div className="col-span-3 flex flex-col justify-between h-full">
+      <div className="flex-1 flex flex-col justify-between h-full">
         <div>
           <Link
             to={`/products/${_id}`}
-            className="text-md font-bold text-gray-700"
+            className="text-lg font-bold text-gray-700"
           >
             {name}
           </Link>
           <p className="text-sm mt-2 text-gray-600">
             {description?.slice(0, 150)}
           </p>
-          <h2 className="text-xl font-medium text-orange-500 mt-4">
-            $ {price}
-          </h2>
+          <h2 className="text-xl font-bold text-red-500 mt-4">$ {price}.00</h2>
         </div>
         <div className="flex flex-col">
           <div className="w-full justify-between flex gap-2 items-center">
             <div className="flex items-center gap-2">
-              <FaStar className="text-sm text-orange-500" />
+              <FaStar className="text-sm text-yellow-500" />
               {ratings}
             </div>
             <button
@@ -114,7 +112,7 @@ const ProductCardList = ({ data }) => {
               className="text-gray-600"
             >
               {isAddedToCart ? (
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-primary cursor-default">
                   <BsCartCheckFill className="text-lg mb-0.5" />{" "}
                   <h2>Added to Cart</h2>
                 </div>
@@ -136,13 +134,13 @@ const ProductCardList = ({ data }) => {
                   onClick={(e) => handleAddToWishList(e)}
                   className="flex items-center gap-2 text-gray-800"
                 >
-                  <FaHeart className="text-lg mb-0.5" />{" "}
+                  <FaHeart className="text-lg text-red-500 mb-0.5" />{" "}
                   <h2>Added in wishlist</h2>
                 </div>
               ) : (
                 <div
                   onClick={(e) => handleAddToWishList(e)}
-                  className=" flex items-center gap-2 text-gray-800"
+                  className="flex items-center gap-2 text-gray-800"
                 >
                   <FaRegHeart className="text-lg mb-0.5" />{" "}
                   <h2>Add to wishlist</h2>
@@ -151,7 +149,7 @@ const ProductCardList = ({ data }) => {
             </button>
             <button
               onClick={handleNavigate}
-              className="tr bg-primary hover:bg-secondary tr text-white font-semibold text-sm py-2.5 px-8 rounded-lg"
+              className="tr bg-primary hover:bg-black tr text-white font-semibold text-sm py-2 px-6 rounded-full"
             >
               Buy Now
             </button>

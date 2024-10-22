@@ -1,25 +1,12 @@
-import { useCallback, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import { IoIosArrowForward } from "react-icons/io";
 import "swiper/css";
 import "swiper/css/pagination";
 
 const Banner = ({ banners }) => {
-  const [swiperRef, setSwiperRef] = useState();
-
-  const handlePrevious = useCallback(() => {
-    swiperRef?.slidePrev();
-  }, [swiperRef]);
-
-  const handleNext = useCallback(() => {
-    swiperRef?.slideNext();
-  }, [swiperRef]);
-
   return (
-    <div className="banner w-full relative bg-[#DCF2F1]">
+    <div className="container banner w-full rounded-2xl overflow-hidden">
       <Swiper
-        onSwiper={setSwiperRef}
         slidesPerView={1}
         spaceBetween={0}
         loop={true}
@@ -38,7 +25,7 @@ const Banner = ({ banners }) => {
             <img
               src={banner?.url || ""}
               alt=""
-              className="lg:h-[80vh] md:h-[400px] h-[200px] w-full object-cover"
+              className="lg:h-[75vh] md:h-[400px] h-[200px] w-full object-cover rounded-2xl"
             />
           </SwiperSlide>
         ))}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BsCartCheckFill, BsCartPlusFill } from "react-icons/bs";
-import { FaRegHeart } from "react-icons/fa";
 import { addToCart } from "../../feature/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +9,9 @@ import {
   useGetMyWishListQuery,
 } from "../../feature/products/productsApiSlice";
 import toast from "react-hot-toast";
-import { FaHeart } from "react-icons/fa6";
 import { authModalOpen } from "../../feature/auth/authModalSlice";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoHeart } from "react-icons/io5";
 
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
@@ -81,9 +81,9 @@ const ProductCard = ({ data }) => {
     }
   };
 
-  const handleCartOpen = ()=>{
-    document.querySelector("#cart").click()
-  }
+  const handleCartOpen = () => {
+    document.querySelector("#cart").click();
+  };
 
   return (
     <div
@@ -99,12 +99,12 @@ const ProductCard = ({ data }) => {
           />
           <button
             onClick={(e) => handleAddToWishList(e)}
-            className="absolute top-3 right-3 -translate-y-16 group-hover:translate-y-0 tr bg-[#CAF7E3] hover:bg-green-300 tr h-10 w-10 text-gray-600 rounded-lg grid place-items-center"
+            className="absolute top-3 right-3 -translate-y-16 group-hover:translate-y-0 tr bg-white hover:bg-green-100 tr h-10 w-10 text-black border border-green-500/10 rounded-full grid place-items-center"
           >
             {!isAddedToWishList ? (
-              <FaRegHeart className="text-xl" />
+              <IoMdHeartEmpty className="text-xl" />
             ) : (
-              <FaHeart className="text-xl" />
+              <IoHeart className="text-xl text-red-500" />
             )}
           </button>
         </div>
@@ -115,21 +115,24 @@ const ProductCard = ({ data }) => {
       <div className="overflow-hidden h-[118px]">
         <div className="flex flex-col items-center">
           <Ratings rating={4} size={12} mt={8} />
-          <div className="flex items-center gap-2 mt-[18px]">
-            <h2 className="text-xl text-orange-500">${price}.00</h2>
+          <div className="flex items-center justify-between gap-2 mt-5 w-full px-2">
+            <h2 className="text-red-500 font-bold">${price}.00</h2>
             <button
               onClick={
                 !isAddedToCart ? handleAddToCart : (e) => e.stopPropagation()
               }
-              className="text-white w-full text-sm"
+              className="text-white w-fit text-sm"
             >
               {isAddedToCart ? (
-                <div className="bg-primary/80 py-2 px-3 rounded-lg fl gap-2 tr cursor-default">
-                  <BsCartCheckFill className="text-white " />
-                  Added to Cart
+                <div className="bg-primary/20 text-black/50 py-2 pl-3 pr-4 rounded-full fl gap-2 tr cursor-default">
+                  <BsCartCheckFill className="" />
+                  Added
                 </div>
               ) : (
-                <div onClick={handleCartOpen} className="fl gap-2 bg-emerald-500 hover:bg-primary/80 py-2 px-3 rounded-lg tr">
+                <div
+                  onClick={handleCartOpen}
+                  className="fl gap-2 bg-emerald-500 hover:bg-black py-2 pl-3 pr-4 rounded-full tr"
+                >
                   <BsCartPlusFill className="text-white" />
                   Add to Cart
                 </div>

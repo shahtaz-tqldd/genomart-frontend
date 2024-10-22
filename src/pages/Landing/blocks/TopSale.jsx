@@ -1,6 +1,5 @@
 import React from "react";
 import ProductCard from "../../../components/ProductCards/ProductCard";
-import shopping from "../../../assets/images/shopping.png";
 import { useGetAllProductsQuery } from "../../../feature/products/productsApiSlice";
 import HomeProductSkeleton from "../../../components/Skeletons/HomeProductSkeleton";
 
@@ -31,15 +30,12 @@ const TopSale = () => {
   }
 
   return (
-    <div className="container my-20">
-      <div className="flex flex-col items-center justify-center">
-        {/* <img src={shopping} alt="" className="h-16 w-16 object-contain mb-2" /> */}
-        <h2 className="text-4xl font-bold flex items-end gap-3">
-          Top Sale Products
-        </h2>
-        <div className="border-gray-700 border-2 w-40 mt-5"></div>
-      </div>
-      <div className="mt-12 grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-8">
+    <div className="container mt-32 mb-20">
+      <h2 className="text-4xl uppercase text-black/80 font-semibold">
+        Top Sold Products
+      </h2>
+      <div className="border-primary/20 border w-full mt-4"></div>
+      <div className="mt-10 grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-8">
         {content}
       </div>
     </div>

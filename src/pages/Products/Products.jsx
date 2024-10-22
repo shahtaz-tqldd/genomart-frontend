@@ -14,6 +14,7 @@ import useTitle from "../../hooks/useTitle";
 import SearchInput from "../../ui/InputField/SearchInput";
 import ProductCardSkeleton from "../../components/Skeletons/ProductCardSkeleton";
 import ProductCardListSkeleton from "../../components/Skeletons/ProductCardListSkeleton";
+import ProductCard from "../../components/ProductCards/ProductCard";
 
 const Products = () => {
   useTitle("Genomart Product List");
@@ -92,7 +93,7 @@ const Products = () => {
         grid ? (
           <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-8">
             {data?.data?.map((data, i) => (
-              <ProductCardsm key={i} data={data} />
+              <ProductCard key={i} data={data} />
             ))}
           </div>
         ) : (
@@ -108,7 +109,7 @@ const Products = () => {
   }
 
   return (
-    <div className="container mt-12 flex md:flex-row flex-col gap-12">
+    <div className="container mt-32 flex md:flex-row flex-col gap-12">
       <div className="lg:w-[25%] md:w-[40%] w-full lg:block md:block hidden h-full sticky top-28">
         <h2 className="text-xl font-medium mb-3">Product Status</h2>
         {["All Items", "On Stock", "New Arival"]?.map((c, i) => (
@@ -157,21 +158,21 @@ const Products = () => {
       </div>
       <div className="lg:w-[75%] md:w-[60%] w-full">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <IoGridOutline
               onClick={!grid && toggleGrid}
-              className={`text-3xl p-1.5 rounded  border cursor-pointer ${
+              className={`text-3xl p-1.5 rounded-md border cursor-pointer ${
                 grid
-                  ? "bg-slate-800 text-white border-slate-800"
+                  ? "bg-primary text-white"
                   : "text-gray-600"
               }`}
             />
             <AiOutlineMenu
               onClick={grid && toggleGrid}
-              className={`text-3xl p-1.5  rounded border cursor-pointer ${
+              className={`text-3xl p-1.5 rounded-md border cursor-pointer ${
                 grid
                   ? "text-gray-600"
-                  : "bg-slate-800 border-slate-800 text-white"
+                  : "bg-primary text-white"
               }`}
             />
           </div>

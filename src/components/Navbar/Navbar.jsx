@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { authModalOpen } from "../../feature/auth/authModalSlice";
 import Profilemenu from "../../ui/Menu/ProfileMenu";
 import { HiMiniArchiveBox } from "react-icons/hi2";
-import logo from "../../assets/images/logo.png";
 
+import logo from "../../assets/images/logo.png";
+  
 const Navbar = () => {
   const { user } = useSelector((state) => state?.auth);
   const [openMenu, setOpenMenu] = useState(null);
@@ -98,13 +99,17 @@ const Navbar = () => {
   }, []);
 
   const { pathname } = useLocation();
-  const isHome = pathname === "/";
+  const isActivePage = (path) => {
+    return path === pathname;
+  };
 
   return (
     <div
-      className={`w-full sticky top-0 z-[100]  ${
-        isScrolled ? "bg-[#232323]" : isHome ? "bg-transparent" : "bg-[#232323]"
-      } text-gray-100`}
+      className={`w-full fixed top-0 left-0 right-0 z-[100] text-black ${
+        isScrolled
+          ? "bg-green-50 border-b border-b-green-200"
+          : "bg-transparent"
+      }`}
     >
       <div className="container flex items-center justify-between py-4">
         <button
@@ -114,14 +119,14 @@ const Navbar = () => {
           <HiMenuAlt1 className="text-lg ml-2" />
         </button>
 
-        <Link
-          to={"/"}
-          className="text-[2rem] font-bold w-fit font-nav text-gradient"
-        >
-          <img src={logo} alt="" className="h-8" />
+        <Link to={"/"} className="flex items-center gap-2">
+          <img src={logo} alt="" className="h-10" />
+          <span className="text-xl uppercase tracking-[2px]">
+            geno<span className="font-semibold">mart</span>
+          </span>
         </Link>
 
-        <div className="flex items-center gap-16 text-white/70 text-poppins text-lg">
+        <div className="flex items-center gap-16 text-black/80 text-poppins text-lg">
           <div className="items-center gap-12 font-medium md:flex hidden">
             <button
               onMouseEnter={handleMouseEnter}
@@ -137,7 +142,7 @@ const Navbar = () => {
                   Categories
                   <IoIosArrowDown className="mt-0.5" />
                 </h1>
-                <h1 className="h-5 text-white flex items-center gap-1.5">
+                <h1 className="h-5 text-primary flex items-center gap-1.5">
                   Categories
                   <IoIosArrowDown
                     className={`mt-0.5 ${
@@ -154,9 +159,15 @@ const Navbar = () => {
                 to={d.link}
                 className="group h-5 overflow-hidden mt-1"
               >
-                <div className="group-hover:-translate-y-5 transition duration-500 -mt-0.5">
+                <div
+                  className={` transition duration-500 -mt-0.5 ${
+                    isActivePage(d.link)
+                      ? "-translate-y-5"
+                      : "group-hover:-translate-y-5"
+                  }`}
+                >
                   <h1 className="h-5 flex items-center gap-1.5">{d.title}</h1>
-                  <h1 className="h-5 text-white flex items-center gap-1.5">
+                  <h1 className="h-5 text-primary flex items-center gap-1.5">
                     {d.title}
                   </h1>
                 </div>

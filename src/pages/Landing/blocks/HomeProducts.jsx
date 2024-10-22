@@ -1,7 +1,6 @@
 import React from "react";
 import ProductCard from "../../../components/ProductCards/ProductCard";
-import creative from "../../../assets/images/creative.png";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { RiArrowRightSLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useGetAllProductsQuery } from "../../../feature/products/productsApiSlice";
 import HomeProductSkeleton from "../../../components/Skeletons/HomeProductSkeleton";
@@ -33,14 +32,11 @@ const HomeProducts = () => {
   }
 
   return (
-    <div className="container my-20">
-      <div className="flex flex-col items-center justify-center">
-        {/* <img src={creative} alt="" className="h-20 w-20 object-contain mb-2" /> */}
-        <h2 className="text-4xl font-bold flex items-end gap-3">
-          Discover our latest products
-        </h2>
-        <div className="border-gray-700 border-2 w-40 mt-5"></div>
-      </div>
+    <div className="container mt-32 mb-20">
+      <h2 className="text-4xl text-black/80 font-semibold uppercase">
+        Latest Products
+      </h2>
+      <div className="border-primary/20 border w-full mt-4"></div>
       <div className="mt-12 grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-8 md:gap-6 gap-4">
         {content}
       </div>
@@ -48,10 +44,10 @@ const HomeProducts = () => {
       <div className="flex justify-center mt-12">
         <Link
           to={"/products"}
-          className="flex text-xl items-center gap-4 group hover:text-primary tr"
+          className="py-2 pr-5 pl-6 fl gap-1 rounded-full border border-primary/10 font-medium text-primary bg-green-50 hover:bg-primary/20 tr group"
         >
-          See All Products{" "}
-          <FaArrowRightLong className="group-hover:translate-x-3 tr" />
+          More Products{" "}
+          <RiArrowRightSLine className="text-lg group-hover:translate-x-1 tr" />
         </Link>
       </div>
     </div>

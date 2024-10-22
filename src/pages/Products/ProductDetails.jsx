@@ -141,7 +141,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="container grid lg:grid-cols-2 grid-cols-1 lg:gap-20 md:gap-16 gap-10 lg:mt-12 md:mt-12 mt-4">
+    <div className="container grid lg:grid-cols-2 grid-cols-1 lg:gap-20 md:gap-16 gap-10 lg:mt-32 md:mt-12 mt-4">
       {/* product images */}
       <div>
         <img
