@@ -30,7 +30,7 @@ const PickOfTheDayProducts = () => {
     <div className="container mt-32">
       <div>
         <div className="flex items-center justify-between">
-          <h2 className="text-4xl text-black/80 font-semibold uppercase items-start gap-3">
+          <h2 className="lg:text-4xl md:text-3xl text-2xl text-black/80 font-semibold uppercase items-start gap-3">
             Pick of the day
           </h2>
           <div className="flex gap-4">

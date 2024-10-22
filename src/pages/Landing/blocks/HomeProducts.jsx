@@ -33,7 +33,7 @@ const HomeProducts = () => {
 
   return (
     <div className="container mt-32 mb-20">
-      <h2 className="text-4xl text-black/80 font-semibold uppercase">
+      <h2 className="lg:text-4xl md:text-3xl text-2xl text-black/80 font-semibold uppercase">
         Latest Products
       </h2>
       <div className="border-primary/20 border w-full mt-4"></div>
