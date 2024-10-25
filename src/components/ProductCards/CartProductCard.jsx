@@ -60,9 +60,9 @@ const CartProductCard = ({ data, onClose }) => {
         </h2>
         <div
           onClick={() => handleDeleteCartItem(_id)}
-          className="hidden group-hover:grid absolute top-0 right-3 h-7 w-7 bg-red-100 hover:bg-red-200 place-items-center rounded-full transition duration-300  cursor-pointer"
+          className="opacity-0 group-hover:opacity-100 grid tr absolute top-0 right-3 h-7 w-7 bg-red-100 hover:bg-red-200 place-items-center rounded-full transition duration-300  cursor-pointer"
         >
-          <RiDeleteBin6Line className="text-red-500 text-[14px]" />
+          <RiDeleteBin6Line className="text-red-500 text-sm" />
         </div>
         <div className="flex justify-between items-end">
           <div className="flex items-center gap-2 border lg:px-2 px-1 py-[1px] w-fit rounded-full bg-[#f5f8fb]">

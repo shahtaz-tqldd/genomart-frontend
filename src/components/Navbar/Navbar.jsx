@@ -13,7 +13,7 @@ import { authModalOpen } from "../../feature/auth/authModalSlice";
 import Profilemenu from "../../ui/Menu/ProfileMenu";
 import { HiMiniArchiveBox } from "react-icons/hi2";
 
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/cart.png";
   
 const Navbar = () => {
   const { user } = useSelector((state) => state?.auth);
@@ -120,7 +120,7 @@ const Navbar = () => {
         </button>
 
         <Link to={"/"} className="flex items-center gap-2">
-          <img src={logo} alt="" className="h-10" />
+          <img src={logo} alt="" className="h-8 mb-2" />
           <span className="text-xl uppercase tracking-[2px]">
             geno<span className="font-semibold">mart</span>
           </span>

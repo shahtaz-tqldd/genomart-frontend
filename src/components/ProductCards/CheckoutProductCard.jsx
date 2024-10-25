@@ -71,12 +71,12 @@ const CheckoutProductCard = ({ data }) => {
   };
 
   return (
-    <div className="flex gap-5 group hover:bg-blue-100 rounded-xl p-3 tr">
+    <div className="flex gap-5 group bg-gray-50 border border-gray-100 rounded-xl p-3 tr">
       <div>
         <img
           src={image}
           alt=""
-          className="h-24 w-24 p-3 object-contain bg-gray-100 rounded-xl"
+          className="h-24 w-24 p-3 object-contain rounded-xl"
         />
       </div>
       <div className="py-0.5 flex flex-1 flex-col justify-between relative">

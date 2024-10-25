@@ -141,7 +141,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="container grid lg:grid-cols-2 grid-cols-1 lg:gap-20 md:gap-16 gap-10 lg:mt-32 md:mt-12 mt-4">
+    <div className="container grid lg:grid-cols-2 grid-cols-1 lg:gap-20 md:gap-16 gap-10 lg:mt-28 mt-20">
       {/* product images */}
       <div>
         <img
@@ -163,12 +163,7 @@ const ProductDetails = () => {
 
       {/* product details */}
       <div>
-        <p>
-          {data?.data?.category}{" "}
-          <span className="ml-5 font-bold text-blue-500">
-            {data?.data?.brand}
-          </span>
-        </p>
+        <span className="py-1 px-4 rounded-full bg-rose-500/10 text-sm text-rose-500 font-medium border border-rose-500/20 w-fit">{data?.data?.brand}</span>
         <h2 className="md:text-3xl text-2xl font-medium mt-2 mb-4">
           {data?.data?.name}
         </h2>
@@ -248,28 +243,29 @@ const ProductDetails = () => {
         )}
 
         <div className="flex items-center gap-4 mt-12">
-          <div className="flex items-center gap-2 border lg:px-2 px-4 py-1.5 w-fit bg-[#f5f8fb] rounded-lg">
+          <div className="flex items-center gap-2 border lg:px-2 px-4 py-2 w-fit bg-gray-50 rounded-full">
             <button
               onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-              className="lg:text-sm text-xs border p-1 rounded-full bg-white hover:bg-red-200 hover:border-red-400 hover:text-red-500 transition duration-300"
+              className="lg:text-sm text-xs border p-2 rounded-full bg-white hover:bg-red-200 hover:border-red-400 hover:text-red-500 transition duration-300"
             >
               <AiOutlineMinus />
             </button>
-            <p className="py-1 lg:px-2 px-1 lg:text-sm text-xs md:text-base  text-gray-600 rounded-full">
+            <p className="py-1 lg:px-2 px-1 lg:text-sm text-xs md:text-base text-black/80 font-medium rounded-full">
               {quantity}
             </p>
             <button
               onClick={() =>
                 setQuantity(data?.data?.stock > quantity && quantity + 1)
               }
-              className="lg:text-sm text-xs border p-1 rounded-full bg-white hover:bg-emerald-200 hover:border-emerald-500 hover:text-emerald-500 transition duration-300"
+              className="lg:text-sm text-xs border p-2 rounded-full bg-white hover:bg-emerald-200 hover:border-emerald-500 hover:text-emerald-500 transition duration-300"
             >
               <AiOutlinePlus />
             </button>
           </div>
+
           <button
             onClick={handleCheckout}
-            className="group flex items-center gap-3 bg-primary py-2 lg:px-20 md:px-16 px-12 text-white border border-primary rounded-lg"
+            className="group flex items-center gap-3 bg-primary py-3 lg:px-16 md:px-16 px-12 text-white rounded-full hover:bg-black tr"
           >
             Checkout
             <FaArrowRightLong className="mt-0.5 group-hover:translate-x-2 tr" />

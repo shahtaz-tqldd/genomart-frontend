@@ -41,7 +41,7 @@ const Checkout = () => {
   };
   const { register, handleSubmit } = useForm({ defaultValues: initialValues });
   return (
-    <div className="container mt-12 grid grid-cols-2 gap-10">
+    <div className="container mt-36 grid grid-cols-2 gap-10">
       <div>
         <h2 className="text-2xl font-medium text-slate-800 mb-6">
           Product Details
@@ -54,12 +54,12 @@ const Checkout = () => {
         <hr className="mt-12 mb-4" />
         <div className="flex justify-between text-xl mb-4 px-2">
           <h2>Subtotal</h2>
-          <h2 className="font-bold">${subtotal}</h2>
+          <h2 className="font-bold">${subtotal}.00</h2>
         </div>
       </div>
       <form
         onSubmit={handleSubmit(handleConfirmOrder)}
-        className="bg-gray-100 rounded-xl py-5 px-10 h-fit"
+        className="bg-gradient-to-tr from-primary/10 to-rose-50 rounded-xl py-5 px-10 h-fit"
       >
         <h2 className="text-2xl font-medium text-slate-800 mb-6">
           Billing Information

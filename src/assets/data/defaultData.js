@@ -6,7 +6,7 @@ export const defaultShopData = {
   contact: "+552345672",
   email: "shopname@contact.com",
   bio: "Modern Ecommerce",
-  map: "https://k8q3f6p8.rocketcdn.me/wp-content/uploads/2019/05/Google-Maps-Tips.png",
+  map: "https://media.graphassets.com/resize=width:1280/ukmE2ezySfqPEjUpQik9",
 
   shopImages: [
     "https://img.freepik.com/premium-photo/interior-brand-new-fashion-clothing-store_652667-137.jpg",

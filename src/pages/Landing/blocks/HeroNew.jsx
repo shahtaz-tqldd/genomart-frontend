@@ -11,14 +11,14 @@ const HeroNew = () => {
   );
   const { name, price, images, brand, discount, _id } = data?.data[2] || {};
   return (
-    <section className="h-screen bg-gradient-to-br from-green-50 to-rose-50 relative center">
+    <section className="h-screen bg-gradient-to-tr from-primary/10 to-rose-50 relative center">
       <GridBackground />
       <div className="container grid grid-cols-2 gap-16 items-center relative z-10 mt-10">
         <div>
-          <div className="py-1.5 px-3 bg-green-100 text-green-500 font-medium text-sm mb-5 w-fit border border-green-200 rounded-full">
+          <div className="py-1 px-4 rounded-full bg-rose-500/10 text-sm text-rose-500 font-medium border border-rose-500/20 w-fit">
             {brand || "Nebula Watch"}
           </div>
-          <h2 className="text-6xl">{name}</h2>
+          <h2 className="text-6xl mt-3">{name}</h2>
           <div className="mt-10 flex items-end gap-3">
             <h4 className="text-4xl font-black">${price}.00</h4>
             <p className="text-red-500 mb-0.5 text-sm font-bold">

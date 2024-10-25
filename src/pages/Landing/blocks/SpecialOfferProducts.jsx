@@ -11,7 +11,7 @@ const ProductCard = ({ offer, className }) => {
         <h2 className="text-md text-red-600 mb-2 font-bold">
           {offer.specialOffer}
         </h2>
-        <span className="py-1 px-3 rounded-full text-xs bg-primary/10 text-primary border border-primary/10">
+        <span className="py-1 px-4 rounded-full bg-rose-500/10 text-sm text-rose-500 font-medium border border-rose-500/20 w-fit">
           {offer.brand || "Apple"}
         </span>
         <h2 className="text-xl font-medium text-slate-800 mt-3">

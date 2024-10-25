@@ -5,8 +5,7 @@ import Heading from "../../ui/Heading/Heading";
 import SubmitButton from "../../ui/Buttons/SubmitButton";
 import useTitle from "../../hooks/useTitle";
 import toast from "react-hot-toast";
-const contactImg =
-  "https://design4users.com/wp-content/uploads/2020/02/3d-art-google-partners.jpg";
+import contactImg from "../../assets/images/contact.png";
 
 const ContactPage = () => {
   useTitle("Contact");
@@ -18,19 +17,12 @@ const ContactPage = () => {
     }
   };
   return (
-    <div className="grid lg:grid-cols-2 h-[92vh] -mb-16">
-      <div className="">
-        <img
-          src={contactImg}
-          alt="img"
-          className="h-[92vh] w-full object-cover"
-        />
+    <div className="grid lg:grid-cols-2 grid-cols-1 container lg:my-32 my-24 gap-16">
+      <div className="lg:block hidden">
+        <img src={contactImg} alt="img" className="h-[500px] w-full object-contain" />
       </div>
-      {/* <div className="bg-[#AFAFAF] grid place-items-center">
-        <img src={contactImg} alt="img" className="max-h-[400px] h-full" />
-      </div> */}
-      <div className="grid place-items-center bg-gray-50">
-        <div className="max-w-[500px] w-full bg-white py-6 px-10 rounded-xl shadow">
+      <div className="grid place-items-center">
+        <div className="max-w-[540px] w-full border border-gray-200 bg-gradient-to-tr from-primary/10 to-rose-50 py-6 lg:px-10 md:px-8 px-5 rounded-xl">
           <Heading title={"Write us your message"} />
 
           <form
@@ -50,18 +42,21 @@ const ContactPage = () => {
               {...register("email", { required: true })}
             />
             <TextField
+              label="Contact Number"
+              type="text"
+              variant="standard"
+              {...register("contact", { required: true })}
+            />
+            <TextField
               label="Message"
               multiline
-              rows={4}
+              rows={6}
               type="text"
               variant="standard"
               {...register("message", { required: true })}
             />
             <div className="flex mt-8 justify-end">
-              <SubmitButton
-                name={"Send"}
-                // loading={isLoading}
-              />
+              <SubmitButton name={"Send Message"} />
             </div>
           </form>
         </div>

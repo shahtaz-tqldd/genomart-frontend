@@ -5,7 +5,7 @@ import moment from "moment";
 const ReviewCard = ({ data }) => {
   const { comment, name, rating, img, createdAt } = data;
   return (
-    <div className="border flex flex-col justify-between border-slate-400 rounded-xl p-4">
+    <div className="border border-primary/10 bg-primary/5 flex flex-col justify-between rounded-xl p-4">
       <p className="text-sm text-slate-700">{comment}</p>
       <div>
         <hr className="mb-2 mt-4" />
@@ -18,7 +18,7 @@ const ReviewCard = ({ data }) => {
                 alt={name}
               />
             ) : (
-              <div className="h-9 w-9 rounded-full grid place-items-center font-bold text-white bg-orange-500 text-xl">
+              <div className="h-9 w-9 rounded-full grid place-items-center font-bold text-white bg-primary text-xl">
                 {name?.charAt(0).toUpperCase()}
               </div>
             )}

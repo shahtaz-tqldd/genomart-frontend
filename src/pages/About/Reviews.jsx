@@ -8,7 +8,7 @@ const ShopReviews = () => {
   return (
     <div>
       <Heading title="Customer Reviews" />
-      <div className="grid grid-cols-3 mt-8 gap-5">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-5">
         {reviews?.map((data, i) => (
           <ReviewCard key={i} data={data} />
         ))}

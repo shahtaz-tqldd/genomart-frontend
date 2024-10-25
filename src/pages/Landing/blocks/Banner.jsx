@@ -25,7 +25,7 @@ const Banner = ({ banners }) => {
             <img
               src={banner?.url || ""}
               alt=""
-              className="lg:h-[75vh] md:h-[400px] h-[200px] w-full object-cover rounded-2xl"
+              className="lg:h-[600px] md:h-[400px] h-[200px] w-full object-cover rounded-2xl"
             />
           </SwiperSlide>
         ))}

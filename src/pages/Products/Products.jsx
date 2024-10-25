@@ -109,7 +109,7 @@ const Products = () => {
   }
 
   return (
-    <div className="container mt-32 flex md:flex-row flex-col gap-12">
+    <div className="container mt-28 flex md:flex-row flex-col gap-12">
       <div className="lg:w-[25%] md:w-[40%] w-full lg:block md:block hidden h-full sticky top-28">
         <h2 className="text-xl font-medium mb-3">Product Status</h2>
         {["All Items", "On Stock", "New Arival"]?.map((c, i) => (
