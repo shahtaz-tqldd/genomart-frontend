@@ -115,7 +115,7 @@ const ProductCard = ({ data }) => {
       <div className="overflow-hidden h-[118px]">
         <div className="flex flex-col items-center">
           <Ratings rating={4} size={12} mt={8} />
-          <div className="flex items-center justify-between gap-2 mt-5 w-full px-2">
+          <div className="flex md:flex-row flex-col items-center justify-between gap-2 mt-5 w-full px-2">
             <h2 className="text-red-500 font-bold">${price}.00</h2>
             <button
               onClick={

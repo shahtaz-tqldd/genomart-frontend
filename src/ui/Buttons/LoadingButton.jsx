@@ -6,8 +6,8 @@ const LoadingButton = ({ name, loading, onClick }) => {
       onClick={onClick}
       className={
         loading
-          ? "py-2 px-7 border-2 border-gray-200 rounded-lg bg-primary text-white"
-          : `py-2 px-7 border-2 border-primary rounded-lg bg-primary text-white hover:bg-primaryh hover:border-primaryh transition duration-200`
+          ? "py-3 px-10 rounded-full bg-primary text-white"
+          : `py-3 px-10 rounded-full bg-primary text-white hover:bg-black transition duration-200`
       }
       disabled={loading}
     >

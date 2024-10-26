@@ -5,8 +5,10 @@ import { FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useTitle from "../../hooks/useTitle";
 
 const Checkout = () => {
+  useTitle("Checkout");
   const [payment, setPayment] = useState("cash");
   const { cart, auth } = useSelector((state) => state);
   const subtotal = cart.reduce((acc, product) => {
@@ -16,7 +18,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (cart?.length <= 0) {
-      console.log("true")
+      console.log("true");
       navigate("/products");
     }
   }, [cart]);
@@ -41,10 +43,10 @@ const Checkout = () => {
   };
   const { register, handleSubmit } = useForm({ defaultValues: initialValues });
   return (
-    <div className="container mt-36 grid grid-cols-2 gap-10">
+    <div className="container lg:mt-32 mt-24 grid lg:grid-cols-2 grid-cols-1 gap-16">
       <div>
         <h2 className="text-2xl font-medium text-slate-800 mb-6">
-          Product Details
+          Product Added
         </h2>
         <div className="flex flex-col gap-5">
           {cart?.map((data, i) => (
@@ -131,7 +133,7 @@ const Checkout = () => {
         <div className="mt-10 flex justify-end">
           <button
             type="submit"
-            className="py-2.5 bg-primary pl-8 pr-10 rounded-lg text-white flex items-center gap-2"
+            className="py-3 bg-primary hover:bg-black tr pl-8 pr-10 rounded-full text-white flex items-center gap-2"
           >
             <FaRegCheckCircle />
             Confirm Order

@@ -179,6 +179,33 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
-.btn-outline{
+.btn-outline {
   border: 1px solid #222;
+}
+
+.custom-scrollbar {
+  padding-right: 10px;
+  overflow-y: scroll; /* Ensure that scrollbar appears */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255);
+}
+
+/* Handle (scrollbar thumb) */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  visibility: hidden;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: 8px;
+}
+
+/* On hover, make the scrollbar thumb visible */
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  visibility: visible !important;
 }

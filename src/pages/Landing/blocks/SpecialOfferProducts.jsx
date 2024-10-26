@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const ProductCard = ({ offer, className }) => {
   return (
     <div
-      className={`rounded-xl py-8 px-10 flex justify-between gap-16 items-center border ${className}`}
+      className={`rounded-xl py-8 px-10 flex md:flex-row flex-col justify-between gap-8 items-center border ${className}`}
     >
-      <div>
+      <div className="flex-1 w-full">
         <h2 className="text-md text-red-600 mb-2 font-bold">
           {offer.specialOffer}
         </h2>
@@ -28,7 +28,7 @@ const ProductCard = ({ offer, className }) => {
       <img
         src={offer.images[1]?.url}
         alt={offer.name}
-        className="h-52"
+        className="h-52 w-52 object-contain"
       />
     </div>
   );

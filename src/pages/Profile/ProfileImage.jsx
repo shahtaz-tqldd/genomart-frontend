@@ -31,7 +31,7 @@ const ProfileImage = ({
         <label
           htmlFor={id}
           id="image-preview"
-          className="bg-[#F7F7F7] rounded-xl w-full h-[240px] border-gray-400 items-center mx-auto text-center cursor-pointer justify-center flex"
+          className="bg-gray-50 rounded-xl w-full h-[260px] border-gray-400 items-center mx-auto text-center cursor-pointer justify-center flex"
         >
           <input
             id={id}
@@ -50,7 +50,7 @@ const ProfileImage = ({
               className="h-[120px] w-[120px] object-cover mb-2 bg-white rounded-full border border-dashed border-gray-500"
             />
             <h2 className="text-md font-bold text-[#434343]">
-              Upload Profile Picture
+              Update Profile Picture
             </h2>
 
             <div className="text-gray-600 flex flex-col justify-center items-center text-xs mt-2">

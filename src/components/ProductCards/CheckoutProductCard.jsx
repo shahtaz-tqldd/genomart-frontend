@@ -71,19 +71,14 @@ const CheckoutProductCard = ({ data }) => {
   };
 
   return (
-    <div className="flex gap-5 group bg-gray-50 border border-gray-100 rounded-xl p-3 tr">
-      <div>
-        <img
-          src={image}
-          alt=""
-          className="h-24 w-24 p-3 object-contain rounded-xl"
-        />
+    <div className="flex gap-5 group bg-gray-50 hover:bg-gray-100 border border-gray-100 rounded-xl p-3 tr">
+      <div className="h-28 w-28">
+        <img src={image} alt="" className="h-full w-full p-3 object-contain" />
       </div>
-      <div className="py-0.5 flex flex-1 flex-col justify-between relative">
-        {/* name of the product */}
+      <div className="py-0.5 flex flex-1 flex-col justify-between relative gap-4">
         <h2
           onClick={handleNaviagte}
-          className="font-bold cursor-pointer hover:text-slate-900 tr"
+          className="font-bold cursor-pointer hover:text-slate-900 tr pr-4"
         >
           {name}
         </h2>
@@ -111,17 +106,20 @@ const CheckoutProductCard = ({ data }) => {
           </div>
         )}
         {/* size and price */}
-        <div className="flex justify-between">
+
+        <div className="flex lg:flex-row flex-col gap-4 justify-between">
           {data?.sizes?.length ? (
             <div className="flex items-center gap-4">
               <h2 className="text-sm">Size</h2>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1">
                 {data?.sizes?.map((s, i) => (
                   <div
                     key={i}
                     onClick={() => setSize(s)}
-                    className={`cursor-pointer py-1 px-2 rounded text-xs grid place-content-center ${
-                      size === s ? "bg-slate-800 text-white" : "text-slate-800"
+                    className={`cursor-pointer py-1 px-2 w-12 rounded-full text-xs grid place-content-center ${
+                      size === s
+                        ? "bg-slate-800 text-white"
+                        : "text-slate-800 bg-black/5 border border-black/20"
                     }`}
                   >
                     {s}
@@ -132,36 +130,37 @@ const CheckoutProductCard = ({ data }) => {
           ) : (
             <div></div>
           )}
-          <div className="flex justify-between items-end">
+          <div className="fl gap-3 justify-between">
+            {/* increse icon */}
+            <div className="flex items-center gap-2 border px-1 py-[1px] w-fit rounded-full bg-[#f5f8fb]">
+              <button
+                onClick={() => handleDecrementQuantity(_id, quantity)}
+                className="lg:text-sm text-xs border p-1 rounded-full bg-white hover:bg-red-200 hover:border-red-400 hover:text-red-500 transition duration-300"
+              >
+                <AiOutlineMinus />
+              </button>
+              <p className="py-1 lg:px-2 px-1 lg:text-sm text-xs md:text-base  text-gray-600 rounded-full">
+                {quantity}
+              </p>
+              <button
+                onClick={() => handleIncrementQuantity(_id, quantity, stock)}
+                className="lg:text-sm text-xs border p-1 rounded-full bg-white hover:bg-emerald-200 hover:border-emerald-500 hover:text-emerald-500 transition duration-300"
+              >
+                <AiOutlinePlus />
+              </button>
+            </div>
             <h2 className="text-sm font-bold">
-              ${price} x {quantity}
+              ${price}.00 x {quantity}
             </h2>
           </div>
         </div>
+
         {/* delete button */}
         <div
           onClick={() => handleDeleteCartItem(_id)}
           className="grid absolute top-1 right-1 h-7 w-7 bg-red-100 hover:bg-red-200 place-items-center rounded-full transition duration-300  cursor-pointer"
         >
           <RiDeleteBin6Line className="text-red-500 text-[14px]" />
-        </div>
-        {/* increse icon */}
-        <div className="absolute top-1/2 -translate-y-1/2 right-28 hidden group-hover:flex items-center gap-2 border lg:px-2 px-1 py-[1px] w-fit rounded-full bg-[#f5f8fb]">
-          <button
-            onClick={() => handleDecrementQuantity(_id, quantity)}
-            className="lg:text-sm text-xs border p-1 rounded-full bg-white hover:bg-red-200 hover:border-red-400 hover:text-red-500 transition duration-300"
-          >
-            <AiOutlineMinus />
-          </button>
-          <p className="py-1 lg:px-2 px-1 lg:text-sm text-xs md:text-base  text-gray-600 rounded-full">
-            {quantity}
-          </p>
-          <button
-            onClick={() => handleIncrementQuantity(_id, quantity, stock)}
-            className="lg:text-sm text-xs border p-1 rounded-full bg-white hover:bg-emerald-200 hover:border-emerald-500 hover:text-emerald-500 transition duration-300"
-          >
-            <AiOutlinePlus />
-          </button>
         </div>
       </div>
     </div>

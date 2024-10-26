@@ -6,7 +6,7 @@ import { authModalOpen } from "../../feature/auth/authModalSlice";
 import { useDispatch } from "react-redux";
 import SocialMedia from "../../utiles/SocialMedia";
 import { useGetSettingsInfoQuery } from "../../feature/dashboard/dashboardApiSlice";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/cart.png";
 
 const Footer = () => {
   const { data } = useGetSettingsInfoQuery({}, { refetchOnReconnect: true });
@@ -24,15 +24,19 @@ const Footer = () => {
   return (
     <div className="bg-black/90 text-white">
       <footer className="container px-6 mt-16">
-        <section className="grid lg:grid-cols-4 grid-cols-2 mb-4 pt-12">
+        <section className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mb-4 pt-12 gap-8">
           <div>
-            <Link to={"/"} className="flex items-center gap-3">
+            <Link to={"/"} className="flex items-center gap-4">
               <img src={logo} alt="" className="h-10" />
-              <span className="text-xl uppercase tracking-[2px]">
-                geno<span className="font-semibold">mart</span>
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl uppercase tracking-[2px]">
+                  geno<span className="font-semibold">mart</span>
+                </span>
+                <span className="text-sm text-white/50">
+                  Modern Ecommerce Store
+                </span>
+              </div>
             </Link>
-            <span className="mt-2 ml-[52px] text-white/50">Ecommerce store</span>
           </div>
           <div>
             <h2 className="mb-2 font-medium uppercase">Menubar</h2>
@@ -59,7 +63,10 @@ const Footer = () => {
             <ul className="flex flex-col gap-[6px] text-sm">
               {navItems2.map((item, index) => (
                 <li key={index}>
-                  <Link to={item.path} className="hover:underline text-white/75">
+                  <Link
+                    to={item.path}
+                    className="hover:underline text-white/75"
+                  >
                     {item.name}
                   </Link>
                 </li>

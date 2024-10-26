@@ -11,19 +11,17 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import Heading from "../../ui/Heading/Heading";
 
 const CartSlide = ({ state, setState, toggleDrawerCart }) => {
-  const { token } = useSelector((state) => state?.auth);
-  const cart = useSelector((state) => state?.cart);
+  // Hooks and state
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token } = useSelector((state) => state?.auth);
+  const cart = useSelector((state) => state?.cart);
 
+  // Handlers
   const handleRemoveAll = () => {
     dispatch(clearCart());
     setState({ right: false });
   };
-
-  const subtotal = cart.reduce((acc, product) => {
-    return acc + product.price * product.quantity;
-  }, 0);
 
   const handleCheckout = () => {
     if (token) {
@@ -33,15 +31,27 @@ const CartSlide = ({ state, setState, toggleDrawerCart }) => {
       dispatch(authModalOpen());
     }
   };
+
+  const handleShopNow = () => {
+    setState({ right: false });
+    navigate("/products");
+  };
+
+  // Calculate subtotal
+  const subtotal = cart.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0
+  );
+
   return (
     <div className="w-full absolute">
       <SwipeableDrawer
-        anchor={"right"}
+        anchor="right"
         open={state["right"]}
         onClose={toggleDrawerCart("right", false)}
         onOpen={toggleDrawerCart("right", true)}
       >
-        <div className="md:w-[480px] w-[80vw] py-5 px-6">
+        <div className="md:w-[480px] w-[80vw] py-5 px-6 flex flex-col h-full">
           <div className="flex justify-between">
             <Heading title="Your Cart" />
 
@@ -55,16 +65,22 @@ const CartSlide = ({ state, setState, toggleDrawerCart }) => {
               </button>
             )}
           </div>
-          <div className="">
-            {cart?.length > 0 ? (
-              <div className="flex flex-col gap-4">
-                {cart?.map((data, i) => (
-                  <CartProductCard
-                    key={i}
-                    data={data}
-                    onClose={toggleDrawerCart("right", false)}
-                  />
-                ))}
+
+          {cart?.length > 0 ? (
+            <>
+              <div className="flex-1 custom-scrollbar">
+                <div className="flex flex-col gap-5">
+                  {cart.map((product, index) => (
+                    <CartProductCard
+                      key={index}
+                      data={product}
+                      onClose={toggleDrawerCart("right", false)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div>
                 <hr className="mt-6 mb-2" />
                 <div className="flex justify-between text-xl mb-4 px-2">
                   <h2>Subtotal</h2>
@@ -73,7 +89,7 @@ const CartSlide = ({ state, setState, toggleDrawerCart }) => {
                 <div className="flex gap-3 w-full">
                   <button
                     onClick={toggleDrawerCart("right", false)}
-                    className="w-full group flex items-center gap-2 hover:bg-black/5 tr py-3 justify-center border border-black/50 text-black rounded-full"
+                    className="w-full group flex items-center gap-2 hover:bg-red-500/20 tr py-3 justify-center border border-red-500/20 text-black rounded-full"
                   >
                     Cancel
                   </button>
@@ -81,26 +97,26 @@ const CartSlide = ({ state, setState, toggleDrawerCart }) => {
                     onClick={handleCheckout}
                     className="w-full group flex items-center gap-2 bg-primary hover:bg-black tr py-3 justify-center text-white rounded-full"
                   >
-                    Checkout
+                    <span className="pl-4">Checkout</span>
                     <RiArrowRightSLine className="text-xl mt-0.5 group-hover:translate-x-2 tr" />
                   </button>
                 </div>
               </div>
-            ) : (
-              <div className="h-[70vh] text-black/40 flex flex-col items-center justify-center gap-5">
-                <FiShoppingCart className="h-14 w-14 opacity-60" />
-                <h2 className="text-xl font-medium uppercase mb-10">
-                  Your cart is Empty
-                </h2>
-                <Link
-                  to={"/products"}
-                  className="text-primary py-1.5 px-6 rounded-full border border-primary"
-                >
-                  Shop Now
-                </Link>
-              </div>
-            )}
-          </div>
+            </>
+          ) : (
+            <div className="h-[70vh] text-black/40 flex flex-col items-center justify-center gap-5">
+              <FiShoppingCart className="h-14 w-14 opacity-60" />
+              <h2 className="text-xl font-medium uppercase mb-10">
+                Your cart is Empty
+              </h2>
+              <button
+                onClick={handleShopNow}
+                className="text-primary py-1.5 px-6 rounded-full border border-primary"
+              >
+                Shop Now
+              </button>
+            </div>
+          )}
         </div>
       </SwipeableDrawer>
     </div>

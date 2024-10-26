@@ -6,8 +6,10 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../feature/cart/cartSlice";
 import LoadingButton from "../../ui/Buttons/LoadingButton";
+import useTitle from "../../hooks/useTitle";
 
 const ConfirmOrder = () => {
+  useTitle("Order Place");
   const { state } = useLocation();
   const { token } = useSelector((state) => state?.auth);
   const { products, customer, payment } = state || {};
@@ -37,8 +39,8 @@ const ConfirmOrder = () => {
   };
 
   return (
-    <div className="max-w-[860px] mx-auto px-4 mt-12">
-      <h2 className="text-2xl text-center font-bold text-slate-800">
+    <div className="max-w-[980px] mx-auto p-10 mt-32 bg-gray-50 border border-primary/20 rounded-xl">
+      <h2 className="text-2xl text-center font-semibold uppercase text-black/90">
         Preview Order
       </h2>
       <div className="border border-gray-500 w-20 mx-auto mb-10 mt-3"></div>
@@ -46,10 +48,10 @@ const ConfirmOrder = () => {
         <div className="flex flex-col gap-6">
           {products?.map((p, i) => (
             <div key={i}>
-              <h2 className="font-bold text-lg text-slate-800">
+              <h2 className="font-semibold text-black/90">
                 {i + 1}. {p?.name}
               </h2>
-              <div className="flex items-center gap-6 text-sm mt-2 text-gray-500">
+              <div className="ml-3.5 flex items-center gap-6 text-sm mt-1.5 text-gray-500">
                 <p>
                   Qunatity :{" "}
                   <strong className="text-gray-700">{p?.quantity}</strong>
@@ -70,10 +72,10 @@ const ConfirmOrder = () => {
                   </p>
                 )}
               </div>
-              <div className="flex items-center gap-6 text-sm mt-1 text-gray-500">
+              <div className="ml-3.5 flex items-center gap-6 text-sm mt-0.5 text-gray-500">
                 Price :{" "}
                 <strong className="text-gray-700">
-                  $ {p?.price} x {p?.quantity} = ${p?.price * p?.quantity}{" "}
+                  $ {p?.price} x {p?.quantity} = ${p?.price * p?.quantity}.00
                 </strong>
               </div>
             </div>
@@ -93,7 +95,7 @@ const ConfirmOrder = () => {
           <hr className="my-5" />
           <div>
             <h1>
-              Subtotal : <strong>${payment?.total}</strong>
+              Subtotal : <strong>${payment?.total}.00</strong>
             </h1>
             <h1>
               Payment Method: <strong>{payment?.method}</strong>
@@ -101,11 +103,11 @@ const ConfirmOrder = () => {
           </div>
         </div>
       </div>
-      <div className="mt-10 flex justify-center">
+      <div className="mt-14 flex justify-center">
         <LoadingButton
           onClick={handleSubmit}
           loading={isLoading}
-          name={"Submit"}
+          name={"Place Order"}
         />
       </div>
     </div>

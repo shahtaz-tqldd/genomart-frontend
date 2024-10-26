@@ -7,7 +7,6 @@ import HomeProducts from "./blocks/HomeProducts";
 import PickOfTheDayProducts from "./blocks/PickOfTheDayProducts";
 import SpecialOfferProducts from "./blocks/SpecialOfferProducts";
 import TopSale from "./blocks/TopSale";
-import Hero from "./blocks/Hero";
 import HeroNew from "./blocks/HeroNew";
 
 const Homepage = () => {
@@ -18,7 +17,6 @@ const Homepage = () => {
   useTitle(info?.data?.name || "Shop Name");
   return (
     <div>
-      {/* <Hero/> */}
       <HeroNew />
       <HomeCategories />
       <HomeProducts />

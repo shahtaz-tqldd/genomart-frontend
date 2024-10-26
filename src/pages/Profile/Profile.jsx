@@ -7,8 +7,8 @@ const Profile = () => {
   const isCurrentTab = (tab) => pathname.includes(tab);
 
   return (
-    <div className="container mt-8">
-      <div className="lg:w-[260px] md:w-[200px] md:flex hidden flex-col gap-2 fixed mt-4 top-20">
+    <div className="container mt-28">
+      <div className="lg:w-[260px] md:w-[200px] md:flex hidden flex-col gap-2 fixed mt-8 top-20">
         {[
           { to: `/profile/my-info`, label: "My Information", icon: <FiUser/> },
           { to: `/profile/my-orders`, label: "My Orders", icon:<FiShoppingCart/> },
@@ -18,18 +18,18 @@ const Profile = () => {
           <Link
             key={item.to}
             to={item.to}
-            className={`py-2 px-5 ${
+            className={`py-3 px-5 ${
               isCurrentTab(item.to)
                 ? "bg-primary text-white"
-                : "hover:bg-green-100 hover:text-primary tr"
-            }  rounded-lg w-full text-start flex items-center gap-2`}
+                : "hover:bg-primary/10 tr"
+            }  rounded-full w-full text-start flex items-center gap-2`}
           >
             {item.icon}
             {item.label}
           </Link>
         ))}
       </div>
-      <div className="lg:ml-[320px] md:ml-[260px] lg:w-4/5 md:w-3/5 w-full min-h-[60vh]">
+      <div className="lg:ml-[320px] md:ml-[260px] lg:w-4/5 md:w-3/5 w-full min-h-[80vh]">
         <Outlet />
       </div>
     </div>

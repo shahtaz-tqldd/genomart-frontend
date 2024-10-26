@@ -46,15 +46,15 @@ const CartProductCard = ({ data, onClose }) => {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-3 group">
-      <div className="col-span-1">
+    <div className="flex gap-3 group">
+      <div className="h-20 w-20">
         <img
           src={image}
           alt=""
-          className="h-20 p-3 w-full object-contain bg-gray-100 rounded-xl"
+          className="h-full w-full p-3 w-full object-contain bg-gray-100 rounded-xl"
         />
       </div>
-      <div className="col-span-3 flex flex-col justify-between relative">
+      <div className="flex-1 flex flex-col justify-between relative">
         <h2 onClick={handleNaviagte} className="font-medium cursor-pointer hover:text-slate-900 tr">
           {name}
         </h2>
@@ -65,7 +65,7 @@ const CartProductCard = ({ data, onClose }) => {
           <RiDeleteBin6Line className="text-red-500 text-sm" />
         </div>
         <div className="flex justify-between items-end">
-          <div className="flex items-center gap-2 border lg:px-2 px-1 py-[1px] w-fit rounded-full bg-[#f5f8fb]">
+          <div className="flex items-center gap-1 border py-0.5 px-1 w-fit rounded-full bg-gray-50">
             <button
               onClick={() => handleDecrementQuantity(_id, quantity)}
               className="lg:text-sm text-xs border p-1 rounded-full bg-white hover:bg-red-200 hover:border-red-400 hover:text-red-500 transition duration-300"
@@ -82,7 +82,7 @@ const CartProductCard = ({ data, onClose }) => {
               <AiOutlinePlus />
             </button>
           </div>
-          <h2 className="text-sm font-bold">${price * quantity}</h2>
+          <h2 className="text-sm font-bold">${price * quantity}.00</h2>
         </div>
       </div>
     </div>
