@@ -30,7 +30,7 @@ const LogoImage = ({
         <label
           htmlFor={id}
           id="image-preview"
-          className="bg-[#F7F7F7] rounded-xl w-full h-[240px] border-gray-400 items-center mx-auto text-center cursor-pointer justify-center flex"
+          className="bg-[#F7F7F7] border border-primary/20 rounded-xl w-full h-[240px] border-gray-400 items-center mx-auto text-center cursor-pointer justify-center flex"
         >
           <input
             id={id}

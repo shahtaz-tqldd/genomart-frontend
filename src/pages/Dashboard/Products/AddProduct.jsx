@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ColorPickerComponent from "../../../utiles/ColorPicker";
+import Heading from "../../../ui/Heading/Heading";
 
 const AddProduct = () => {
   const { token } = useSelector((state) => state?.auth);
@@ -126,8 +127,8 @@ const AddProduct = () => {
 
   return (
     <div>
-      <Greetings page={"Add New Product"} />
-      <div className="flex gap-8 mt-10 items-start relative">
+      <Heading title={"Add New Product"} />
+      <div className="flex gap-8 mt-4 items-start relative">
         <div className="w-[60%]">
           <form
             onSubmit={handleSubmit(handleProductSubmit)}
@@ -342,7 +343,7 @@ const AddProduct = () => {
         </div>
       </div>
       <div className="flex justify-end">
-        <button className="btn btn-outline mr-4">Preview</button>
+        <button className="btn btn-outline mr-3 rounded-full px-12 border border-primary/20">Preview</button>
         <SubmitButton loading={isLoading} name="Add Product" />
       </div>
     </div>

@@ -9,7 +9,7 @@ const TopSoldProducts = () => {
   );
 
   return (
-    <div>
+    <>
       <Heading title={"Top sold products"} />
       <div className="grid grid-cols-7 font-semibold">
         <div className="col-span-3 ml-4">Product</div>
@@ -19,7 +19,7 @@ const TopSoldProducts = () => {
       </div>
       <hr className="my-2"/>
       {data?.data?.slice(1, 7)?.map((p, i) => (
-        <a key={i} target="_blank" href={`/products/${p?._id}`} className="grid grid-cols-7 items-center mb-3 hover:bg-green-100 tr cursor-pointer p-1 rounded-lg">
+        <a key={i} target="_blank" href={`/products/${p?._id}`} className="grid grid-cols-7 items-center mb-3 hover:bg-primary/10 tr cursor-pointer p-2 rounded-lg">
           <div className="col-span-3 flex items-start gap-4">
             <img
               src={p?.images[0]?.url}
@@ -39,7 +39,7 @@ const TopSoldProducts = () => {
           </div>
         </a>
       ))}
-    </div>
+    </>
   );
 };
 

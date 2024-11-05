@@ -115,19 +115,17 @@ const ProductListTable = () => {
   }
 
   return (
-    <div className="mt-10">
-      <div className="mb-4">
-        {content}
-        {isDeleteMopen && (
-          <DeleteModal
-            open={isDeleteMopen}
-            setOpen={setIsDeleteMopen}
-            target={"Product"}
-            loading={deleteLoading}
-            handleDelete={handleDeleteProduct}
-          />
-        )}
-      </div>
+    <div className="mt-2 mb-5">
+      {content}
+      {isDeleteMopen && (
+        <DeleteModal
+          open={isDeleteMopen}
+          setOpen={setIsDeleteMopen}
+          target={"Product"}
+          loading={deleteLoading}
+          handleDelete={handleDeleteProduct}
+        />
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import Greetings from "../../../utiles/Greetings";
 import { useGetSettingsInfoQuery } from "../../../feature/dashboard/dashboardApiSlice";
+import Heading from "../../../ui/Heading/Heading";
 
 const SpecialOffer = () => {
   const { data: info, isSuccess } = useGetSettingsInfoQuery(
@@ -9,8 +9,8 @@ const SpecialOffer = () => {
   );
   return (
     <div>
-      <Greetings page={"Special Offer"} />
-      <div className="grid grid-cols-5 gap-8 mt-10">
+      <Heading title={"Special Offer"} />
+      <div className="grid grid-cols-5 gap-8 mt-2">
         {info?.data?.specialOffer?.length > 0 && (
           <div className="col-span-3 bg-[#CDF0EA] rounded-xl px-12 py-4 justify-between flex items-center">
             <div>

@@ -13,7 +13,7 @@ const NewOrders = () => {
   );
 
   return (
-    <div>
+    <>
       <Heading title={"New Orders"} />
       <div className="grid grid-cols-6 font-semibold">
         <div className="col-span-1 ml-4">Order</div>
@@ -25,7 +25,7 @@ const NewOrders = () => {
       {data?.data?.slice(1, 7)?.map((order, i) => (
         <div
           key={i}
-          className="grid grid-cols-6 items-center hover:bg-green-100 tr cursor-pointer px-1 py-2 rounded-lg border-b"
+          className="grid grid-cols-6 items-center hover:bg-primary/10 tr cursor-pointer px-1 py-2 rounded-lg border-b"
         >
           <div className="col-span-1 text-sm font-bold ml-2">
             {order?.orderSl}
@@ -48,7 +48,7 @@ const NewOrders = () => {
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 };
 

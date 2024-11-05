@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import LoadingButton from "../../../ui/Buttons/LoadingButton";
 import useTitle from "../../../hooks/useTitle";
+import Heading from "../../../ui/Heading/Heading";
 
 const BannerList = () => {
   useTitle("Hero Banner")
@@ -56,8 +57,8 @@ const BannerList = () => {
 
   return (
     <div>
-      <Greetings page={"Hero Banner"} />
-      <div className="grid grid-cols-1 gap-10 mt-12">
+      <Heading title={"Promotinal Banner"} />
+      <div className="grid grid-cols-2 gap-5 mt-4">
         <UploadImage
           setSelectedFile={setSelectedFile1}
           maxSize={0.5}

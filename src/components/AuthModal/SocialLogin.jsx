@@ -43,7 +43,7 @@ const SocialLogin = ({ handleClose }) => {
   return (
     <div
       onClick={handleGoogleLogin}
-      className="flex items-center gap-2 justify-center text-sm font-semibold cursor-pointer border py-2.5 rounded-lg hover:bg-slate-800 hover:text-white tr"
+      className="flex items-center gap-2 justify-center text-sm font-semibold cursor-pointer border py-2.5 rounded-full hover:bg-black hover:text-white tr"
     >
       <img src={googleImg} alt="" className="h-4 w-4" />
       Continue with Google

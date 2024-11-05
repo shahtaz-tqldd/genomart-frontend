@@ -1,14 +1,14 @@
 import React from "react";
 import UserTable from "./UserTable";
-import Greetings from "../../../utiles/Greetings";
 import useTitle from "../../../hooks/useTitle";
+import Heading from "../../../ui/Heading/Heading";
 
 const UserList = () => {
-  useTitle("User List")
+  useTitle("User List");
   return (
     <div>
       <div className="flex justify-between items-start">
-        <Greetings page={"User List"} />
+        <Heading title={"User List"} />
       </div>
       <UserTable />
     </div>

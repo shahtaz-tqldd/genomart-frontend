@@ -32,7 +32,7 @@ const PiChart = ({ data }) => {
   };
 
   return (
-    <div className="mb-10 flex items-center justify-center">
+    <div className="mb-20 flex items-center justify-center">
       <div id="chart">
         <ReactApexChart
           options={chartData.options}

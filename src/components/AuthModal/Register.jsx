@@ -42,7 +42,7 @@ const Register = ({ setRegOpen, handleClose }) => {
           <h2 className="text-xl font-bold">Open a new Account</h2>
           <IoCloseOutline
             onClick={handleClose}
-            className="absolute top-0 right-0 text-4xl p-1 rounded-full hover:bg-purple-200 cursor-pointer trasition duration-300"
+            className="absolute top-0 right-0 text-4xl p-1 rounded-full hover:bg-red-500/10 cursor-pointer trasition duration-300"
           />
         </div>
         <form
@@ -70,7 +70,7 @@ const Register = ({ setRegOpen, handleClose }) => {
           />
           <button
             type="submit"
-            className="bg-secondary hover:bg-primary tr mt-4 py-2 w-full rounded-lg text-white"
+            className="bg-black hover:bg-primary tr mt-4 py-2 w-full rounded-full text-white"
           >
             Register
           </button>
@@ -85,8 +85,8 @@ const Register = ({ setRegOpen, handleClose }) => {
 
         <div className="flex gap-1 text-sm justify-center mt-5">
           Already have an account?
-          <button onClick={() => setRegOpen(false)} className="text-orange-500">
-            Login
+          <button onClick={() => setRegOpen(false)} className="text-primary underline">
+            Login Here
           </button>
         </div>
       </div>

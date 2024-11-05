@@ -45,12 +45,12 @@ const Login = ({ setRegOpen, handleClose }) => {
           <h2 className="text-xl font-bold">Login to Genomart</h2>
           <IoCloseOutline
             onClick={handleClose}
-            className="absolute top-0 right-0 text-4xl p-1 rounded-full hover:bg-purple-200 cursor-pointer trasition duration-300"
+            className="absolute top-0 right-0 text-4xl p-1 rounded-full hover:bg-red-500/10 cursor-pointer trasition duration-300"
           />
         </div>
         <button
           onClick={handleMakeAdminLogin}
-          className="underline text-sm mt-2 text-secondary"
+          className="underline text-sm mt-2 text-primary"
         >
           Admin Login
         </button>
@@ -85,7 +85,7 @@ const Login = ({ setRegOpen, handleClose }) => {
           </div>
           <button
             type="submit"
-            className="bg-primary hover:bg-secondary tr py-2 w-full rounded-lg text-white"
+            className="bg-primary hover:bg-black tr py-2 w-full rounded-full text-white"
           >
             Login
           </button>
@@ -99,7 +99,7 @@ const Login = ({ setRegOpen, handleClose }) => {
 
         <div className="flex gap-1 text-sm justify-center mt-7">
           New to genomart?
-          <button onClick={() => setRegOpen(true)} className="text-orange-500">
+          <button onClick={() => setRegOpen(true)} className="text-primary underline">
             Open Account
           </button>
         </div>

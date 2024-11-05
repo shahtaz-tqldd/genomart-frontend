@@ -8,7 +8,6 @@ import { dsnavdata } from "../../assets/data/dsnavdata";
 
 const DSNav = ({ toggle, setToggle }) => {
   const { user } = useSelector((state) => state?.auth);
-  const dispatch = useDispatch();
   const role = user?.role;
   const { pathname } = useLocation();
 
@@ -16,10 +15,6 @@ const DSNav = ({ toggle, setToggle }) => {
     return pathname === path;
   };
 
-  const handleLogout = () => {
-    dispatch(userLoggedOut());
-  };
-  console.log(pathname.split("/")[2]);
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const toggleDropdown = (index) => {
@@ -31,28 +26,25 @@ const DSNav = ({ toggle, setToggle }) => {
   };
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-[#232323] to-[#2f3e46]">
+    <div className="min-h-screen relative bg-primary/10">
       <div
         onClick={() => setToggle(!toggle)}
         className="h-7 w-7 bg-primary hover:bg-primaryh text-white rounded-full lg:hidden grid place-items-center absolute top-5 right-4 cursor-pointer"
       >
         <BiChevronLeft className="text-2xl" />
       </div>
-      <div className="py-4 flex flex-col items-center justify-center gap-2">
-        <Link
-          to={"/"}
-          className="text-3xl font-nav text-primary hover:text-emerald-500 transition"
-        >
-          geno mart
+      <div className="py-4 flex flex-col items-center justify-center gap-1">
+        <Link to={"/"} className="text-xl font-medium uppercase">
+          genomart
         </Link>
-        <h2 className="uppercase tracking-widest text-sm text-white">
+        <h2 className="uppercase tracking-widest text-sm text-primary">
           Admin Dashboard
         </h2>
       </div>
 
       <div className="mt-2 mx-4">
         {dsnavdata?.map(({ stackName, data }, index) => (
-          <div className="my-5" key={index}>
+          <div className="my-5 flex flex-col gap-1" key={index}>
             <h2 className="text-primary mb-2 uppercase font-semibold text-xs ml-2">
               {stackName}
             </h2>
@@ -95,7 +87,7 @@ const DSNav = ({ toggle, setToggle }) => {
                             isActiveNavLink(childItem.link)
                               ? "text-primary"
                               : "text-gray-600"
-                          } hover:bg-primaryh hover:text-white tr items-center gap-2 py-1.5 text-sm pl-7 rounded-md ${
+                          } hover:bg-primaryh hover:text-white tr items-center gap-2 py-3 text-sm pl-7 rounded-md ${
                             childItem?.roles
                               ? childItem?.roles?.includes(role)
                                 ? "flex"
@@ -116,9 +108,9 @@ const DSNav = ({ toggle, setToggle }) => {
                     onClick={() => setToggle(false)}
                     className={`${
                       isActiveNavLink(item.link)
-                        ? "bg-[#90D26D] text-white"
-                        : "text-white/70 group-hover:bg-primaryh group-hover:text-white"
-                    } ${dashboardMenu} rounded-md tr`}
+                        ? "bg-primary text-white"
+                        : "text-black/60 group-hover:bg-primary/10 group-hover:text-black/70"
+                    } ${dashboardMenu} rounded-full tr`}
                   >
                     <item.icon className="text-base" />
                     {item.title}
@@ -128,15 +120,6 @@ const DSNav = ({ toggle, setToggle }) => {
             ))}
           </div>
         ))}
-
-        <div className="group pb-8 absolute bottom-0 left-5 right-5">
-          <button
-            onClick={handleLogout}
-            className={`py-2 w-full bg-red-500 hover:bg-red-600 text-white rounded-md flex justify-center transition duration-300`}
-          >
-            Logout
-          </button>
-        </div>
       </div>
     </div>
   );

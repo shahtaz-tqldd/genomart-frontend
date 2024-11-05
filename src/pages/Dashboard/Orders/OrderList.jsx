@@ -4,6 +4,7 @@ import Greetings from "../../../utiles/Greetings";
 import SearchInput from "../../../ui/InputField/SearchInput";
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import useTitle from "../../../hooks/useTitle";
+import Heading from "../../../ui/Heading/Heading";
 
 const OrderList = () => {
   useTitle("Order List");
@@ -20,16 +21,17 @@ const OrderList = () => {
   };
 
   const checkboxStyle = {
-    fontSize: "10px",
-    color: "#2D9596",
+    fontSize: "8px",
+    color: "#10b981",
+    marginLeft:"6px"
   };
 
   return (
     <div>
       <div className="flex justify-between items-start">
-        <Greetings page={"Order List"} />
+        <Heading title={"Order List"}/>
       </div>
-      <div className="flex justify-between items-center mt-4 px-2">
+      <div className="flex justify-between items-center px-2 -ml-6">
         <FormGroup row>
           <FormControlLabel
             control={<Checkbox style={checkboxStyle} />}

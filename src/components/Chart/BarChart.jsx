@@ -27,6 +27,7 @@ const BarChart = ({ data, name }) => {
           },
         },
       },
+      colors: ['#10b981'],
       dataLabels: {
         enabled: true,
         formatter: function (val) {
@@ -104,7 +105,7 @@ const BarChart = ({ data, name }) => {
         type="bar"
         height={350}
       />
-      <div className="flex justify-center text-xl font-bold text-gray-700">{name} Report</div>
+      <div className="flex justify-center text-xl font-semibold uppercase text-black/70">{name} Report</div>
     </div>
   );
 };

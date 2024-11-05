@@ -9,7 +9,7 @@ const SpecialOfferProducts = () => {
   );
   
   return (
-    <div>
+    <>
       <Heading title={"Special Offer"} />
       <div className="grid grid-cols-5 font-semibold">
         <div className="col-span-4 ml-6">Product</div>
@@ -53,7 +53,7 @@ const SpecialOfferProducts = () => {
           </div>
         </a>
       ))}
-    </div>
+    </>
   );
 };
 

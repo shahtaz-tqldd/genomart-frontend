@@ -59,7 +59,7 @@ const Dashboard = () => {
         />
       </div>
       <div className="grid grid-cols-7 gap-6 mt-10">
-        <div className="col-span-5 bg-white shadow rounded-xl border border-black/10 p-5">
+        <div className="col-span-5 bg-white rounded-xl border border-primary/20 p-5">
           <BarChart data={monthlySoldData} name={"Monthly Sold"} />
         </div>
         <div className="col-span-2">
@@ -70,19 +70,19 @@ const Dashboard = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-5 gap-16 mt-20">
-        <div className="col-span-3">
+      <div className="grid grid-cols-5 gap-6 mt-12">
+        <div className="col-span-3 bg-white p-5 rounded-2xl border border-primary/20">
           <NewOrders />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-2 bg-white p-5 rounded-2xl border border-primary/20">
           <SpecialOfferProducts />
         </div>
       </div>
-      <div className="grid grid-cols-5 gap-16 mt-20">
-        <div className="col-span-3">
+      <div className="grid grid-cols-5 gap-6 mt-12">
+        <div className="col-span-3 bg-white p-5 rounded-2xl border border-primary/20">
           <TopSoldProducts />
         </div>
-        <div className="col-span-2 flex flex-col gap-2 justify-between">
+        <div className="col-span-2 flex flex-col gap-2 justify-between bg-white p-5 rounded-2xl border border-primary/20">
           <Heading title={"Product Categories"} />
           <PiChart data={category?.data || []} />
         </div>

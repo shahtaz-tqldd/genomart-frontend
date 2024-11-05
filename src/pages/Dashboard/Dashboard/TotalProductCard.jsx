@@ -5,17 +5,17 @@ import Lordicon from "../../../utiles/Lordicon";
 const TotalProductCard = ({ totalProducts, totalStock, totalCategories }) => {
   return (
     <div className="bg-primary rounded-xl h-full border border-[#ccc] flex flex-col">
-      <div className="bg-white p-6 rounded-b-3xl rounded-t-xl  flex-1">
-        <div className="flex flex-col items-center justify-center z-10 mt-8">
+      <div className="bg-white/20 m-4 p-6 rounded-3xl  flex-1">
+        <div className="flex flex-col items-center justify-center z-10 mt-3">
           <Lordicon link={"qxqvtswi"} size={80} target={"div"} />
-          <h2 className="text-xl mt-3 uppercase text-primary font-semibold tracking-widest">
-            Total Product
-          </h2>
+          <h1 className="text-center text-7xl font-bold text-white mt-3">
+            {totalProducts < 9 && "0"}
+            {totalProducts}
+          </h1>
         </div>
-        <h1 className="text-center text-7xl font-black text-slate-800 mt-5">
-          {totalProducts < 9 && 0}
-          {totalProducts}
-        </h1>
+        <h2 className="text-xl mt-4 uppercase text-white text-center tracking-widest">
+          Total Product
+        </h2>
       </div>
 
       <div className="w-full flex justify-between text-white p-8">
@@ -25,7 +25,10 @@ const TotalProductCard = ({ totalProducts, totalStock, totalCategories }) => {
           Total Stock
         </p>
         <p>
-          <strong className="text-3xl">{totalCategories}</strong>
+          <strong className="text-3xl">
+            {totalCategories < 9 && "0"}
+            {totalCategories}
+          </strong>
           <br />
           Categories
         </p>

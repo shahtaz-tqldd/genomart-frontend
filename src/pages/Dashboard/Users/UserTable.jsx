@@ -167,52 +167,50 @@ const UserTable = () => {
   }
 
   return (
-    <div className="mt-10">
-      <div className="mb-4">
-        {content}
-        {isDisableModal && (
-          <DisableModal
-            open={isDisableModal}
-            setOpen={setIsDisableModal}
-            target={"Disable User"}
-            targetText={
-              "Are you sure want to disable user? Disabling User will prevent this user to access and authorize certain actions."
-            }
-            loading={disableLoading}
-            handleDisable={handleDisableUser}
-          />
-        )}
-        {isEnableUser && (
-          <DisableModal
-            open={isEnableUser}
-            setOpen={setIsEnableUser}
-            target={"Enable User"}
-            targetText={
-              "Are you sure want to enable user? Enabling User will provide this user to access and authorize certain actions."
-            }
-            loading={disableLoading}
-            handleDisable={handleEnableUser}
-          />
-        )}
-        {isMakeAdminModal && (
-          <ConfirmModal
-            open={isMakeAdminModal}
-            setOpen={setIsMakeAdminModal}
-            target={"Admin"}
-            loading={adminLoading}
-            handleAction={handleMakeAdmin}
-          />
-        )}
-        {isMakeUserModal && (
-          <ConfirmModal
-            open={isMakeUserModal}
-            setOpen={setIsMakeUserModal}
-            target={"User"}
-            loading={adminLoading}
-            handleAction={handleMakeUser}
-          />
-        )}
-      </div>
+    <div className="mt-2 mb-5">
+      {content}
+      {isDisableModal && (
+        <DisableModal
+          open={isDisableModal}
+          setOpen={setIsDisableModal}
+          target={"Disable User"}
+          targetText={
+            "Are you sure want to disable user? Disabling User will prevent this user to access and authorize certain actions."
+          }
+          loading={disableLoading}
+          handleDisable={handleDisableUser}
+        />
+      )}
+      {isEnableUser && (
+        <DisableModal
+          open={isEnableUser}
+          setOpen={setIsEnableUser}
+          target={"Enable User"}
+          targetText={
+            "Are you sure want to enable user? Enabling User will provide this user to access and authorize certain actions."
+          }
+          loading={disableLoading}
+          handleDisable={handleEnableUser}
+        />
+      )}
+      {isMakeAdminModal && (
+        <ConfirmModal
+          open={isMakeAdminModal}
+          setOpen={setIsMakeAdminModal}
+          target={"Admin"}
+          loading={adminLoading}
+          handleAction={handleMakeAdmin}
+        />
+      )}
+      {isMakeUserModal && (
+        <ConfirmModal
+          open={isMakeUserModal}
+          setOpen={setIsMakeUserModal}
+          target={"User"}
+          loading={adminLoading}
+          handleAction={handleMakeUser}
+        />
+      )}
     </div>
   );
 };

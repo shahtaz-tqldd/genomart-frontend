@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
-import Greetings from "../../../utiles/Greetings";
 import useTitle from "../../../hooks/useTitle";
 import LogoImage from "../../../ui/Images/LogoImage";
 import SubmitButton from "../../../ui/Buttons/SubmitButton";
@@ -13,120 +12,155 @@ import {
   useGetSettingsInfoQuery,
 } from "../../../feature/dashboard/dashboardApiSlice";
 import toast from "react-hot-toast";
+import Heading from "../../../ui/Heading/Heading";
 
 const InfoPage = () => {
   useTitle("Admin Dashboard | Settings");
-  const { token, user } = useSelector((state) => state?.auth);
+  const { token } = useSelector((state) => state?.auth);
   const [terms, setTerms] = useState("");
   const [policy, setPolicy] = useState("");
+  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
 
-  const { data:info, isSuccess } = useGetSettingsInfoQuery(
+  const { data: info, isSuccess } = useGetSettingsInfoQuery(
     { token },
     { refetchOnReconnect: true, skip: !token }
   );
-  const [selectedImage, setSelectedImage] = useState("");
-  const [selectedFile, setSelectedFile] = useState();
-  const { register, handleSubmit, reset } = useForm();
+
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      contact: "",
+      location: "",
+      description: "",
+    }
+  });
 
   useEffect(() => {
     if (info?.success) {
       const initialValues = {
-        name: info?.data?.name,
-        email: info?.data?.email,
-        contact: info?.data?.contact,
-        location: info?.data?.location,
-        description: info?.data?.description,
+        name: info?.data?.name || "",
+        email: info?.data?.email || "",
+        contact: info?.data?.contact || "",
+        location: info?.data?.location || "",
+        description: info?.data?.description || "",
       };
       setSelectedImage(info?.data?.logo?.url);
-      setPolicy(info?.data?.policy);
-      setTerms(info?.data?.terms);
+      setPolicy(info?.data?.policy || "");
+      setTerms(info?.data?.terms || "");
       reset(initialValues);
     }
   }, [info, reset]);
 
   const [createInfo, { isLoading }] = useCreateInfoMutation() || {};
+
   const handleProfileSubmit = async (data) => {
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(data)) {
       formData.append(key, value);
     }
-    if (terms) {
-      formData.append("terms", terms);
-    }
-    if (policy) {
-      formData.append("policy", policy);
-    }
-    if (selectedFile) {
-      formData.append("logo", selectedFile);
-    }
+    if (terms) formData.append("terms", terms);
+    if (policy) formData.append("policy", policy);
+    if (selectedFile) formData.append("logo", selectedFile);
 
-    const res = await createInfo({ bodyData: formData, token });
-
-    if (res?.data?.success) {
-      toast.success(res?.data?.message);
-    } else {
-      toast.error(res?.error?.data?.message);
+    try {
+      const res = await createInfo({ bodyData: formData, token });
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+      } else {
+        toast.error(res?.error?.data?.message);
+      }
+    } catch (error) {
+      toast.error("An error occurred while saving changes");
     }
   };
+
   return (
-    <form onSubmit={handleSubmit(handleProfileSubmit)}>
-      <Greetings page={"Settings"} />
-      <div className="grid grid-cols-5 gap-14 mt-8">
+    <form onSubmit={handleSubmit(handleProfileSubmit)} className="space-y-6">
+      <Heading title="Settings" />
+      <div className="grid grid-cols-5 gap-6 mt-2">
         <div className="col-span-2">
           <LogoImage
             setSelectedFile={setSelectedFile}
             selectedImage={selectedImage}
             setSelectedImage={setSelectedImage}
-            id={"logo"}
+            id="logo"
             maxSize={1}
           />
         </div>
-        <div className="col-span-3 flex flex-col gap-5">
+        <div className="col-span-3 flex flex-col gap-5 bg-white p-5 rounded-xl border border-primary/20">
           <div className="grid grid-cols-2 gap-5">
-            <TextField
-              label="Shop Name"
-              type="text"
-              InputLabelProps={{ shrink: info?.data?.name ? true : false }}
-              {...register("name", { required: false })}
-              variant="standard"
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Shop Name"
+                  variant="standard"
+                  fullWidth
+                />
+              )}
             />
-            <TextField
-              label="Contact"
-              type="text"
-              variant="standard"
-              InputLabelProps={{ shrink: info?.data?.contact ? true : false }}
-              {...register("contact", { required: false })}
+            <Controller
+              name="contact"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Contact"
+                  variant="standard"
+                  fullWidth
+                />
+              )}
             />
           </div>
           <div className="grid grid-cols-2 gap-5">
-            <TextField
-              label="Email"
-              type="email"
-              variant="standard"
-              InputLabelProps={{ shrink: info?.data?.email ? true : false }}
-              {...register("email", { required: false })}
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Email"
+                  type="email"
+                  variant="standard"
+                  fullWidth
+                />
+              )}
             />
-            <TextField
-              label="Location"
-              type="text"
-              variant="standard"
-              InputLabelProps={{ shrink: info?.data?.location ? true : false }}
-              {...register("location", { required: false })}
+            <Controller
+              name="location"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Location"
+                  variant="standard"
+                  fullWidth
+                />
+              )}
             />
           </div>
-
-          <TextField
-            label="Description"
-            type="text"
-            multiline="true"
-            maxRows={4}
-            variant="standard"
-            InputLabelProps={{ shrink: info?.data?.description ? true : false }}
-            {...register("description", { required: false })}
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Description"
+                multiline
+                maxRows={4}
+                variant="standard"
+                fullWidth
+              />
+            )}
           />
         </div>
       </div>
+
       {isSuccess && (
         <div className="grid grid-cols-2 gap-8 mt-10">
           <div>
@@ -144,7 +178,7 @@ const InfoPage = () => {
           </div>
           <div>
             <h2 className="text-md mb-4 ml-1 text-slate-800 font-semibold">
-              Terms and Condtions
+              Terms and Conditions
             </h2>
             <ReactQuill
               modules={quillModules}
@@ -157,8 +191,9 @@ const InfoPage = () => {
           </div>
         </div>
       )}
-      <div className="flex justify-end mt-16">
-        <SubmitButton loading={isLoading} name={"Save Changes"} />
+
+      <div className="flex justify-end">
+        <SubmitButton loading={isLoading} name="Save Changes" />
       </div>
     </form>
   );
